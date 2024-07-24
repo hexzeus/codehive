@@ -7,7 +7,7 @@ import {
 } from './LoginPageStyles';
 import logo from './logo.svg';
 
-const LoginPage = () => {
+const LoginPage = ({ onSignup }) => {
     useEffect(() => {
         const netlifyIdentity = window.netlifyIdentity;
         if (netlifyIdentity) {
