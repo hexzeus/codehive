@@ -6,15 +6,36 @@ export const ProtectedContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 `;
 
 export const ProtectedHeader = styled.header`
   text-align: center;
   margin-bottom: 2rem;
+  color: #ffffff;
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.25rem;
+  }
+`;
+
+export const ProtectedContent = styled.div`
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 2rem;
+
+  p {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+  }
 `;
 
 export const LogoutButton = styled.button`

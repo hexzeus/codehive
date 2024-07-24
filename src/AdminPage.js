@@ -6,10 +6,10 @@ import {
     LogoutButton
 } from './ProtectedPageStyles';
 
-const ProtectedPage = () => {
+const AdminPage = () => {
     const user = window.netlifyIdentity.currentUser();
 
-    if (!user) {
+    if (!user || !user.app_metadata.roles.includes('admin')) {
         return <p>You do not have access to this page.</p>;
     }
 
@@ -24,12 +24,12 @@ const ProtectedPage = () => {
     return (
         <ProtectedContainer>
             <ProtectedHeader>
-                <h1>Welcome, {user.user_metadata.full_name}!</h1>
-                <p>You have successfully logged in!</p>
+                <h1>Admin Page</h1>
+                <p>Welcome, {user.user_metadata.full_name}!</p>
             </ProtectedHeader>
             <ProtectedContent>
-                <p>This is your protected content.</p>
-                <p>Feel free to explore and enjoy the features available to you.</p>
+                <p>This is the admin section.</p>
+                <p>You have access to manage the application.</p>
             </ProtectedContent>
             <LogoutButton onClick={logout}>
                 Logout
@@ -38,4 +38,4 @@ const ProtectedPage = () => {
     );
 };
 
-export default ProtectedPage;
+export default AdminPage;

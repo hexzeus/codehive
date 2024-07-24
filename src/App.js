@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import ProtectedPage from './ProtectedPage';
+import AdminPage from './AdminPage';
 import GlobalStyles from './GlobalStyles';
 import GoTrue from 'gotrue-js';
 
@@ -25,7 +26,14 @@ function App() {
       netlifyIdentity.on('login', user => {
         console.log('Login user:', user);
         setUser(user);
-        window.location.href = '/protected'; // Redirect to protected page on login
+
+        // Redirect based on role
+        const roles = user.app_metadata.roles;
+        if (roles.includes('admin')) {
+          window.location.href = '/admin';
+        } else {
+          window.location.href = '/protected';
+        }
       });
       netlifyIdentity.on('logout', () => {
         console.log('Logout');
@@ -48,24 +56,14 @@ function App() {
     }
   }, []);
 
-  const handleSignup = (email, password, role) => {
-    console.log('Sign-Up Attempt:', email, password, role);
-    auth.signup(email, password, { role: role })
-      .then(response => {
-        console.log('Confirmation email sent', response);
-      })
-      .catch(error => {
-        console.error('Error sending confirmation email', error);
-      });
-  };
-
   return (
     <>
       <GlobalStyles />
       <Router>
         <Routes>
-          <Route path="/" element={user ? <Navigate to="/protected" /> : <LoginPage onSignup={handleSignup} />} />
+          <Route path="/" element={user ? <Navigate to="/protected" /> : <LoginPage />} />
           <Route path="/protected" element={user ? <ProtectedPage /> : <Navigate to="/" />} />
+          <Route path="/admin" element={user && user.app_metadata.roles.includes('admin') ? <AdminPage /> : <Navigate to="/" />} />
         </Routes>
       </Router>
     </>
