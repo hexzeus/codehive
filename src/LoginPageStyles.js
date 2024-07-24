@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export const AppContainer = styled.div`
+export const LoginContainer = styled.div`
   text-align: center;
 `;
 
-export const AppHeader = styled.header`
+export const LoginHeader = styled.header`
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -15,7 +15,7 @@ export const AppHeader = styled.header`
   color: white;
 `;
 
-export const AppLogo = styled.img`
+export const LoginLogo = styled.img`
   height: 40vmin;
   pointer-events: none;
   @media (prefers-reduced-motion: no-preference) {
@@ -31,6 +31,17 @@ export const AppLogo = styled.img`
   }
 `;
 
-export const AppLink = styled.a`
+export const IdentityButton = styled.div`
+  cursor: pointer;
+  margin: 1em;
+  padding: 0.5em 1em;
+  border: 1px solid #61dafb;
+  border-radius: 3px;
   color: #61dafb;
+  background-color: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  &:hover {
+    background-color: #61dafb;
+    color: white;
+  }
 `;
