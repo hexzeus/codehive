@@ -12,6 +12,8 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
     background-color: #f4f4f9;
     color: #333;
+    margin: 0;
+    padding: 0;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -21,25 +23,6 @@ const GlobalStyles = createGlobalStyle`
   a {
     text-decoration: none;
     color: inherit;
-  }
-
-  nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: #282c34;
-    color: white;
-  }
-
-  nav a {
-    margin: 0 1rem;
-    font-weight: bold;
-    color: white;
-  }
-
-  nav a:hover {
-    color: #61dafb;
   }
 
   .container {

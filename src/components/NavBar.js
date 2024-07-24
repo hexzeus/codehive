@@ -1,55 +1,30 @@
 // src/components/NavBar.js
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import { Nav, NavLinks, NavLink, Hamburger, Logo } from './NavBarStyles';
 
-const Nav = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: #282c34;
-  color: white;
+const NavBar = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
-const NavLinks = styled.div`
-  display: flex;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-  }
-`;
-
-const NavLink = styled(Link)`
-  margin: 0 1rem;
-  font-weight: bold;
-  color: white;
-
-  &:hover {
-    color: #61dafb;
-  }
-
-  @media (max-width: 768px) {
-    margin: 0.5rem 0;
-  }
-`;
-
-const NavBar = () => (
+  return (
     <Nav>
-        <h1>CodeHive</h1>
-        <NavLinks>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/about">About</NavLink>
-            <NavLink to="/services">Services</NavLink>
-            <NavLink to="/contact">Contact</NavLink>
-        </NavLinks>
+      <Logo>CodeHive</Logo>
+      <Hamburger onClick={toggleMenu}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </Hamburger>
+      <NavLinks $isOpen={isOpen}>
+        <NavLink to="/" onClick={toggleMenu}>Home</NavLink>
+        <NavLink to="/about" onClick={toggleMenu}>About</NavLink>
+        <NavLink to="/services" onClick={toggleMenu}>Services</NavLink>
+        <NavLink to="/contact" onClick={toggleMenu}>Contact</NavLink>
+      </NavLinks>
     </Nav>
-);
+  );
+};
 
 export default NavBar;
