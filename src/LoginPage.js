@@ -24,13 +24,7 @@ const LoginPage = ({ onSignup }) => {
     const openLogin = () => {
         const netlifyIdentity = window.netlifyIdentity;
         if (netlifyIdentity) {
-            netlifyIdentity.open('login'); // Open the modal to the login tab
-        }
-    };
-
-    const handleSignUp = () => {
-        if (onSignup) {
-            onSignup(email, password, role);
+            netlifyIdentity.open(); // Open the modal
         }
     };
 
@@ -41,7 +35,7 @@ const LoginPage = ({ onSignup }) => {
                 <p>Please log in or sign up to continue</p>
             </LoginHeader>
             <IdentityButton onClick={openLogin}>
-                Login with Netlify Identity
+                Login / Sign Up with Netlify Identity
             </IdentityButton>
             <div>
                 <input
@@ -61,9 +55,6 @@ const LoginPage = ({ onSignup }) => {
                     <option value="admin">Admin</option>
                     <option value="editor">Editor</option>
                 </select>
-                <IdentityButton onClick={handleSignUp}>
-                    Sign Up with Netlify Identity
-                </IdentityButton>
             </div>
             <div id="netlify-modal"></div>
         </LoginContainer>

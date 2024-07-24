@@ -6,7 +6,7 @@ import GlobalStyles from './GlobalStyles';
 import GoTrue from 'gotrue-js';
 
 const auth = new GoTrue({
-  APIUrl: 'https://<your-site>.netlify.app/.netlify/identity',
+  APIUrl: 'https://adamives.com/.netlify/identity',
   audience: '',
   setCookie: true,
 });
@@ -49,6 +49,7 @@ function App() {
   }, []);
 
   const handleSignup = (email, password, role) => {
+    console.log('Sign-Up Attempt:', email, password, role);
     auth.signup(email, password, { role: role })
       .then(response => {
         console.log('Confirmation email sent', response);

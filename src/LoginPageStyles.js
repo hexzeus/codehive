@@ -17,12 +17,6 @@ export const LoginHeader = styled.header`
   margin-bottom: 2rem;
 `;
 
-export const LoginLogo = styled.img`
-  width: 100px;
-  height: 100px;
-  margin-bottom: 1rem;
-`;
-
 export const IdentityButton = styled.button`
   cursor: pointer;
   margin: 0.5em;
