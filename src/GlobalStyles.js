@@ -4,12 +4,8 @@ const GlobalStyles = createGlobalStyle`
   body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #1f1c2c, #928dab);
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    background-color: #f4f4f9;
+    color: #333;
   }
 
   h1, h2, h3, h4, h5, h6 {

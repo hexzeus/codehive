@@ -1,7 +1,17 @@
+# Add the Lighthouse plugin
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+
+  # Optional: Deploy the Lighthouse report to a path under your site
+  [plugins.inputs.audits]
+    output_path = "reports/lighthouse.html"
+
+# Build settings
 [build]
   command = "npm run build"
   publish = "build"
 
+# Redirect all requests to index.html
 [[redirects]]
   from = "/*"
   to = "/index.html"
