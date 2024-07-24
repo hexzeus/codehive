@@ -1,23 +1,18 @@
-# Add the Lighthouse plugin
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
 
-  # Optional: Deploy the Lighthouse report to a path under your site
   [plugins.inputs.audits]
     output_path = "reports/lighthouse.html"
 
-# Build settings
 [build]
   command = "npm run build"
   publish = "build"
 
-# Redirect all requests to index.html
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-# Headers settings
 [[headers]]
   for = "/*"
   [headers.values]
@@ -28,7 +23,6 @@
     img-src 'self' data:; 
     connect-src 'self' https://identity.netlify.com; 
     font-src 'self' data:; 
-    frame-src 'self';
     object-src 'none';
     base-uri 'self';
     form-action 'self';
@@ -47,7 +41,6 @@
     img-src 'self' data:; 
     connect-src 'self' https://identity.netlify.com; 
     font-src 'self' data:; 
-    frame-src 'self';
     object-src 'none';
     base-uri 'self';
     form-action 'self';
