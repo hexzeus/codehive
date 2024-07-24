@@ -6,7 +6,10 @@ export const LoginContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 `;
 
 export const LoginHeader = styled.header`
@@ -15,12 +18,12 @@ export const LoginHeader = styled.header`
 `;
 
 export const LoginLogo = styled.img`
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   margin-bottom: 1rem;
 `;
 
-export const IdentityButton = styled.div`
+export const IdentityButton = styled.button`
   cursor: pointer;
   margin: 0.5em;
   padding: 0.75em 1.5em;

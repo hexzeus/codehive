@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {
     LoginContainer,
     LoginHeader,
-    LoginLogo,
     IdentityButton,
 } from './LoginPageStyles';
-import logo from './logo.svg';
 
 const LoginPage = ({ onSignup }) => {
     const [email, setEmail] = useState('');
@@ -39,7 +37,6 @@ const LoginPage = ({ onSignup }) => {
     return (
         <LoginContainer>
             <LoginHeader>
-                <LoginLogo src={logo} alt="logo" />
                 <h1>Welcome to Our App</h1>
                 <p>Please log in or sign up to continue</p>
             </LoginHeader>

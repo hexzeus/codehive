@@ -6,7 +6,10 @@ export const ProtectedContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #ffecd2, #fcb69f);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 `;
 
 export const ProtectedHeader = styled.header`
