@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/codehive/static/css/main.f855e6bc.css",
+    "main.js": "/codehive/static/js/main.76e2abd7.js",
+    "static/js/453.f7c2557d.chunk.js": "/codehive/static/js/453.f7c2557d.chunk.js",
+    "static/media/logo.svg": "/codehive/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/codehive/index.html",
+    "main.f855e6bc.css.map": "/codehive/static/css/main.f855e6bc.css.map",
+    "main.76e2abd7.js.map": "/codehive/static/js/main.76e2abd7.js.map",
+    "453.f7c2557d.chunk.js.map": "/codehive/static/js/453.f7c2557d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f855e6bc.css",
+    "static/js/main.76e2abd7.js"
+  ]
+}
