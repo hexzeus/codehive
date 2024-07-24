@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import ProtectedPage from './ProtectedPage';
+import GlobalStyles from './GlobalStyles';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -18,17 +19,23 @@ function App() {
         setUser(null);
         window.location.href = '/'; // Redirect to login page on logout
       });
-      netlifyIdentity.init();
+      netlifyIdentity.init({
+        container: '#netlify-modal',
+        locale: 'en',
+      });
     }
   }, []);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={user ? <Navigate to="/protected" /> : <LoginPage />} />
-        <Route path="/protected" element={user ? <ProtectedPage /> : <Navigate to="/" />} />
-      </Routes>
-    </Router>
+    <>
+      <GlobalStyles />
+      <Router>
+        <Routes>
+          <Route path="/" element={user ? <Navigate to="/protected" /> : <LoginPage />} />
+          <Route path="/protected" element={user ? <ProtectedPage /> : <Navigate to="/" />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 

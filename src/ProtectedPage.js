@@ -19,10 +19,10 @@ const ProtectedPage = () => {
             <ProtectedHeader>
                 <h1>Protected Page</h1>
                 <p>You have successfully logged in!</p>
-                <LogoutButton onClick={logout}>
-                    Logout
-                </LogoutButton>
             </ProtectedHeader>
+            <LogoutButton onClick={logout}>
+                Logout
+            </LogoutButton>
         </ProtectedContainer>
     );
 };

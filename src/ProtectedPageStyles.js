@@ -1,31 +1,29 @@
 import styled from 'styled-components';
 
 export const ProtectedContainer = styled.div`
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffecd2, #fcb69f);
 `;
 
 export const ProtectedHeader = styled.header`
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
 `;
 
 export const LogoutButton = styled.button`
   cursor: pointer;
   margin: 1em;
-  padding: 0.5em 1em;
-  border: 1px solid #61dafb;
+  padding: 0.75em 1.5em;
+  border: 1px solid #dc3545;
   border-radius: 3px;
-  color: #61dafb;
-  background-color: transparent;
+  color: #fff;
+  background-color: #dc3545;
   transition: background-color 0.3s ease, color 0.3s ease;
   &:hover {
-    background-color: #61dafb;
-    color: white;
+    background-color: #c82333;
   }
 `;

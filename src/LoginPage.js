@@ -18,10 +18,17 @@ const LoginPage = () => {
         }
     }, []);
 
-    const openWidget = () => {
+    const openLogin = () => {
         const netlifyIdentity = window.netlifyIdentity;
         if (netlifyIdentity) {
-            netlifyIdentity.open();
+            netlifyIdentity.open('login'); // Open the modal to the login tab
+        }
+    };
+
+    const openSignUp = () => {
+        const netlifyIdentity = window.netlifyIdentity;
+        if (netlifyIdentity) {
+            netlifyIdentity.open('signup'); // Open the modal to the signup tab
         }
     };
 
@@ -29,14 +36,16 @@ const LoginPage = () => {
         <LoginContainer>
             <LoginHeader>
                 <LoginLogo src={logo} alt="logo" />
-                <p>
-                    Welcome! Please log in to access the protected page.
-                </p>
-                <IdentityButton onClick={openWidget}>
-                    Login with Netlify Identity
-                </IdentityButton>
-                <div id="netlify-modal"></div>
+                <h1>Welcome to Our App</h1>
+                <p>Please log in or sign up to continue</p>
             </LoginHeader>
+            <IdentityButton onClick={openLogin}>
+                Login with Netlify Identity
+            </IdentityButton>
+            <IdentityButton onClick={openSignUp}>
+                Sign Up with Netlify Identity
+            </IdentityButton>
+            <div id="netlify-modal"></div>
         </LoginContainer>
     );
 };

@@ -1,47 +1,35 @@
 import styled from 'styled-components';
 
 export const LoginContainer = styled.div`
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
 `;
 
 export const LoginHeader = styled.header`
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
 `;
 
 export const LoginLogo = styled.img`
-  height: 40vmin;
-  pointer-events: none;
-  @media (prefers-reduced-motion: no-preference) {
-    animation: App-logo-spin infinite 20s linear;
-  }
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
+  width: 150px;
+  height: 150px;
+  margin-bottom: 1rem;
 `;
 
 export const IdentityButton = styled.div`
   cursor: pointer;
-  margin: 1em;
-  padding: 0.5em 1em;
-  border: 1px solid #61dafb;
+  margin: 0.5em;
+  padding: 0.75em 1.5em;
+  border: 1px solid #007bff;
   border-radius: 3px;
-  color: #61dafb;
-  background-color: transparent;
+  color: #fff;
+  background-color: #007bff;
   transition: background-color 0.3s ease, color 0.3s ease;
   &:hover {
-    background-color: #61dafb;
-    color: white;
+    background-color: #0056b3;
   }
 `;
