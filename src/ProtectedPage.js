@@ -6,6 +6,12 @@ import {
 } from './ProtectedPageStyles';
 
 const ProtectedPage = () => {
+    const user = window.netlifyIdentity.currentUser();
+
+    if (!user || (user.app_metadata && !user.app_metadata.roles.includes('admin'))) {
+        return <p>You do not have access to this page.</p>;
+    }
+
     const logout = () => {
         const netlifyIdentity = window.netlifyIdentity;
         if (netlifyIdentity) {

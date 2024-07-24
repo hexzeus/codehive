@@ -48,8 +48,8 @@ function App() {
     }
   }, []);
 
-  const handleSignup = (email, password) => {
-    auth.signup(email, password, { role: 'user' })
+  const handleSignup = (email, password, role) => {
+    auth.signup(email, password, { role: role })
       .then(response => {
         console.log('Confirmation email sent', response);
       })

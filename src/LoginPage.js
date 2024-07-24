@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     LoginContainer,
     LoginHeader,
@@ -8,6 +8,10 @@ import {
 import logo from './logo.svg';
 
 const LoginPage = ({ onSignup }) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [role, setRole] = useState('user'); // Default role is 'user'
+
     useEffect(() => {
         const netlifyIdentity = window.netlifyIdentity;
         if (netlifyIdentity) {
@@ -26,10 +30,9 @@ const LoginPage = ({ onSignup }) => {
         }
     };
 
-    const openSignUp = () => {
-        const netlifyIdentity = window.netlifyIdentity;
-        if (netlifyIdentity) {
-            netlifyIdentity.open('signup'); // Open the modal to the signup tab
+    const handleSignUp = () => {
+        if (onSignup) {
+            onSignup(email, password, role);
         }
     };
 
@@ -43,9 +46,28 @@ const LoginPage = ({ onSignup }) => {
             <IdentityButton onClick={openLogin}>
                 Login with Netlify Identity
             </IdentityButton>
-            <IdentityButton onClick={openSignUp}>
-                Sign Up with Netlify Identity
-            </IdentityButton>
+            <div>
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <select value={role} onChange={(e) => setRole(e.target.value)}>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                    <option value="editor">Editor</option>
+                </select>
+                <IdentityButton onClick={handleSignUp}>
+                    Sign Up with Netlify Identity
+                </IdentityButton>
+            </div>
             <div id="netlify-modal"></div>
         </LoginContainer>
     );
