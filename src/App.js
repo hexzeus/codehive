@@ -21,7 +21,7 @@ function App() {
         setUser(user);
 
         // Redirect based on role
-        const roles = user.app_metadata.roles;
+        const roles = user?.app_metadata?.roles || [];
         if (roles.includes('admin')) {
           window.location.href = '/admin';
         } else {
@@ -56,7 +56,7 @@ function App() {
         <Routes>
           <Route path="/" element={user ? <Navigate to="/protected" /> : <LoginPage />} />
           <Route path="/protected" element={user ? <ProtectedPage /> : <Navigate to="/" />} />
-          <Route path="/admin" element={user && user.app_metadata.roles.includes('admin') ? <AdminPage /> : <Navigate to="/" />} />
+          <Route path="/admin" element={user && user?.app_metadata?.roles?.includes('admin') ? <AdminPage /> : <Navigate to="/" />} />
         </Routes>
       </Router>
     </>
