@@ -14,6 +14,7 @@ const LoginPage = () => {
             netlifyIdentity.on('login', () => {
                 window.location.href = '/protected';
             });
+            netlifyIdentity.on('error', err => console.error('Netlify Identity Error', err));
             netlifyIdentity.init();
         }
     }, []);
