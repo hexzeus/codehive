@@ -4,13 +4,6 @@ import LoginPage from './LoginPage';
 import ProtectedPage from './ProtectedPage';
 import AdminPage from './AdminPage';
 import GlobalStyles from './GlobalStyles';
-import GoTrue from 'gotrue-js';
-
-const auth = new GoTrue({
-  APIUrl: 'https://adamives.com/.netlify/identity',
-  audience: '',
-  setCookie: true,
-});
 
 function App() {
   const [user, setUser] = useState(null);
