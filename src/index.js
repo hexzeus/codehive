@@ -12,7 +12,7 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// Register service worker for offline capabilities
+// Register the service worker
 serviceWorkerRegistration.register();
 
 reportWebVitals();
