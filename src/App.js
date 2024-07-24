@@ -1,7 +1,13 @@
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import netlifyIdentity from 'netlify-identity-widget';
 
 function App() {
+  useEffect(() => {
+    netlifyIdentity.init();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +23,9 @@ function App() {
         >
           Learn React
         </a>
+
+        <div data-netlify-identity-menu></div>
+        <div data-netlify-identity-button>Login with Netlify Identity</div>
       </header>
     </div>
   );
