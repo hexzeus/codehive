@@ -7,8 +7,8 @@ export const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #282c34;
-  color: white;
+  background-color: #1a1a1a; /* Darker background color for higher contrast */
+  color: #ffffff; /* White text for higher contrast */
   position: fixed;
   width: 100%;
   top: 0;
@@ -36,7 +36,7 @@ export const NavLinks = styled.div`
 export const NavLink = styled(Link)`
   margin: 0 1rem;
   font-weight: bold;
-  color: white;
+  color: #ffffff; /* White text for higher contrast */
   position: relative;
 
   &:after {
@@ -44,7 +44,7 @@ export const NavLink = styled(Link)`
     display: block;
     width: 0;
     height: 2px;
-    background: #61dafb;
+    background: #61dafb; /* Lighter color for hover effect */
     transition: width 0.3s;
   }
 
@@ -78,7 +78,7 @@ export const Hamburger = styled.div`
 
 export const Logo = styled.h1`
   font-size: 1.5rem;
-  color: #61dafb;
+  color: #61dafb; /* Lighter color for logo */
   font-weight: bold;
 
   @media (max-width: 768px) {
