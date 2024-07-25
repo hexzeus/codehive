@@ -16,8 +16,7 @@ const HomePage = ({ onUnlock }) => {
 
   return (
     <Container>
-      <h1>IVES HUB</h1>
-      <p>Your go-to solution for modern web development.</p>
+
     </Container>
   );
 };
