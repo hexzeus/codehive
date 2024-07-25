@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Container = styled.div`
   padding: 6rem 2rem;
   text-align: center;
-  background: linear-gradient(135deg, #e8f0f4 0%, #cce0e8 100%);
-  color: #1a1a1a;
+  background: linear-gradient(135deg, #1a1a1a 0%, #121212 100%);
+  color: #e0e0e0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -14,14 +14,14 @@ export const Container = styled.div`
   h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
-    color: #333;
+    color: #61dafb;
   }
 
   p {
     font-size: 1.5rem;
     max-width: 800px;
     margin: 0 auto;
-    color: #555;
+    color: #bbbbbb;
   }
 
   @media (max-width: 768px) {
