@@ -27,7 +27,7 @@ const IntroAnimation = ({ onUnlock }) => {
       onUnlock();
       navigate('/home');
     } else {
-      const timer = setTimeout(() => setShowCode(false), 2000); // 2 seconds for animation
+      const timer = setTimeout(() => setShowCode(false), 1000); // 1 seconds for animation
       return () => clearTimeout(timer);
     }
   }, [navigate, onUnlock]);
