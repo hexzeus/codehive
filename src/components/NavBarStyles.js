@@ -30,14 +30,14 @@ export const MenuButton = styled.button`
 `;
 
 export const LogoContainer = styled(Link)`
-  display: flex;
+  display: inline-flex; /* Changed from flex to inline-flex */
   align-items: center;
   background: linear-gradient(135deg, #1f1f1f, #333333); /* Subtle gradient for plaque effect */
   padding: 0.5rem 1rem;
   border-radius: 10px; /* Rounded corners for plaque effect */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
   text-decoration: none; /* Remove underline from Link */
-  margin: 1rem auto; /* Center the logo container */
+  margin: 1rem; /* Align to the left */
 `;
 
 export const LogoImage = styled.img`

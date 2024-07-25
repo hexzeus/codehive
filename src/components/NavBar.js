@@ -4,7 +4,7 @@ import logo from '../logo.png';
 import { Link } from 'react-router-dom';
 import { FaHome, FaInfo, FaServicestack, FaEnvelope } from 'react-icons/fa';
 
-const NavBar = ({ isUnlocked, location }) => {
+const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDrawer = () => {
@@ -15,7 +15,7 @@ const NavBar = ({ isUnlocked, location }) => {
     <>
       <LogoContainer as={Link} to="/home">
         <LogoImage src={logo} alt="Logo" />
-        <BrandName>IVES CODE HUB</BrandName>
+        <BrandName>IVES DESIGN</BrandName>
       </LogoContainer>
       <MenuButton onClick={toggleDrawer}>
         ☰

@@ -7,6 +7,7 @@ import AboutPage from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
 import IntroAnimation from './components/IntroAnimation';
+import ScrollToTop from './components/ScrollToTop';
 
 const AppContent = ({ isUnlocked, onUnlock }) => {
   const location = useLocation();
@@ -36,6 +37,7 @@ function App() {
     <>
       <GlobalStyles />
       <Router>
+        <ScrollToTop />
         <AppContent isUnlocked={isUnlocked} onUnlock={handleUnlock} />
       </Router>
     </>
