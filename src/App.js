@@ -15,9 +15,9 @@ function App() {
     <>
       <GlobalStyles />
       <Router>
-        <ScrollToTop /> {/* Add ScrollToTop component */}
+        <ScrollToTop /> {/* Ensure the page scrolls to the top on navigation */}
         {isUnlocked && <NavBar />}
-        <div style={{ paddingTop: '4rem' }}> {/* Add a padding top to ensure content is not hidden behind the navbar */}
+        <div style={{ paddingTop: isUnlocked ? '4rem' : '0' }}> {/* Add a padding top to ensure content is not hidden behind the navbar */}
           <Routes>
             <Route path="/" element={<HomePage onUnlock={() => setIsUnlocked(true)} />} />
             <Route path="/about" element={<AboutPage />} />

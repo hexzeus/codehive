@@ -9,6 +9,10 @@ const NavBar = () => {
     setIsOpen(!isOpen);
   };
 
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
   return (
     <>
       <Nav>
@@ -22,10 +26,10 @@ const NavBar = () => {
           <span></span>
         </Hamburger>
         <NavLinks $isOpen={isOpen}>
-          <NavLink to="/" onClick={toggleMenu}>Home</NavLink>
-          <NavLink to="/about" onClick={toggleMenu}>About</NavLink>
-          <NavLink to="/services" onClick={toggleMenu}>Services</NavLink>
-          <NavLink to="/contact" onClick={toggleMenu}>Contact</NavLink>
+          <NavLink to="/" onClick={closeMenu}>Home</NavLink>
+          <NavLink to="/about" onClick={closeMenu}>About</NavLink>
+          <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
+          <NavLink to="/contact" onClick={closeMenu}>Contact</NavLink>
         </NavLinks>
       </Nav>
       {isOpen && <Overlay onClick={toggleMenu} />}

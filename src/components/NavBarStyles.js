@@ -125,7 +125,12 @@ export const Overlay = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0);
   z-index: 999;
-  backdrop-filter: blur(5px); /* Add blur effect for a premium feel */
+  backdrop-filter: blur(0px); /* Remove blur effect */
+  display: none; /* Ensure the overlay is hidden by default */
+
+  @media (max-width: 768px) {
+    display: ${({ $isOpen }) => ($isOpen ? 'block' : 'none')};
+  }
 `;
