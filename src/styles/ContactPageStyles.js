@@ -15,7 +15,7 @@ const fadeInUp = keyframes`
 export const Container = styled.div`
   padding: 6rem 2rem;
   text-align: center;
-  background: linear-gradient(135deg, #151515 0%, #0b0b0b 100%);
+  background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
   color: #e0e0e0;
   min-height: 100vh;
   display: flex;
@@ -118,13 +118,14 @@ export const Input = styled.input`
   margin-bottom: 1rem;
   border: none;
   border-radius: 5px;
-  background-color: #1f1f1f;
+  background-color: #262626;
   color: #e0e0e0;
   font-size: 1rem;
+  transition: box-shadow 0.3s ease-in-out;
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 5px #1e90ff;
+    box-shadow: 0 0 5px #1e90ff, 0 0 15px rgba(30, 144, 255, 0.5);
   }
 
   @media (max-width: 768px) {
@@ -143,13 +144,14 @@ export const TextArea = styled.textarea`
   margin-bottom: 1rem;
   border: none;
   border-radius: 5px;
-  background-color: #1f1f1f;
+  background-color: #262626;
   color: #e0e0e0;
   font-size: 1rem;
+  transition: box-shadow 0.3s ease-in-out;
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 5px #1e90ff;
+    box-shadow: 0 0 5px #1e90ff, 0 0 15px rgba(30, 144, 255, 0.5);
   }
 
   @media (max-width: 768px) {
@@ -171,10 +173,11 @@ export const Button = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 
   &:hover {
     background-color: #0b74da;
+    transform: translateY(-3px);
   }
 
   @media (max-width: 768px) {

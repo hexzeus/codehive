@@ -186,6 +186,16 @@ export const Member = styled.div`
   width: 30%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   animation: ${fadeInUp} 1s ease-out both;
+  text-align: center;
+
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    object-fit: cover;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
   h3 {
     font-size: 1.5rem;
@@ -202,6 +212,11 @@ export const Member = styled.div`
     width: 80%;
     padding: 1.5rem;
 
+    img {
+      width: 80px;
+      height: 80px;
+    }
+
     h3 {
       font-size: 1.3rem;
     }
@@ -214,6 +229,11 @@ export const Member = styled.div`
   @media (max-width: 480px) {
     width: 90%;
     padding: 1rem;
+
+    img {
+      width: 70px;
+      height: 70px;
+    }
 
     h3 {
       font-size: 1.2rem;
@@ -250,6 +270,7 @@ export const HistoryItem = styled.div`
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   animation: ${fadeInUp} 1s ease-out both;
+  text-align: center;
 
   h3 {
     font-size: 1.5rem;

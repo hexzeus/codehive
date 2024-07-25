@@ -4,7 +4,7 @@ import { Container, Title, Subtitle, Form, Input, TextArea, Button } from '../st
 const ContactPage = () => (
   <Container>
     <Title>Contact Us</Title>
-    <Subtitle>Get in touch with the IVES HUB team.</Subtitle>
+    <Subtitle>Get in touch with the IVES DESIGN team.</Subtitle>
     <Form>
       <Input type="text" placeholder="Name" required />
       <Input type="email" placeholder="Email" required />

@@ -15,7 +15,7 @@ const fadeInUp = keyframes`
 export const Container = styled.div`
   padding: 6rem 2rem;
   text-align: center;
-  background: linear-gradient(135deg, #151515 0%, #0b0b0b 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #0b0b0b 100%);
   color: #e0e0e0;
   min-height: 100vh;
   display: flex;
@@ -140,6 +140,23 @@ export const ServiceList = styled.div`
   flex-wrap: wrap;
   margin: 3rem 0;
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+export const ServiceItem = styled.div`
+  background: linear-gradient(135deg, #202020, #2d2d2d);
+  padding: 2rem;
+  margin: 1rem;
+  border-radius: 10px;
+  width: 30%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+  animation: ${fadeInUp} 1s ease-out both;
+  text-align: left;
+
   h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
@@ -151,9 +168,15 @@ export const ServiceList = styled.div`
     color: #b3b3b3;
   }
 
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+
   @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
+    width: 80%;
+    padding: 1.5rem;
+    text-align: center;
 
     h3 {
       font-size: 1.3rem;
@@ -163,24 +186,17 @@ export const ServiceList = styled.div`
       font-size: 0.9rem;
     }
   }
-`;
-
-export const ServiceItem = styled.div`
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2rem;
-  margin: 1rem;
-  border-radius: 10px;
-  width: 30%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  animation: ${fadeInUp} 1s ease-out both;
-
-  @media (max-width: 768px) {
-    width: 80%;
-    padding: 1.5rem;
-  }
 
   @media (max-width: 480px) {
     width: 90%;
     padding: 1rem;
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
   }
 `;
