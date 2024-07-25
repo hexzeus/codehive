@@ -1,4 +1,10 @@
 import styled, { keyframes } from 'styled-components';
+import logo from '../logo.png';
+
+const fadeIn = keyframes`
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -6,7 +12,8 @@ export const Container = styled.div`
   align-items: center;
   flex-direction: column;
   height: 100vh;
-  background-color: #121212;
+  background: url(${logo}) no-repeat center center;
+  background-size: cover;
   color: #e0e0e0;
   text-align: center;
   position: relative;
@@ -18,7 +25,7 @@ export const CodeAnimation = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: #121212;
+  background: rgba(18, 18, 18, 0.9); /* Slightly transparent to show the logo */
   overflow: hidden;
   z-index: 1;
 
@@ -44,27 +51,11 @@ export const CodeAnimation = styled.div`
   }
 `;
 
-const fadeIn = keyframes`
-  0% { opacity: 0; transform: scale(0.8); }
-  100% { opacity: 1; transform: scale(1); }
-`;
-
 export const LogoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   z-index: 2;
-  animation: ${fadeIn} 1.5s ease-out forwards;
-`;
-
-export const Logo = styled.img`
-  width: 150px;
-  height: 150px;
-  margin-bottom: 2rem;
-  filter: drop-shadow(0 0 10px #1e90ff);
-  cursor: pointer;
-  border-radius: 15px; /* Add rounded corners */
-  border: 2px solid #1e90ff; /* Subtle border for professional look */
   animation: ${fadeIn} 1.5s ease-out forwards;
 `;
 

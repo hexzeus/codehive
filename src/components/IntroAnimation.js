@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../logo.png';
 import {
   Container,
   CodeAnimation,
   LogoContainer,
-  Logo,
   PasswordInput
 } from '../components/IntroAnimationStyles';
 
@@ -20,7 +18,6 @@ const generateBinary = () => {
 const IntroAnimation = ({ onComplete }) => {
   const [showCode, setShowCode] = useState(true);
   const [password, setPassword] = useState('');
-  const [unlocked, setUnlocked] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,7 +32,6 @@ const IntroAnimation = ({ onComplete }) => {
 
   useEffect(() => {
     if (password === '5555') {
-      setUnlocked(true);
       sessionStorage.setItem('authenticated', 'true');
       setTimeout(() => {
         onComplete();
@@ -50,7 +46,6 @@ const IntroAnimation = ({ onComplete }) => {
 
   const handlePasswordSubmit = (e) => {
     if ((e.type === 'keydown' && e.key === 'Enter' && password === '5555') || (e.type === 'click' && password === '5555')) {
-      setUnlocked(true);
       setTimeout(() => {
         onComplete();
         navigate('/');
@@ -68,15 +63,7 @@ const IntroAnimation = ({ onComplete }) => {
         </div>
       </CodeAnimation>
       {!showCode && (
-        <>
-          <LogoContainer>
-            <Logo
-              src={logo}
-              alt="Logo"
-              unlocked={unlocked}
-              onClick={handlePasswordSubmit}
-            />
-          </LogoContainer>
+        <LogoContainer>
           <PasswordInput
             type="password"
             placeholder="Enter password"
@@ -85,7 +72,7 @@ const IntroAnimation = ({ onComplete }) => {
             onKeyDown={handlePasswordSubmit}
             autoComplete="off" /* Disable autocomplete */
           />
-        </>
+        </LogoContainer>
       )}
     </Container>
   );
