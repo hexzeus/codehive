@@ -72,6 +72,14 @@ export const Title = styled.h1`
   font-size: 3rem;
   margin-bottom: 1rem;
   color: #1e90ff; /* Electric blue for headers */
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+  }
 `;
 
 export const Subtitle = styled.p`
@@ -79,6 +87,14 @@ export const Subtitle = styled.p`
   max-width: 800px;
   margin: 0 auto 2rem auto;
   color: #b3b3b3;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
 `;
 
 export const Form = styled.form`
@@ -87,6 +103,14 @@ export const Form = styled.form`
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    max-width: 400px;
+  }
+
+  @media (max-width: 480px) {
+    max-width: 300px;
+  }
 `;
 
 export const Input = styled.input`
@@ -101,6 +125,16 @@ export const Input = styled.input`
   &:focus {
     outline: none;
     box-shadow: 0 0 5px #1e90ff;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.6rem;
+    font-size: 0.8rem;
   }
 `;
 
@@ -117,6 +151,16 @@ export const TextArea = styled.textarea`
     outline: none;
     box-shadow: 0 0 5px #1e90ff;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.6rem;
+    font-size: 0.8rem;
+  }
 `;
 
 export const Button = styled.button`
@@ -131,5 +175,15 @@ export const Button = styled.button`
 
   &:hover {
     background-color: #0b74da;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
   }
 `;

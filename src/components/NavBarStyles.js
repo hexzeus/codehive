@@ -6,13 +6,17 @@ export const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #151515; /* Darker background color */
+  background-color: rgba(21, 21, 21, 0.9); /* Slightly transparent background */
   color: #ffffff;
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
+  }
 `;
 
 export const NavLinks = styled.div`
@@ -25,7 +29,7 @@ export const NavLinks = styled.div`
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: #151515;
+    background-color: rgba(21, 21, 21, 0.9);
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -39,7 +43,7 @@ export const NavLinks = styled.div`
 export const NavLink = styled(Link)`
   margin: 0 1rem;
   font-weight: bold;
-  color: #e0e0e0; /* Light text color */
+  color: #e0e0e0;
   position: relative;
 
   &:after {
@@ -47,7 +51,7 @@ export const NavLink = styled(Link)`
     display: block;
     width: 0;
     height: 2px;
-    background: #1e90ff; /* Electric blue for hover effect */
+    background: #1e90ff;
     transition: width 0.3s;
   }
 
@@ -81,16 +85,16 @@ export const Hamburger = styled.div`
     transform-origin: 1px;
 
     :first-child {
-      transform: ${({ isOpen }) => (isOpen ? 'rotate(45deg)' : 'rotate(0)')};
+      transform: ${({ $isOpen }) => ($isOpen ? 'rotate(45deg)' : 'rotate(0)')};
     }
 
     :nth-child(2) {
-      opacity: ${({ isOpen }) => (isOpen ? '0' : '1')};
-      transform: ${({ isOpen }) => (isOpen ? 'translateX(20px)' : 'translateX(0)')};
+      opacity: ${({ $isOpen }) => ($isOpen ? '0' : '1')};
+      transform: ${({ $isOpen }) => ($isOpen ? 'translateX(20px)' : 'translateX(0)')};
     }
 
     :last-child {
-      transform: ${({ isOpen }) => (isOpen ? 'rotate(-45deg)' : 'rotate(0)')};
+      transform: ${({ $isOpen }) => ($isOpen ? 'rotate(-45deg)' : 'rotate(0)')};
     }
   }
 `;
@@ -99,7 +103,7 @@ export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   font-size: 1.5rem;
-  color: #1e90ff; /* Electric blue for logo text */
+  color: #1e90ff;
   font-weight: bold;
 
   @media (max-width: 768px) {
@@ -111,9 +115,8 @@ export const LogoImage = styled.img`
   width: 50px;
   height: 50px;
   margin-right: 0.5rem;
-  filter: drop-shadow(0 0 10px #1e90ff); /* Electric blue for logo shadow */
-  border-radius: 15px; /* Add rounded corners */
-  border: 2px solid #1e90ff; /* Subtle border for professional look */
+  border-radius: 10px; /* Add rounded corners */
+  filter: drop-shadow(0 0 10px #1e90ff); /* Subtle drop shadow */
 `;
 
 export const Overlay = styled.div`
@@ -124,4 +127,5 @@ export const Overlay = styled.div`
   width: 100%;
   background: rgba(0, 0, 0, 0.7);
   z-index: 999;
+  backdrop-filter: blur(5px); /* Add blur effect for a premium feel */
 `;

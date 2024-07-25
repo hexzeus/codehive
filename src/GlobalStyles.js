@@ -36,6 +36,10 @@ const GlobalStyles = createGlobalStyle`
       padding: 0;
     }
   }
+
+  #root {
+    padding-top: 4rem; /* Adjust this value to match the height of your navbar */
+  }
 `;
 
 export default GlobalStyles;

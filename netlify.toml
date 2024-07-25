@@ -13,20 +13,3 @@
   to = "/index.html"
   status = 200
 
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Content-Security-Policy = """
-    default-src 'self'; 
-    script-src 'self' 'unsafe-inline' 'unsafe-eval'; 
-    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
-    img-src 'self' data:; 
-    connect-src 'self'; 
-    font-src 'self' data: https://fonts.gstatic.com; 
-    object-src 'none';
-    base-uri 'self';
-    form-action 'self';
-    """
-    X-Content-Type-Options = "nosniff"
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"

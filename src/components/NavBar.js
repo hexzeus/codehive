@@ -16,7 +16,7 @@ const NavBar = () => {
           <LogoImage src={logo} alt="Logo" />
           IVES HUB
         </LogoContainer>
-        <Hamburger onClick={toggleMenu} isOpen={isOpen}>
+        <Hamburger onClick={toggleMenu} $isOpen={isOpen}>
           <span></span>
           <span></span>
           <span></span>

@@ -22,13 +22,13 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative; /* Ensure positioning context for the background image */
+  position: relative;
 
   &::before {
     content: "";
     background: url(${logo}) no-repeat center center;
-    background-size: 80%; /* Adjust size as needed */
-    opacity: 0.05; /* Adjust opacity to make it ghosted */
+    background-size: 80%;
+    opacity: 0.05;
     position: absolute;
     top: 0;
     left: 0;
@@ -47,11 +47,11 @@ export const Container = styled.div`
     padding: 4rem 1rem;
 
     h3 {
-      font-size: 2.5rem;
+      font-size: 1.5rem;
     }
 
     p {
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
   }
 
@@ -59,11 +59,11 @@ export const Container = styled.div`
     padding: 3rem 1rem;
 
     h3 {
-      font-size: 2rem;
+      font-size: 1.2rem;
     }
 
     p {
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
   }
 `;
@@ -110,6 +110,12 @@ export const Service = styled.div`
 
   @media (max-width: 768px) {
     width: 80%;
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    width: 90%;
+    padding: 1rem;
   }
 `;
 
@@ -155,6 +161,12 @@ export const Feature = styled.div`
 
   @media (max-width: 768px) {
     width: 80%;
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    width: 90%;
+    padding: 1rem;
   }
 `;
 
@@ -170,6 +182,26 @@ export const Testimonials = styled.div`
     font-size: 1.2rem;
     color: #1e90ff;
   }
+
+  @media (max-width: 768px) {
+    p {
+      font-size: 0.9rem;
+    }
+
+    h4 {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    p {
+      font-size: 0.8rem;
+    }
+
+    h4 {
+      font-size: 0.9rem;
+    }
+  }
 `;
 
 export const Testimonial = styled.div`
@@ -179,6 +211,14 @@ export const Testimonial = styled.div`
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   animation: ${fadeInUp} 1s ease-out both;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `;
 
 export const CallToAction = styled.div`
@@ -195,6 +235,26 @@ export const CallToAction = styled.div`
     font-size: 1.5rem;
     color: #b3b3b3;
   }
+
+  @media (max-width: 768px) {
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h3 {
+      font-size: 1.3rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
 `;
 
 export const Button = styled.button`
@@ -209,5 +269,15 @@ export const Button = styled.button`
 
   &:hover {
     background-color: #0b74da;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
   }
 `;
