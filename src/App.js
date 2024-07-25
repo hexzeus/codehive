@@ -13,7 +13,7 @@ const AppContent = ({ isUnlocked, onUnlock }) => {
 
   return (
     <>
-      <NavBar isUnlocked={isUnlocked} location={location.pathname} />
+      {isUnlocked && <NavBar isUnlocked={isUnlocked} location={location.pathname} />}
       <Routes>
         <Route path="/" element={<IntroAnimation onUnlock={onUnlock} />} />
         <Route path="/home" element={<HomePage />} />

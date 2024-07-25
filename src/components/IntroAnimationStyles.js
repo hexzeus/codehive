@@ -12,14 +12,11 @@ export const Container = styled.div`
   align-items: center;
   flex-direction: column;
   height: 100vh;
-  width: 100vw;
   background: url(${logo}) no-repeat center center;
   background-size: cover;
   color: #e0e0e0;
   text-align: center;
   position: relative;
-  z-index: 10000;
-  margin: 0;
 `;
 
 export const CodeAnimation = styled.div`
@@ -74,5 +71,4 @@ export const PasswordInput = styled.input`
   z-index: 2;
   animation: ${fadeIn} 1.5s ease-out forwards;
   -webkit-text-security: disc;
-  autocomplete: "new-password";
 `;
