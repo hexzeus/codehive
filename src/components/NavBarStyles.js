@@ -29,31 +29,30 @@ export const MenuButton = styled.button`
   z-index: 1001; /* Ensure it's above the drawer */
 `;
 
-export const LogoContainer = styled(Link)`
-  display: inline-flex; /* Changed from flex to inline-flex */
+export const BrandContainer = styled(Link)`
+  display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #1f1f1f, #333333); /* Subtle gradient for plaque effect */
+  background: linear-gradient(135deg, #1f1f1f, #333333);
   padding: 0.5rem 1rem;
-  border-radius: 10px; /* Rounded corners for plaque effect */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
-  text-decoration: none; /* Remove underline from Link */
-  margin: 1rem; /* Align to the left */
-`;
-
-export const LogoImage = styled.img`
-  width: 50px;
-  height: 50px;
-  margin-right: 0.5rem;
-  filter: drop-shadow(0 0 10px #1e90ff); /* Subtle drop shadow */
-  border: 3px solid #ffffff; /* White border for professional look */
-`;
-
-export const BrandName = styled.span`
-  font-size: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  margin: 1rem;
   color: #1e90ff;
   font-weight: bold;
-  font-family: 'Merriweather', serif; /* Using Merriweather font */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Add a subtle text shadow */
+  font-family: 'Merriweather', serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+
+  .logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 0.5rem;
+    filter: drop-shadow(0 0 10px #1e90ff);
+  }
+
+  .brand-name {
+    font-size: 1.5rem;
+  }
 `;
 
 export const NavLink = styled(Link)`

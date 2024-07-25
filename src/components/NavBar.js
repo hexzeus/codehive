@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer, MenuButton, LogoContainer, LogoImage, NavLink, DrawerLinks, BrandName } from './NavBarStyles';
+import { Drawer, MenuButton, BrandContainer, NavLink, DrawerLinks } from './NavBarStyles';
 import logo from '../logo.png';
 import { Link } from 'react-router-dom';
 import { FaHome, FaInfo, FaServicestack, FaEnvelope } from 'react-icons/fa';
@@ -13,10 +13,10 @@ const NavBar = () => {
 
   return (
     <>
-      <LogoContainer as={Link} to="/home">
-        <LogoImage src={logo} alt="Logo" />
-        <BrandName>IVES DESIGN</BrandName>
-      </LogoContainer>
+      <BrandContainer as={Link} to="/home">
+        <img src={logo} alt="Logo" className="logo" />
+        <span className="brand-name">IVES DESIGN</span>
+      </BrandContainer>
       <MenuButton onClick={toggleDrawer}>
         ☰
       </MenuButton>
