@@ -1,4 +1,3 @@
-// src/GlobalStyles.js
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
@@ -14,10 +13,12 @@ const GlobalStyles = createGlobalStyle`
     color: #333;
     margin: 0;
     padding: 0;
+    line-height: 1.6;
   }
 
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
+    font-weight: 700;
   }
 
   a {
@@ -27,6 +28,12 @@ const GlobalStyles = createGlobalStyle`
 
   .container {
     padding: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 0 1rem;
+    }
   }
 `;
 

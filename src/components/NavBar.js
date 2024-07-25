@@ -11,7 +11,7 @@ const NavBar = () => {
 
   return (
     <Nav>
-      <Logo>CodeHive</Logo>
+      <Logo>IVES HUB</Logo>
       <Hamburger onClick={toggleMenu}>
         <span></span>
         <span></span>
