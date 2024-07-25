@@ -47,7 +47,7 @@ export const NavLink = styled(Link)`
     display: block;
     width: 0;
     height: 2px;
-    background: #000000; /* Different vibrant accent color */
+    background: #ff4081; /* Different vibrant accent color */
     transition: width 0.3s;
   }
 
@@ -97,7 +97,7 @@ export const Hamburger = styled.div`
 
 export const Logo = styled.h1`
   font-size: 1.5rem;
-  color: #000000; /* Different vibrant accent color */
+  color: #ff4081; /* Different vibrant accent color */
   font-weight: bold;
 
   @media (max-width: 768px) {
