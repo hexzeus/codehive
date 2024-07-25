@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 import { Nav, NavLinks, NavLink, Hamburger, LogoContainer, LogoImage, Overlay } from './NavBarStyles';
 import logo from '../logo.png';
+import { Link } from 'react-router-dom';
 
-const NavBar = () => {
+const NavBar = ({ isUnlocked, location }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const closeMenu = () => {
-    setIsOpen(false);
-  };
-
   return (
     <>
-      <Nav>
-        <LogoContainer>
+      <Nav $isUnlocked={isUnlocked} $location={location}>
+        <LogoContainer as={Link} to="/home">
           <LogoImage src={logo} alt="Logo" />
           IVES HUB
         </LogoContainer>
@@ -26,13 +23,13 @@ const NavBar = () => {
           <span></span>
         </Hamburger>
         <NavLinks $isOpen={isOpen}>
-          <NavLink to="/" onClick={closeMenu}>Home</NavLink>
-          <NavLink to="/about" onClick={closeMenu}>About</NavLink>
-          <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
-          <NavLink to="/contact" onClick={closeMenu}>Contact</NavLink>
+          <NavLink to="/home" onClick={toggleMenu}>Home</NavLink>
+          <NavLink to="/about" onClick={toggleMenu}>About</NavLink>
+          <NavLink to="/services" onClick={toggleMenu}>Services</NavLink>
+          <NavLink to="/contact" onClick={toggleMenu}>Contact</NavLink>
         </NavLinks>
       </Nav>
-      {isOpen && <Overlay onClick={toggleMenu} />}
+      {isOpen && <Overlay $isOpen={isOpen} onClick={toggleMenu} />}
     </>
   );
 };

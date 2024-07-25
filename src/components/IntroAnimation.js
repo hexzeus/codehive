@@ -15,30 +15,30 @@ const generateBinary = () => {
   return binaryStr;
 };
 
-const IntroAnimation = ({ onComplete }) => {
+const IntroAnimation = ({ onUnlock }) => {
   const [showCode, setShowCode] = useState(true);
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     if (sessionStorage.getItem('authenticated') === 'true') {
-      onComplete();
-      navigate('/');
+      onUnlock();
+      navigate('/home');
     } else {
       const timer = setTimeout(() => setShowCode(false), 2000); // 2 seconds for animation
       return () => clearTimeout(timer);
     }
-  }, [navigate, onComplete]);
+  }, [navigate, onUnlock]);
 
   useEffect(() => {
     if (password === '5555') {
       sessionStorage.setItem('authenticated', 'true');
       setTimeout(() => {
-        onComplete();
-        navigate('/');
+        onUnlock();
+        navigate('/home');
       }, 1000); // 1 second delay for unlock animation
     }
-  }, [password, navigate, onComplete]);
+  }, [password, navigate, onUnlock]);
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -47,8 +47,8 @@ const IntroAnimation = ({ onComplete }) => {
   const handlePasswordSubmit = (e) => {
     if ((e.type === 'keydown' && e.key === 'Enter' && password === '5555') || (e.type === 'click' && password === '5555')) {
       setTimeout(() => {
-        onComplete();
-        navigate('/');
+        onUnlock();
+        navigate('/home');
       }, 1000); // 1 second delay for unlock animation
     }
   };

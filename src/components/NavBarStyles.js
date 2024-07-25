@@ -13,6 +13,7 @@ export const Nav = styled.nav`
   top: 0;
   z-index: 1000;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+  margin-bottom: ${({ $location }) => ($location === '/' ? '0' : '70px')};
 
   @media (max-width: 768px) {
     padding: 0.5rem 1rem;

@@ -22,13 +22,13 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative; /* Ensure positioning context for the background image */
+  position: relative;
 
   &::before {
     content: "";
     background: url(${logo}) no-repeat center center;
-    background-size: 80%; /* Adjust size as needed */
-    opacity: 0.05; /* Adjust opacity to make it ghosted */
+    background-size: 80%;
+    opacity: 0.05;
     position: absolute;
     top: 0;
     left: 0;
@@ -44,26 +44,42 @@ export const Container = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 4rem 1rem;
-
-    h1 {
-      font-size: 2.5rem;
-    }
-
-    p {
-      font-size: 1.2rem;
-    }
-  }
-
-  @media (max-width: 480px) {
     padding: 3rem 1rem;
 
     h1 {
       font-size: 2rem;
     }
 
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
     p {
       font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 2rem 1rem;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+    }
+
+    h3 {
+      font-size: 1rem;
+    }
+
+    p {
+      font-size: 0.9rem;
     }
   }
 `;
@@ -96,7 +112,7 @@ export const Section = styled.section`
 
   @media (max-width: 480px) {
     h2 {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
     }
 
     p {
@@ -108,14 +124,14 @@ export const Section = styled.section`
 export const Title = styled.h1`
   font-size: 3rem;
   margin-bottom: 1rem;
-  color: #1e90ff; /* Electric blue for headers */
+  color: #1e90ff;
 
   @media (max-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   @media (max-width: 480px) {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 `;
 
@@ -157,7 +173,7 @@ export const Team = styled.div`
 
   @media (max-width: 480px) {
     h2 {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
     }
   }
 `;
@@ -222,7 +238,7 @@ export const History = styled.div`
     }
 
     @media (max-width: 480px) {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
     }
   }
 `;

@@ -1,19 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container, Services, Service, Features, Feature, Testimonials, Testimonial, CallToAction, Button } from '../styles/HomePageStyles';
-import IntroAnimation from '../components/IntroAnimation';
 
-const HomePage = ({ onUnlock }) => {
-  const [showHomePage, setShowHomePage] = useState(false);
-
-  const handleIntroComplete = () => {
-    setShowHomePage(true);
-    onUnlock();
-  };
-
-  if (!showHomePage) {
-    return <IntroAnimation onComplete={handleIntroComplete} />;
-  }
-
+const HomePage = () => {
   return (
     <Container>
       <Services>

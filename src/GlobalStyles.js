@@ -7,24 +7,26 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
   }
 
-  body {
+  body, html {
     font-family: 'Roboto', sans-serif;
-    background-color: #0b0b0b; /* Ultra dark background */
-    color: #e0e0e0; /* Light text color */
+    background-color: #0b0b0b;
+    color: #e0e0e0;
     margin: 0;
     padding: 0;
     line-height: 1.6;
+    height: 100%;
+    width: 100%;
   }
 
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
     font-weight: 700;
-    color: #ffffff; /* White text for contrast */
+    color: #ffffff;
   }
 
   a {
     text-decoration: none;
-    color: #1e90ff; /* Electric blue for links */
+    color: #1e90ff;
   }
 
   .container {
@@ -35,10 +37,6 @@ const GlobalStyles = createGlobalStyle`
     body {
       padding: 0;
     }
-  }
-
-  #root {
-    padding-top: 4rem; /* Adjust this value to match the height of your navbar */
   }
 `;
 

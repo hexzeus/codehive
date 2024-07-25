@@ -1,30 +1,42 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import GlobalStyles from './GlobalStyles';
 import NavBar from './components/NavBar';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
-import ScrollToTop from './components/ScrollToTop'; // Import the ScrollToTop component
+import IntroAnimation from './components/IntroAnimation';
+
+const AppContent = ({ isUnlocked, onUnlock }) => {
+  const location = useLocation();
+
+  return (
+    <>
+      <NavBar isUnlocked={isUnlocked} location={location.pathname} />
+      <Routes>
+        <Route path="/" element={<IntroAnimation onUnlock={onUnlock} />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+      </Routes>
+    </>
+  );
+};
 
 function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
+
+  const handleUnlock = () => {
+    setIsUnlocked(true);
+  };
 
   return (
     <>
       <GlobalStyles />
       <Router>
-        <ScrollToTop /> {/* Ensure the page scrolls to the top on navigation */}
-        {isUnlocked && <NavBar />}
-        <div style={{ paddingTop: isUnlocked ? '4rem' : '0' }}> {/* Add a padding top to ensure content is not hidden behind the navbar */}
-          <Routes>
-            <Route path="/" element={<HomePage onUnlock={() => setIsUnlocked(true)} />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-          </Routes>
-        </div>
+        <AppContent isUnlocked={isUnlocked} onUnlock={handleUnlock} />
       </Router>
     </>
   );

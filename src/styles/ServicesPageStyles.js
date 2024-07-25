@@ -83,12 +83,40 @@ export const Section = styled.section`
     margin: 0 auto;
     color: #b3b3b3;
   }
+
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 1.3rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
 `;
 
 export const Title = styled.h1`
   font-size: 3rem;
   margin-bottom: 1rem;
   color: #1e90ff; /* Electric blue for headers */
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+  }
 `;
 
 export const Subtitle = styled.p`
@@ -96,6 +124,14 @@ export const Subtitle = styled.p`
   max-width: 800px;
   margin: 0 auto;
   color: #b3b3b3;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
 `;
 
 export const ServiceList = styled.div`
@@ -140,5 +176,11 @@ export const ServiceItem = styled.div`
 
   @media (max-width: 768px) {
     width: 80%;
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    width: 90%;
+    padding: 1rem;
   }
 `;

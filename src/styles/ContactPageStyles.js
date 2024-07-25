@@ -22,13 +22,13 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative; /* Ensure positioning context for the background image */
+  position: relative;
 
   &::before {
     content: "";
     background: url(${logo}) no-repeat center center;
-    background-size: 80%; /* Adjust size as needed */
-    opacity: 0.05; /* Adjust opacity to make it ghosted */
+    background-size: 80%;
+    opacity: 0.05;
     position: absolute;
     top: 0;
     left: 0;
@@ -71,7 +71,7 @@ export const Container = styled.div`
 export const Title = styled.h1`
   font-size: 3rem;
   margin-bottom: 1rem;
-  color: #1e90ff; /* Electric blue for headers */
+  color: #1e90ff;
 
   @media (max-width: 768px) {
     font-size: 2.5rem;
