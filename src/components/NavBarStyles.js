@@ -44,7 +44,6 @@ export const LogoImage = styled.img`
   width: 50px;
   height: 50px;
   margin-right: 0.5rem;
-  border-radius: 50%; /* Make the logo circular */
   filter: drop-shadow(0 0 10px #1e90ff); /* Subtle drop shadow */
   border: 3px solid #ffffff; /* White border for professional look */
 `;
@@ -53,6 +52,8 @@ export const BrandName = styled.span`
   font-size: 1.5rem;
   color: #1e90ff;
   font-weight: bold;
+  font-family: 'Merriweather', serif; /* Using Merriweather font */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Add a subtle text shadow */
 `;
 
 export const NavLink = styled(Link)`
