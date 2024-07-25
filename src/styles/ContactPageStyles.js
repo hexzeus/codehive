@@ -1,4 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import logo from '../logo.png';
+
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 export const Container = styled.div`
   padding: 6rem 2rem;
@@ -10,18 +22,25 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative; /* Ensure positioning context for the background image */
 
-  h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: #1e90ff; /* Electric blue for headers */
+  &::before {
+    content: "";
+    background: url(${logo}) no-repeat center center;
+    background-size: 80%; /* Adjust size as needed */
+    opacity: 0.05; /* Adjust opacity to make it ghosted */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
   }
 
-  p {
-    font-size: 1.5rem;
-    max-width: 800px;
-    margin: 0 auto;
-    color: #b3b3b3;
+  h1, h3, p, form {
+    position: relative;
+    z-index: 1;
+    animation: ${fadeInUp} 1s ease-out both;
   }
 
   @media (max-width: 768px) {
@@ -46,5 +65,71 @@ export const Container = styled.div`
     p {
       font-size: 1rem;
     }
+  }
+`;
+
+export const Title = styled.h1`
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #1e90ff; /* Electric blue for headers */
+`;
+
+export const Subtitle = styled.p`
+  font-size: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto 2rem auto;
+  color: #b3b3b3;
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+`;
+
+export const Input = styled.input`
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+  font-size: 1rem;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 5px #1e90ff;
+  }
+`;
+
+export const TextArea = styled.textarea`
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+  font-size: 1rem;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 5px #1e90ff;
+  }
+`;
+
+export const Button = styled.button`
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  color: #ffffff;
+  background-color: #1e90ff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0b74da;
   }
 `;

@@ -1,4 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import logo from '../logo.png';
+
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 export const Container = styled.div`
   padding: 6rem 2rem;
@@ -10,18 +22,25 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative; /* Ensure positioning context for the background image */
 
-  h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: #1e90ff; /* Electric blue for headers */
+  &::before {
+    content: "";
+    background: url(${logo}) no-repeat center center;
+    background-size: 80%; /* Adjust size as needed */
+    opacity: 0.05; /* Adjust opacity to make it ghosted */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
   }
 
-  p {
-    font-size: 1.5rem;
-    max-width: 800px;
-    margin: 0 auto;
-    color: #b3b3b3;
+  h1, h3, p {
+    position: relative;
+    z-index: 1;
+    animation: ${fadeInUp} 1s ease-out both;
   }
 
   @media (max-width: 768px) {
@@ -46,5 +65,80 @@ export const Container = styled.div`
     p {
       font-size: 1rem;
     }
+  }
+`;
+
+export const Section = styled.section`
+  margin-bottom: 3rem;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #1e90ff;
+  }
+
+  p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #b3b3b3;
+  }
+`;
+
+export const Title = styled.h1`
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #1e90ff; /* Electric blue for headers */
+`;
+
+export const Subtitle = styled.p`
+  font-size: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+  color: #b3b3b3;
+`;
+
+export const ServiceList = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 3rem 0;
+
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #1e90ff;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #b3b3b3;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+
+    h3 {
+      font-size: 1.3rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
+`;
+
+export const ServiceItem = styled.div`
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  margin: 1rem;
+  border-radius: 10px;
+  width: 30%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: ${fadeInUp} 1s ease-out both;
+
+  @media (max-width: 768px) {
+    width: 80%;
   }
 `;
