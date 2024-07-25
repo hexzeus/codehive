@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   padding: 6rem 2rem;
   text-align: center;
-  background: linear-gradient(135deg, #282828 0%, #1a1a1a 100%);
+  background: linear-gradient(135deg, #151515 0%, #0b0b0b 100%);
   color: #e0e0e0;
   min-height: 100vh;
   display: flex;
@@ -14,14 +14,14 @@ export const Container = styled.div`
   h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
-    color: #61dafb;
+    color: #1e90ff; /* Electric blue for headers */
   }
 
   p {
     font-size: 1.5rem;
     max-width: 800px;
     margin: 0 auto;
-    color: #bbbbbb;
+    color: #b3b3b3;
   }
 
   @media (max-width: 768px) {

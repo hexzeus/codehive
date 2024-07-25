@@ -6,13 +6,13 @@ export const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #1f1f1f; /* Darker background color */
+  background-color: #151515; /* Darker background color */
   color: #ffffff;
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
 `;
 
 export const NavLinks = styled.div`
@@ -25,7 +25,7 @@ export const NavLinks = styled.div`
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: #1f1f1f;
+    background-color: #151515;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -39,7 +39,7 @@ export const NavLinks = styled.div`
 export const NavLink = styled(Link)`
   margin: 0 1rem;
   font-weight: bold;
-  color: #61dafb; /* Vibrant accent color */
+  color: #e0e0e0; /* Light text color */
   position: relative;
 
   &:after {
@@ -47,7 +47,7 @@ export const NavLink = styled(Link)`
     display: block;
     width: 0;
     height: 2px;
-    background: #ff4081; /* Different vibrant accent color */
+    background: #1e90ff; /* Electric blue for hover effect */
     transition: width 0.3s;
   }
 
@@ -95,14 +95,25 @@ export const Hamburger = styled.div`
   }
 `;
 
-export const Logo = styled.h1`
+export const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
   font-size: 1.5rem;
-  color: #ff4081; /* Different vibrant accent color */
+  color: #1e90ff; /* Electric blue for logo text */
   font-weight: bold;
 
   @media (max-width: 768px) {
     margin-bottom: 1rem;
   }
+`;
+
+export const LogoImage = styled.img`
+  width: 50px;
+  height: 50px;
+  margin-right: 0.5rem;
+  filter: drop-shadow(0 0 10px #1e90ff); /* Electric blue for logo shadow */
+  border-radius: 15px; /* Add rounded corners */
+  border: 2px solid #1e90ff; /* Subtle border for professional look */
 `;
 
 export const Overlay = styled.div`
@@ -111,6 +122,6 @@ export const Overlay = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   z-index: 999;
 `;

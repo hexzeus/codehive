@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Nav, NavLinks, NavLink, Hamburger, Logo, Overlay } from './NavBarStyles';
+import { Nav, NavLinks, NavLink, Hamburger, LogoContainer, LogoImage, Overlay } from './NavBarStyles';
+import logo from '../logo.png';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +12,10 @@ const NavBar = () => {
   return (
     <>
       <Nav>
-        <Logo>IVES HUB</Logo>
+        <LogoContainer>
+          <LogoImage src={logo} alt="Logo" />
+          IVES HUB
+        </LogoContainer>
         <Hamburger onClick={toggleMenu} isOpen={isOpen}>
           <span></span>
           <span></span>

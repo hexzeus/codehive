@@ -9,7 +9,7 @@ const GlobalStyles = createGlobalStyle`
 
   body {
     font-family: 'Roboto', sans-serif;
-    background-color: #121212; /* Dark background */
+    background-color: #0b0b0b; /* Ultra dark background */
     color: #e0e0e0; /* Light text color */
     margin: 0;
     padding: 0;
@@ -19,11 +19,12 @@ const GlobalStyles = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
     font-weight: 700;
+    color: #ffffff; /* White text for contrast */
   }
 
   a {
     text-decoration: none;
-    color: inherit;
+    color: #1e90ff; /* Electric blue for links */
   }
 
   .container {
