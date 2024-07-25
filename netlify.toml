@@ -4,9 +4,6 @@
   [plugins.inputs.audits]
     output_path = "reports/lighthouse.html"
 
-[[plugins]]
-  package = "netlify-plugin-is-website-vulnerable"
-
 [build]
   command = "npm run build"
   publish = "build"
@@ -15,3 +12,4 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
