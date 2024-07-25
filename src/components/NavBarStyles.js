@@ -7,7 +7,7 @@ export const Drawer = styled.div`
   right: 0;
   height: 100%;
   width: 250px;
-  background-color: rgba(21, 21, 21, 0.95);
+  background: rgba(10, 10, 10, 0.9); /* Darker, more transparent background */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,6 +15,7 @@ export const Drawer = styled.div`
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
   padding-top: 3rem; /* Space for the logo */
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
 `;
 
 export const MenuButton = styled.button`
@@ -23,25 +24,29 @@ export const MenuButton = styled.button`
   right: 1rem;
   background: none;
   border: none;
-  color: white;
+  color: #e0e0e0;
   font-size: 2rem;
   cursor: pointer;
   z-index: 1001; /* Ensure it's above the drawer */
+
+  &:hover {
+    color: #1e90ff;
+  }
 `;
 
 export const BrandContainer = styled(Link)`
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #1f1f1f, #333333);
+  background: rgba(20, 20, 20, 0.95); /* Darker, more transparent background */
   padding: 0.5rem 1rem;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   text-decoration: none;
   margin: 1rem;
   color: #1e90ff;
   font-weight: bold;
   font-family: 'Merriweather', serif;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 
   .logo {
     width: 50px;
@@ -72,6 +77,10 @@ export const NavLink = styled(Link)`
     height: 2px;
     background: #1e90ff;
     transition: width 0.3s;
+  }
+
+  &:hover {
+    color: #1e90ff;
   }
 
   &:hover:after {

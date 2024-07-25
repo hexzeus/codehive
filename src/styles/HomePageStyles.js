@@ -1,4 +1,3 @@
-// HomePageStyles.js
 import styled, { keyframes } from 'styled-components';
 import logo from '../logo.png';
 
@@ -29,7 +28,7 @@ export const Container = styled.div`
     content: "";
     background: url(${logo}) no-repeat center center;
     background-size: 50vw; /* Adjust the initial size as needed */
-    opacity: 0.05;
+    opacity: 0.2;
     position: absolute;
     top: 0;
     left: 0;
@@ -80,5 +79,39 @@ export const Container = styled.div`
     p {
       font-size: 0.9rem;
     }
+  }
+`;
+
+export const LogoImage = styled.img`
+  width: 50vw; /* Adjust the size as needed */
+  height: auto;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+  transform: perspective(1000px) rotateX(10deg) rotateY(10deg);
+  z-index: 1;
+  position: relative;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 
+                0 0 40px rgba(0, 0, 0, 0.4), 
+                0 0 60px rgba(0, 0, 0, 0.3);
+    z-index: -1;
+  }
+
+  @media (max-width: 1200px) {
+    width: 60vw;
+  }
+
+  @media (max-width: 768px) {
+    width: 70vw;
+  }
+
+  @media (max-width: 480px) {
+    width: 90vw;
   }
 `;

@@ -14,7 +14,7 @@ const NavBar = () => {
   return (
     <>
       <BrandContainer as={Link} to="/home">
-        <img src={logo} alt="Logo" className="logo" />
+        <img className="logo" src={logo} alt="Logo" />
         <span className="brand-name">IVES DESIGN</span>
       </BrandContainer>
       <MenuButton onClick={toggleDrawer}>
