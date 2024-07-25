@@ -4,8 +4,10 @@ import {
   Container,
   CodeAnimation,
   LogoContainer,
+  LogoImage,
   PasswordInput
 } from '../components/IntroAnimationStyles';
+import logo from '../logo.png';  // Import the logo here
 
 const generateBinary = () => {
   let binaryStr = '';
@@ -64,6 +66,7 @@ const IntroAnimation = ({ onUnlock }) => {
       </CodeAnimation>
       {!showCode && (
         <LogoContainer>
+          <LogoImage src={logo} alt="Logo" />
           <PasswordInput
             type="password"
             placeholder="Enter password"
