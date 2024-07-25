@@ -57,13 +57,6 @@ export const LogoContainer = styled.div`
   animation: ${fadeIn} 1.5s ease-out forwards;
 `;
 
-export const LogoText = styled.h1`
-  color: #1e90ff;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  animation: ${fadeIn} 1.5s ease-out forwards;
-`;
-
 export const Logo = styled.img`
   width: 150px;
   height: 150px;

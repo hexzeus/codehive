@@ -5,7 +5,6 @@ import {
   Container,
   CodeAnimation,
   LogoContainer,
-  LogoText,
   Logo,
   PasswordInput
 } from '../components/IntroAnimationStyles';
@@ -25,14 +24,19 @@ const IntroAnimation = ({ onComplete }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowCode(false), 2000); // 2 seconds for animation
-    return () => clearTimeout(timer);
-  }, []);
+    if (sessionStorage.getItem('authenticated') === 'true') {
+      onComplete();
+      navigate('/');
+    } else {
+      const timer = setTimeout(() => setShowCode(false), 2000); // 2 seconds for animation
+      return () => clearTimeout(timer);
+    }
+  }, [navigate, onComplete]);
 
   useEffect(() => {
     if (password === '5555') {
       setUnlocked(true);
-      localStorage.setItem('authenticated', 'true');
+      sessionStorage.setItem('authenticated', 'true');
       setTimeout(() => {
         onComplete();
         navigate('/');
@@ -66,7 +70,6 @@ const IntroAnimation = ({ onComplete }) => {
       {!showCode && (
         <>
           <LogoContainer>
-            <LogoText>IVES HUB</LogoText>
             <Logo
               src={logo}
               alt="Logo"
