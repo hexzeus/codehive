@@ -32,7 +32,7 @@ const GlobalStyles = createGlobalStyle`
 
   @media (max-width: 768px) {
     body {
-      padding: 0 1rem;
+      padding: 0;
     }
   }
 `;

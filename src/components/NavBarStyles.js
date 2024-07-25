@@ -31,6 +31,8 @@ export const NavLinks = styled.div`
     align-items: center;
     transition: transform 0.3s ease-in-out;
     transform: ${({ $isOpen }) => ($isOpen ? 'translateX(0)' : 'translateX(-100%)')};
+    padding: 0;
+    margin: 0;
   }
 `;
 
