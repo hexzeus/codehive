@@ -16,7 +16,7 @@ import {
 } from '../components/IntroAnimationStyles';
 import logo from '../logo.png';
 
-const ACCESS_CODE = '123456';
+const ACCESS_CODE = '151515';
 const ACCESS_CODE_HASH = sha256(ACCESS_CODE);
 
 const IntroAnimation = ({ onUnlock }) => {
