@@ -65,7 +65,7 @@ const HomePage = () => {
         </div>
       </CodeAnimation>
       <HeroSection ref={heroRef}>
-        <LogoImage src={logo} alt="IVES Design Logo" />
+        <LogoImage src={logo} alt="IVES HUB Logo" />
         <Tagline>Crafting Digital Experiences That Inspire</Tagline>
         <CTAButton to="/contact">Initiate Project</CTAButton>
       </HeroSection>

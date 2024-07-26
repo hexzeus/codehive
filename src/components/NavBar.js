@@ -48,7 +48,7 @@ const NavBar = ({ toggleMatrixRain, isMatrixRainActive }) => {
       <NavContainer $scrollProgress={scrollProgress}>
         <BrandContainer as={Link} to="/home">
           <img className="logo" src={logo} alt="Logo" />
-          <span className="brand-name">IVES DESIGN</span>
+          <span className="brand-name">IVES HUB</span>
         </BrandContainer>
         <DesktopNav>
           <NavLink to="/home" $active={location.pathname === '/home'}><FaHome /> Home</NavLink>
