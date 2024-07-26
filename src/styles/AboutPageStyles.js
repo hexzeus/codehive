@@ -1,11 +1,9 @@
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
-import logo from '../logo.png';
 
-const gradientAnimation = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+const matrixRain = keyframes`
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 `;
 
 const fadeInUp = keyframes`
@@ -19,33 +17,42 @@ const fadeInUp = keyframes`
   }
 `;
 
-const shineEffect = keyframes`
-  0% { background-position: 200% 50%; }
-  100% { background-position: -200% 50%; }
-`;
-
-const responsiveStyles = css`
-  @media (max-width: 1200px) {
-    font-size: 95%;
+const glitch = keyframes`
+  0% {
+    text-shadow: 0.05em 0 0 #00fffc, -0.05em -0.025em 0 #fc00ff,
+      0.025em 0.05em 0 #fffc00;
   }
-  @media (max-width: 992px) {
-    font-size: 90%;
+  14% {
+    text-shadow: 0.05em 0 0 #00fffc, -0.05em -0.025em 0 #fc00ff,
+      0.025em 0.05em 0 #fffc00;
   }
-  @media (max-width: 768px) {
-    font-size: 85%;
+  15% {
+    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.025em 0 #fc00ff,
+      -0.05em -0.05em 0 #fffc00;
   }
-  @media (max-width: 576px) {
-    font-size: 80%;
+  49% {
+    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.025em 0 #fc00ff,
+      -0.05em -0.05em 0 #fffc00;
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 #00fffc, 0.05em 0 0 #fc00ff,
+      0 -0.05em 0 #fffc00;
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 #00fffc, 0.05em 0 0 #fc00ff,
+      0 -0.05em 0 #fffc00;
+  }
+  100% {
+    text-shadow: -0.025em 0 0 #00fffc, -0.025em -0.025em 0 #fc00ff,
+      -0.025em -0.05em 0 #fffc00;
   }
 `;
 
 export const Container = styled.div`
   padding: 6rem 2rem;
   text-align: center;
-  background: linear-gradient(135deg, #151515 0%, #0b0b0b 100%);
-  background-size: 400% 400%;
-  animation: ${gradientAnimation} 15s ease infinite;
-  color: #e0e0e0;
+  background: #000000;
+  color: #00ff00;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -53,53 +60,56 @@ export const Container = styled.div`
   align-items: center;
   position: relative;
   overflow: hidden;
+  font-family: 'Courier New', monospace;
+`;
 
-  &::before {
-    content: "";
-    background: url(${logo}) no-repeat center center;
-    background-size: 80%;
-    opacity: 0.05;
+export const CodeAnimation = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.1;
+  
+  span {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 0;
-    animation: ${fadeInUp} 2s ease-out;
+    top: -100%;
+    color: #00ff00;
+    font-size: 1rem;
+    text-shadow: 0 0 5px #00ff00;
+    animation: ${matrixRain} 10s linear infinite;
   }
-
-  ${responsiveStyles}
 `;
 
 export const Section = styled.section`
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
   position: relative;
   z-index: 1;
 `;
 
 export const Title = styled.h1`
-  font-size: 4rem;
+  font-size: 3rem;
   margin-bottom: 1rem;
-  color: transparent;
-  background: linear-gradient(45deg, #1e90ff, #ff6ad5);
-  background-size: 200% auto;
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: ${shineEffect} 3s linear infinite;
-  text-shadow: 0 0 10px rgba(30, 144, 255, 0.5);
+  color: #00ff00;
+  text-shadow: 0 0 10px #00ff00;
+  animation: ${glitch} 3s infinite;
 
-  ${responsiveStyles}
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
 `;
 
 export const Subtitle = styled.p`
   font-size: 1.5rem;
   max-width: 800px;
   margin: 0 auto;
-  color: #b3b3b3;
-  line-height: 1.6;
+  color: #00cc00;
   animation: ${fadeInUp} 1s ease-out 0.5s both;
 
-  ${responsiveStyles}
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
 `;
 
 export const ValueProposition = styled.div`
@@ -109,24 +119,27 @@ export const ValueProposition = styled.div`
   margin: 4rem 0;
 
   div {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 255, 0, 0.1);
+    border: 1px solid #00ff00;
     border-radius: 15px;
     padding: 2rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 
     &:hover {
       transform: translateY(-10px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 20px rgba(0, 255, 0, 0.2);
     }
   }
 
   h3 {
-    color: #1e90ff;
+    color: #00ff00;
     margin-bottom: 1rem;
+    font-size: 1.5rem;
+    text-shadow: 0 0 5px #00ff00;
   }
 
   p {
-    color: #b3b3b3;
+    color: #00cc00;
   }
 `;
 
@@ -140,12 +153,14 @@ export const Team = styled.div`
     grid-column: 1 / -1;
     font-size: 2.5rem;
     margin-bottom: 2rem;
-    color: #1e90ff;
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
   }
 `;
 
 export const Member = styled.div`
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid #00ff00;
   border-radius: 20px;
   padding: 2rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -153,7 +168,7 @@ export const Member = styled.div`
 
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(30, 144, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 255, 0, 0.2);
   }
 
   img {
@@ -162,8 +177,9 @@ export const Member = styled.div`
     border-radius: 50%;
     margin-bottom: 1rem;
     object-fit: cover;
-    border: 4px solid #1e90ff;
+    border: 2px solid #00ff00;
     transition: transform 0.3s ease;
+    filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(70deg) saturate(500%);
 
     &:hover {
       transform: scale(1.1);
@@ -173,12 +189,13 @@ export const Member = styled.div`
   h3 {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
-    color: #1e90ff;
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
   }
 
   p {
     font-size: 1rem;
-    color: #b3b3b3;
+    color: #00cc00;
   }
 `;
 
@@ -193,19 +210,21 @@ export const History = styled.div`
     bottom: 0;
     left: 50%;
     width: 2px;
-    background: #1e90ff;
+    background: #00ff00;
     transform: translateX(-50%);
   }
 
   h2 {
     font-size: 2.5rem;
     margin-bottom: 2rem;
-    color: #1e90ff;
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
   }
 `;
 
 export const HistoryItem = styled.div`
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid #00ff00;
   border-radius: 20px;
   padding: 2rem;
   margin: 2rem 0;
@@ -222,7 +241,7 @@ export const HistoryItem = styled.div`
       left: -15px;
       width: 30px;
       height: 30px;
-      background: #1e90ff;
+      background: #00ff00;
       border-radius: 50%;
       transform: translateY(-50%);
     }
@@ -237,7 +256,7 @@ export const HistoryItem = styled.div`
       right: -15px;
       width: 30px;
       height: 30px;
-      background: #1e90ff;
+      background: #00ff00;
       border-radius: 50%;
       transform: translateY(-50%);
     }
@@ -246,17 +265,19 @@ export const HistoryItem = styled.div`
   h3 {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
-    color: #1e90ff;
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
   }
 
   p {
     font-size: 1rem;
-    color: #b3b3b3;
+    color: #00cc00;
   }
 `;
 
 export const Testimonial = styled.div`
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid #00ff00;
   border-radius: 20px;
   padding: 3rem;
   margin: 4rem 0;
@@ -268,7 +289,7 @@ export const Testimonial = styled.div`
     top: -30px;
     left: 20px;
     font-size: 6rem;
-    color: #1e90ff;
+    color: #00ff00;
     opacity: 0.5;
   }
 
@@ -276,11 +297,12 @@ export const Testimonial = styled.div`
     font-size: 1.5rem;
     font-style: italic;
     margin-bottom: 1rem;
+    color: #00ff00;
   }
 
   cite {
     font-size: 1.2rem;
-    color: #1e90ff;
+    color: #00cc00;
   }
 `;
 
@@ -293,7 +315,8 @@ export const Awards = styled.div`
 `;
 
 export const AwardItem = styled.div`
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid #00ff00;
   border-radius: 15px;
   padding: 1.5rem;
   text-align: center;
@@ -307,11 +330,12 @@ export const AwardItem = styled.div`
     width: 80px;
     height: 80px;
     margin-bottom: 1rem;
+    filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
   }
 
   p {
     font-size: 1rem;
-    color: #1e90ff;
+    color: #00ff00;
   }
 `;
 
@@ -322,7 +346,8 @@ export const CTASection = styled.div`
   h2 {
     font-size: 2.5rem;
     margin-bottom: 2rem;
-    color: #1e90ff;
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
   }
 `;
 
@@ -330,14 +355,16 @@ export const CTAButton = styled(Link)`
   display: inline-block;
   padding: 1rem 2rem;
   font-size: 1.2rem;
-  color: #fff;
-  background: linear-gradient(45deg, #1e90ff, #ff6ad5);
+  color: #000000;
+  background: #00ff00;
+  border: none;
   border-radius: 50px;
   text-decoration: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 
   &:hover {
+    background: #00cc00;
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(30, 144, 255, 0.3);
+    box-shadow: 0 10px 20px rgba(0, 255, 0, 0.3);
   }
 `;

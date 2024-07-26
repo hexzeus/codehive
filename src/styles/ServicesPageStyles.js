@@ -1,6 +1,10 @@
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
-import logo from '../logo.png';
+
+const matrixRain = keyframes`
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+`;
 
 const fadeInUp = keyframes`
   from {
@@ -13,22 +17,42 @@ const fadeInUp = keyframes`
   }
 `;
 
-const float = keyframes`
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-  100% { transform: translateY(0px); }
-`;
-
-const shine = keyframes`
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
+const glitch = keyframes`
+  0% {
+    text-shadow: 0.05em 0 0 #00fffc, -0.05em -0.025em 0 #fc00ff,
+      0.025em 0.05em 0 #fffc00;
+  }
+  14% {
+    text-shadow: 0.05em 0 0 #00fffc, -0.05em -0.025em 0 #fc00ff,
+      0.025em 0.05em 0 #fffc00;
+  }
+  15% {
+    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.025em 0 #fc00ff,
+      -0.05em -0.05em 0 #fffc00;
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.025em 0 #fc00ff,
+      -0.05em -0.05em 0 #fffc00;
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 #00fffc, 0.05em 0 0 #fc00ff,
+      0 -0.05em 0 #fffc00;
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 #00fffc, 0.05em 0 0 #fc00ff,
+      0 -0.05em 0 #fffc00;
+  }
+  100% {
+    text-shadow: -0.025em 0 0 #00fffc, -0.025em -0.025em 0 #fc00ff,
+      -0.025em -0.05em 0 #fffc00;
+  }
 `;
 
 export const Container = styled.div`
   padding: 6rem 2rem;
   text-align: center;
-  background: linear-gradient(135deg, #1a1a1a 0%, #0b0b0b 100%);
-  color: #e0e0e0;
+  background: #000000;
+  color: #00ff00;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -36,23 +60,25 @@ export const Container = styled.div`
   align-items: center;
   position: relative;
   overflow: hidden;
+  font-family: 'Courier New', monospace;
+`;
 
-  &::before {
-    content: "";
-    background: url(${logo}) no-repeat center center;
-    background-size: 80%;
-    opacity: 0.05;
+export const CodeAnimation = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.1;
+  
+  span {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 0;
-    animation: ${float} 6s ease-in-out infinite;
-  }
-
-  @media (max-width: 768px) {
-    padding: 4rem 1rem;
+    top: -100%;
+    color: #00ff00;
+    font-size: 1rem;
+    text-shadow: 0 0 5px #00ff00;
+    animation: ${matrixRain} 10s linear infinite;
   }
 `;
 
@@ -65,20 +91,12 @@ export const Section = styled.section`
 export const Title = styled.h1`
   font-size: 3rem;
   margin-bottom: 1rem;
-  color: transparent;
-  background: linear-gradient(90deg, #1e90ff, #ff6ad5, #1e90ff);
-  background-size: 200% auto;
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: ${shine} 3s linear infinite;
-  text-shadow: 0 0 10px rgba(30, 144, 255, 0.5);
+  color: #00ff00;
+  text-shadow: 0 0 10px #00ff00;
+  animation: ${glitch} 3s infinite;
 
   @media (max-width: 768px) {
     font-size: 2.5rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 2rem;
   }
 `;
 
@@ -86,15 +104,11 @@ export const Subtitle = styled.p`
   font-size: 1.5rem;
   max-width: 800px;
   margin: 0 auto;
-  color: #b3b3b3;
+  color: #00cc00;
   animation: ${fadeInUp} 1s ease-out 0.5s both;
 
   @media (max-width: 768px) {
     font-size: 1.2rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 1rem;
   }
 `;
 
@@ -102,59 +116,44 @@ export const ServiceList = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  margin: 3rem 0;
-  position: relative;
-  z-index: 1;
+  margin: 4rem 0;
 `;
 
 export const ServiceItem = styled.div`
-  background: rgba(255, 255, 255, 0.05);
-  padding: 2rem;
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid #00ff00;
   border-radius: 20px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease-in-out;
+  padding: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: ${fadeInUp} 1s ease-out both;
 
   &:hover {
     transform: translateY(-10px);
-    box-shadow: 0 6px 40px rgba(30, 144, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 255, 0, 0.2);
   }
 
   h3 {
     font-size: 1.5rem;
-    margin: 1rem 0;
-    color: #1e90ff;
+    margin-bottom: 1rem;
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
   }
 
   p {
     font-size: 1rem;
-    color: #b3b3b3;
-  }
-
-  @media (max-width: 768px) {
-    padding: 1.5rem;
-
-    h3 {
-      font-size: 1.3rem;
-    }
-
-    p {
-      font-size: 0.9rem;
-    }
+    color: #00cc00;
   }
 `;
 
 export const Icon = styled.div`
   font-size: 3rem;
-  color: #1e90ff;
+  color: #00ff00;
   margin-bottom: 1rem;
   transition: all 0.3s ease-in-out;
 
   ${ServiceItem}:hover & {
     transform: scale(1.2);
+    text-shadow: 0 0 10px #00ff00;
   }
 `;
 
@@ -170,17 +169,15 @@ export const Testimonial = styled.blockquote`
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid #00ff00;
   border-radius: 20px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #00ff00;
 
   cite {
     display: block;
     margin-top: 1rem;
-    color: #1e90ff;
+    color: #00cc00;
     font-style: normal;
   }
 
@@ -198,7 +195,8 @@ export const CTASection = styled.section`
   h2 {
     font-size: 2rem;
     margin-bottom: 2rem;
-    color: #1e90ff;
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
   }
 
   @media (max-width: 768px) {
@@ -212,18 +210,17 @@ export const CTAButton = styled(Link)`
   display: inline-block;
   padding: 1rem 2rem;
   font-size: 1.2rem;
-  color: #ffffff;
-  background: linear-gradient(90deg, #1e90ff, #ff6ad5);
-  background-size: 200% auto;
+  color: #000000;
+  background: #00ff00;
   border: none;
   border-radius: 50px;
   text-decoration: none;
   transition: all 0.3s ease;
 
   &:hover {
-    background-position: right center;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(30, 144, 255, 0.3);
+    background: #00cc00;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 255, 0, 0.3);
   }
 
   @media (max-width: 768px) {

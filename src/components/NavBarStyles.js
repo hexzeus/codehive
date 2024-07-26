@@ -1,5 +1,11 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
+
+const glowAnimation = keyframes`
+  0% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #00ff00, 0 0 20px #00ff00; }
+  50% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00; }
+  100% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #00ff00, 0 0 20px #00ff00; }
+`;
 
 export const NavContainer = styled.nav`
   position: fixed;
@@ -10,9 +16,10 @@ export const NavContainer = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: ${({ scrolled }) => scrolled ? 'rgba(10, 10, 10, 0.9)' : 'transparent'};
+  background: ${({ scrolled }) => scrolled ? 'rgba(0, 20, 0, 0.9)' : 'transparent'};
   transition: background 0.3s ease-in-out;
   z-index: 1000;
+  border-bottom: 1px solid #00ff00;
 `;
 
 export const Drawer = styled.div`
@@ -21,7 +28,7 @@ export const Drawer = styled.div`
   right: 0;
   height: 100%;
   width: 250px;
-  background: rgba(10, 10, 10, 0.95);
+  background: rgba(0, 20, 0, 0.95);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,7 +36,7 @@ export const Drawer = styled.div`
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
   padding-top: 5rem;
-  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+  box-shadow: -5px 0 15px rgba(0, 255, 0, 0.2);
 `;
 
 export const MenuButton = styled.button`
@@ -38,12 +45,12 @@ export const MenuButton = styled.button`
   border: none;
   cursor: pointer;
   z-index: 1001;
-  
+ 
   span {
     display: block;
     width: 25px;
     height: 3px;
-    background-color: #e0e0e0;
+    background-color: #00ff00;
     margin: 5px 0;
     transition: all 0.3s ease-in-out;
   }
@@ -69,28 +76,31 @@ export const BrandContainer = styled(Link)`
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: #1e90ff;
+  color: #00ff00;
   font-weight: bold;
-  font-family: 'Merriweather', serif;
-  
+  font-family: 'Courier New', monospace;
+ 
   .logo {
     width: 40px;
     height: 40px;
     margin-right: 0.5rem;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: drop-shadow(0 0 5px #00ff00);
   }
-  
+ 
   .brand-name {
     font-size: 1.2rem;
-    transition: color 0.3s ease;
+    transition: text-shadow 0.3s ease;
+    text-shadow: 0 0 5px #00ff00;
   }
 
   &:hover {
     .logo {
       transform: rotate(10deg);
+      filter: drop-shadow(0 0 10px #00ff00);
     }
     .brand-name {
-      color: #ff6ad5;
+      animation: ${glowAnimation} 1.5s ease-in-out infinite;
     }
   }
 `;
@@ -98,14 +108,15 @@ export const BrandContainer = styled(Link)`
 export const NavLink = styled(Link)`
   margin: 0 1rem;
   font-weight: bold;
-  color: #e0e0e0;
+  color: #00ff00;
   text-decoration: none;
   position: relative;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 1rem;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  font-family: 'Courier New', monospace;
 
   &:after {
     content: '';
@@ -115,13 +126,14 @@ export const NavLink = styled(Link)`
     height: 2px;
     bottom: -5px;
     left: 0;
-    background-color: #1e90ff;
+    background-color: #00ff00;
     transform-origin: bottom right;
     transition: transform 0.3s ease-out;
   }
 
   &:hover {
-    color: #1e90ff;
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
   }
 
   &:hover:after {
@@ -130,7 +142,8 @@ export const NavLink = styled(Link)`
   }
 
   ${({ $active }) => $active && css`
-    color: #1e90ff;
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
     &:after {
       transform: scaleX(1);
     }
@@ -141,7 +154,7 @@ export const DrawerLinks = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+ 
   ${NavLink} {
     margin: 1rem 0;
     font-size: 1.2rem;
@@ -150,7 +163,7 @@ export const DrawerLinks = styled.div`
 
 export const DesktopNav = styled.div`
   display: flex;
-  
+ 
   @media (max-width: 768px) {
     display: none;
   }
@@ -159,12 +172,13 @@ export const DesktopNav = styled.div`
 export const ThemeToggle = styled.button`
   background: none;
   border: none;
-  color: #e0e0e0;
+  color: #00ff00;
   font-size: 1.5rem;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 
   &:hover {
-    color: #1e90ff;
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
   }
 `;

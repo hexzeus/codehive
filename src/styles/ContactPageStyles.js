@@ -1,5 +1,9 @@
 import styled, { keyframes } from 'styled-components';
-import logo from '../logo.png';
+
+const matrixRain = keyframes`
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+`;
 
 const fadeInUp = keyframes`
   from {
@@ -12,41 +16,50 @@ const fadeInUp = keyframes`
   }
 `;
 
-const shine = keyframes`
+const glitch = keyframes`
   0% {
-    background-position: 0% 50%;
+    text-shadow: 0.05em 0 0 #00fffc, -0.05em -0.025em 0 #fc00ff,
+      0.025em 0.05em 0 #fffc00;
   }
-  100% {
-    background-position: 200% 50%;
+  14% {
+    text-shadow: 0.05em 0 0 #00fffc, -0.05em -0.025em 0 #fc00ff,
+      0.025em 0.05em 0 #fffc00;
   }
-`;
-
-const float = keyframes`
-  0% {
-    transform: translateY(0px);
+  15% {
+    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.025em 0 #fc00ff,
+      -0.05em -0.05em 0 #fffc00;
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.025em 0 #fc00ff,
+      -0.05em -0.05em 0 #fffc00;
   }
   50% {
-    transform: translateY(-20px);
+    text-shadow: 0.025em 0.05em 0 #00fffc, 0.05em 0 0 #fc00ff,
+      0 -0.05em 0 #fffc00;
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 #00fffc, 0.05em 0 0 #fc00ff,
+      0 -0.05em 0 #fffc00;
   }
   100% {
-    transform: translateY(0px);
+    text-shadow: -0.025em 0 0 #00fffc, -0.025em -0.025em 0 #fc00ff,
+      -0.025em -0.05em 0 #fffc00;
   }
 `;
 
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+const shake = keyframes`
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
 `;
 
 export const Container = styled.div`
   padding: 6rem 2rem;
   text-align: center;
-  background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
-  color: #e0e0e0;
+  background: #000000;
+  color: #00ff00;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -54,43 +67,39 @@ export const Container = styled.div`
   align-items: center;
   position: relative;
   overflow: hidden;
+  font-family: 'Courier New', monospace;
+`;
 
-  &::before {
-    content: "";
-    background: url(${logo}) no-repeat center center;
-    background-size: 80%;
-    opacity: 0.05;
+export const CodeAnimation = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.1;
+  
+  span {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 0;
-    animation: ${float} 6s ease-in-out infinite;
-  }
-
-  @media (max-width: 768px) {
-    padding: 4rem 1rem;
+    top: -100%;
+    color: #00ff00;
+    font-size: 1rem;
+    text-shadow: 0 0 5px #00ff00;
+    animation: ${matrixRain} 10s linear infinite;
   }
 `;
 
 export const Title = styled.h1`
   font-size: 3rem;
   margin-bottom: 1rem;
-  color: transparent;
-  background: linear-gradient(90deg, #1e90ff, #ff6ad5, #1e90ff);
-  background-size: 200% auto;
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: ${shine} 3s linear infinite;
-  text-shadow: 0 0 10px rgba(30, 144, 255, 0.5);
+  color: #00ff00;
+  text-shadow: 0 0 10px #00ff00;
+  animation: ${glitch} 3s infinite;
+  position: relative;
+  z-index: 1;
 
   @media (max-width: 768px) {
     font-size: 2.5rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 2rem;
   }
 `;
 
@@ -98,15 +107,13 @@ export const Subtitle = styled.p`
   font-size: 1.5rem;
   max-width: 800px;
   margin: 0 auto 2rem auto;
-  color: #b3b3b3;
+  color: #00cc00;
   animation: ${fadeInUp} 1s ease-out 0.5s both;
+  position: relative;
+  z-index: 1;
 
   @media (max-width: 768px) {
     font-size: 1.2rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 1rem;
   }
 `;
 
@@ -116,15 +123,8 @@ export const Form = styled.form`
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  animation: ${fadeInUp} 1s ease-out 1s both;
-
-  @media (max-width: 768px) {
-    max-width: 400px;
-  }
-
-  @media (max-width: 480px) {
-    max-width: 300px;
-  }
+  position: relative;
+  z-index: 1;
 `;
 
 export const Input = styled.input`
@@ -132,15 +132,25 @@ export const Input = styled.input`
   margin-bottom: 1rem;
   border: none;
   border-radius: 5px;
-  background-color: rgba(38, 38, 38, 0.8);
-  color: #e0e0e0;
+  background-color: rgba(0, 255, 0, 0.1);
+  color: #00ff00;
   font-size: 1rem;
+  font-family: 'Courier New', monospace;
   transition: all 0.3s ease-in-out;
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
     transform: scale(1.02);
+  }
+
+  &::placeholder {
+    color: rgba(0, 255, 0, 0.5);
+  }
+
+  &.invalid {
+    animation: ${shake} 0.5s ease-in-out;
+    border: 2px solid #ff0000;
   }
 
   @media (max-width: 768px) {
@@ -154,15 +164,26 @@ export const TextArea = styled.textarea`
   margin-bottom: 1rem;
   border: none;
   border-radius: 5px;
-  background-color: rgba(38, 38, 38, 0.8);
-  color: #e0e0e0;
+  background-color: rgba(0, 255, 0, 0.1);
+  color: #00ff00;
   font-size: 1rem;
+  font-family: 'Courier New', monospace;
   transition: all 0.3s ease-in-out;
+  resize: vertical;
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
     transform: scale(1.02);
+  }
+
+  &::placeholder {
+    color: rgba(0, 255, 0, 0.5);
+  }
+
+  &.invalid {
+    animation: ${shake} 0.5s ease-in-out;
+    border: 2px solid #ff0000;
   }
 
   @media (max-width: 768px) {
@@ -174,18 +195,18 @@ export const TextArea = styled.textarea`
 export const Button = styled.button`
   padding: 1rem 2rem;
   font-size: 1.2rem;
-  color: #ffffff;
-  background: linear-gradient(90deg, #1e90ff, #ff6ad5);
-  background-size: 200% auto;
+  color: #000000;
+  background: #00ff00;
   border: none;
-  border-radius: 50px;
+  border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-family: 'Courier New', monospace;
 
   &:hover {
-    background-position: right center;
+    background: #00cc00;
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(30, 144, 255, 0.3);
+    box-shadow: 0 10px 20px rgba(0, 255, 0, 0.3);
   }
 
   &:disabled {
@@ -202,15 +223,19 @@ export const Button = styled.button`
 export const ContactInfo = styled.div`
   margin-top: 3rem;
   animation: ${fadeInUp} 1s ease-out 1.5s both;
+  position: relative;
+  z-index: 1;
 
   h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    color: #1e90ff;
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
   }
 
   p {
     margin-bottom: 0.5rem;
+    color: #00cc00;
   }
 `;
 
@@ -219,17 +244,20 @@ export const SocialLinks = styled.div`
   justify-content: center;
   margin-top: 2rem;
   animation: ${fadeInUp} 1s ease-out 2s both;
+  position: relative;
+  z-index: 1;
 `;
 
 export const SocialIcon = styled.a`
   margin: 0 1rem;
-  color: #1e90ff;
+  color: #00ff00;
   font-size: 1.5rem;
   transition: all 0.3s ease;
 
   &:hover {
-    color: #ff6ad5;
+    color: #00cc00;
     transform: translateY(-5px);
+    text-shadow: 0 0 10px #00ff00;
   }
 `;
 
@@ -240,28 +268,37 @@ export const MapContainer = styled.div`
   margin-top: 3rem;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 255, 0, 0.2);
   animation: ${fadeInUp} 1s ease-out 2.5s both;
+  position: relative;
+  z-index: 1;
 `;
 
 export const SuccessMessage = styled.div`
-  color: #4caf50;
+  color: #00ff00;
   margin-top: 1rem;
   animation: ${fadeInUp} 0.5s ease-out;
+  text-shadow: 0 0 5px #00ff00;
 `;
 
 export const ErrorMessage = styled.div`
-  color: #f44336;
+  color: #ff0000;
   margin-top: 1rem;
   animation: ${fadeInUp} 0.5s ease-out;
+  text-shadow: 0 0 5px #ff0000;
 `;
 
 export const LoadingSpinner = styled.div`
   width: 20px;
   height: 20px;
-  border: 2px solid #ffffff;
+  border: 2px solid #00ff00;
   border-top: 2px solid transparent;
   border-radius: 50%;
-  animation: ${rotate} 1s linear infinite;
+  animation: spin 1s linear infinite;
   margin: 0 auto;
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 `;
