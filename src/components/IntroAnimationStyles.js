@@ -116,6 +116,17 @@ const unlockAnimation = keyframes`
   }
 `;
 
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 export const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -162,6 +173,7 @@ export const LogoContainer = styled.div`
   z-index: 2;
   opacity: ${({ $isUnlocking }) => ($isUnlocking ? 0 : 1)};
   transition: opacity 1s ease-out;
+  animation: ${fadeIn} 1s ease-out;
 
   ${({ $shake }) =>
     $shake &&
@@ -177,6 +189,7 @@ export const LogoImage = styled.img`
   transform: translateZ(0);
   perspective: 1000px;
   transition: all 0.3s ease;
+  animation: ${fadeIn} 1s ease-out;
 
   &:hover {
     filter: drop-shadow(0 0 20px #0f0);
@@ -224,6 +237,12 @@ export const NumericPad = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin-top: 20px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 2px solid #0f0;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+  animation: ${fadeIn} 1s ease-out;
 `;
 
 export const NumericButton = styled.button`
@@ -232,9 +251,10 @@ export const NumericButton = styled.button`
   color: #0f0;
   font-family: 'Matrix Code NFI', monospace;
   font-size: 18px;
-  padding: 10px;
+  padding: 15px;
   cursor: pointer;
   transition: all 0.3s ease;
+  border-radius: 5px;
 
   &:hover {
     background-color: rgba(0, 255, 0, 0.3);
