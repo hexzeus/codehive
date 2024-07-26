@@ -19,7 +19,7 @@ const AppContent = ({ isUnlocked, onUnlock }) => {
 
   return (
     <>
-      {isUnlocked && <NavBar isUnlocked={isUnlocked} location={location.pathname} />}
+      {(location.pathname !== '/' || isUnlocked) && <NavBar isUnlocked={isUnlocked} location={location.pathname} />}
       <ErrorBoundary>
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
