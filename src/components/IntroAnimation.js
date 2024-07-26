@@ -3,23 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { sha256 } from 'js-sha256';
 import {
   Container,
-  CodeAnimation,
+  MatrixBackground,
+  MatrixColumn,
   LogoContainer,
   LogoImage,
   PasswordDisplay,
   GlitchText,
-  ParticleContainer,
-  Particle,
   ProgressBar,
   NumericPad,
   NumericButton,
-  SuccessOverlay
+  UnlockingOverlay
 } from '../components/IntroAnimationStyles';
 import logo from '../logo.png';
-
-const generateBinary = () => {
-  return Array(1000).fill().map(() => Math.random() > 0.5 ? '1' : '0').join('');
-};
 
 const ACCESS_CODE = '123456';
 const ACCESS_CODE_HASH = sha256(ACCESS_CODE);
@@ -29,8 +24,6 @@ const IntroAnimation = ({ onUnlock }) => {
   const [password, setPassword] = useState('');
   const [passwordDisplay, setPasswordDisplay] = useState('');
   const [isUnlocking, setIsUnlocking] = useState(false);
-  const [unlockSuccess, setUnlockSuccess] = useState(false);
-  const [particles, setParticles] = useState([]);
   const [attempts, setAttempts] = useState(0);
   const [lockoutTime, setLockoutTime] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -47,42 +40,6 @@ const IntroAnimation = ({ onUnlock }) => {
       return () => clearTimeout(timer);
     }
   }, [navigate, onUnlock]);
-
-  useEffect(() => {
-    if (isUnlocking) {
-      const timer = setInterval(() => {
-        setProgress(prev => {
-          if (prev >= 100) {
-            clearInterval(timer);
-            setUnlockSuccess(true);
-            setTimeout(() => {
-              sessionStorage.setItem('authenticated', 'true');
-              onUnlock();
-              navigate('/home');
-            }, 2000);
-            return 100;
-          }
-          return prev + 1;
-        });
-      }, 30);
-      return () => clearInterval(timer);
-    }
-  }, [isUnlocking, navigate, onUnlock]);
-
-  useEffect(() => {
-    if (containerRef.current) {
-      const { width, height } = containerRef.current.getBoundingClientRect();
-      setParticles(
-        Array(100).fill().map(() => ({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          size: Math.random() * 5 + 1,
-          speedX: (Math.random() - 0.5) * 3,
-          speedY: (Math.random() - 0.5) * 3
-        }))
-      );
-    }
-  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -118,6 +75,11 @@ const IntroAnimation = ({ onUnlock }) => {
 
     if (hashedPassword === ACCESS_CODE_HASH) {
       setIsUnlocking(true);
+      setTimeout(() => {
+        sessionStorage.setItem('authenticated', 'true');
+        onUnlock();
+        navigate('/home');
+      }, 3000);
     } else {
       setAttempts(prev => prev + 1);
       if (attempts >= 2) {
@@ -133,13 +95,11 @@ const IntroAnimation = ({ onUnlock }) => {
 
   return (
     <Container ref={containerRef}>
-      <CodeAnimation $isUnlocking={isUnlocking}>
-        <div>
-          {[...Array(100)].map((_, index) => (
-            <span key={index}>{generateBinary()}</span>
-          ))}
-        </div>
-      </CodeAnimation>
+      <MatrixBackground $isUnlocking={isUnlocking}>
+        {Array(20).fill().map((_, index) => (
+          <MatrixColumn key={index} />
+        ))}
+      </MatrixBackground>
       {!showCode && (
         <LogoContainer $isUnlocking={isUnlocking} $shake={shake}>
           <LogoImage src={logo} alt="Logo" $isUnlocking={isUnlocking} />
@@ -160,20 +120,7 @@ const IntroAnimation = ({ onUnlock }) => {
           </NumericPad>
         </LogoContainer>
       )}
-      <ParticleContainer>
-        {particles.map((particle, index) => (
-          <Particle
-            key={index}
-            style={{
-              left: `${particle.x}px`,
-              top: `${particle.y}px`,
-              width: `${particle.size}px`,
-              height: `${particle.size}px`
-            }}
-          />
-        ))}
-      </ParticleContainer>
-      {unlockSuccess && <SuccessOverlay />}
+      {isUnlocking && <UnlockingOverlay />}
     </Container>
   );
 };
