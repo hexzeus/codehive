@@ -6,12 +6,13 @@ import {
   CodeAnimation,
   LogoContainer,
   LogoImage,
-  PasswordInput,
-  UnlockButton,
+  PasswordDisplay,
   GlitchText,
   ParticleContainer,
   Particle,
-  ProgressBar
+  ProgressBar,
+  NumericPad,
+  NumericButton
 } from '../components/IntroAnimationStyles';
 import logo from '../logo.png';
 
@@ -19,18 +20,19 @@ const generateBinary = () => {
   return Array(1000).fill().map(() => Math.random() > 0.5 ? '1' : '0').join('');
 };
 
-// Set your access code here
 const ACCESS_CODE = '123456';
 const ACCESS_CODE_HASH = sha256(ACCESS_CODE);
 
 const IntroAnimation = ({ onUnlock }) => {
   const [showCode, setShowCode] = useState(true);
   const [password, setPassword] = useState('');
+  const [passwordDisplay, setPasswordDisplay] = useState('');
   const [isUnlocking, setIsUnlocking] = useState(false);
   const [particles, setParticles] = useState([]);
   const [attempts, setAttempts] = useState(0);
   const [lockoutTime, setLockoutTime] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [shake, setShake] = useState(false);
   const containerRef = useRef(null);
   const navigate = useNavigate();
 
@@ -86,11 +88,22 @@ const IntroAnimation = ({ onUnlock }) => {
     return () => clearInterval(interval);
   }, [lockoutTime]);
 
-  const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    // Update progress based on password length
-    setProgress(Math.min((newPassword.length / ACCESS_CODE.length) * 100, 100));
+  const handleNumericInput = (value) => {
+    if (password.length < ACCESS_CODE.length) {
+      const newPassword = password + value;
+      setPassword(newPassword);
+      setPasswordDisplay('*'.repeat(newPassword.length));
+      setProgress(Math.min((newPassword.length / ACCESS_CODE.length) * 100, 100));
+    }
+  };
+
+  const handleBackspace = () => {
+    if (password.length > 0) {
+      const newPassword = password.slice(0, -1);
+      setPassword(newPassword);
+      setPasswordDisplay('*'.repeat(newPassword.length));
+      setProgress(Math.min((newPassword.length / ACCESS_CODE.length) * 100, 100));
+    }
   };
 
   const handleUnlock = () => {
@@ -105,18 +118,11 @@ const IntroAnimation = ({ onUnlock }) => {
       if (attempts >= 2) {
         setLockoutTime(30);
       }
-      const input = document.querySelector('input');
-      input.classList.add('shake');
-      setTimeout(() => input.classList.remove('shake'), 500);
-      // Reset progress on failed attempt
       setProgress(0);
       setPassword('');
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleUnlock();
+      setPasswordDisplay('');
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
     }
   };
 
@@ -130,23 +136,23 @@ const IntroAnimation = ({ onUnlock }) => {
         </div>
       </CodeAnimation>
       {!showCode && (
-        <LogoContainer $isUnlocking={isUnlocking}>
+        <LogoContainer $isUnlocking={isUnlocking} $shake={shake}>
           <LogoImage src={logo} alt="Logo" $isUnlocking={isUnlocking} />
           <GlitchText $isUnlocking={isUnlocking}>Enter Access Code</GlitchText>
-          <PasswordInput
-            type="password"
-            placeholder="****"
-            value={password}
-            onChange={handlePasswordChange}
-            onKeyDown={handleKeyDown}
-            autoComplete="off"
-            $isUnlocking={isUnlocking}
-            disabled={lockoutTime > 0 || isUnlocking}
-          />
+          <PasswordDisplay>{passwordDisplay}</PasswordDisplay>
           <ProgressBar $progress={progress} />
-          <UnlockButton onClick={handleUnlock} $isUnlocking={isUnlocking} disabled={lockoutTime > 0 || isUnlocking}>
-            {lockoutTime > 0 ? `Locked (${lockoutTime}s)` : 'Unlock'}
-          </UnlockButton>
+          <NumericPad>
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+              <NumericButton key={num} onClick={() => handleNumericInput(num.toString())}>
+                {num}
+              </NumericButton>
+            ))}
+            <NumericButton onClick={() => handleNumericInput('0')}>0</NumericButton>
+            <NumericButton onClick={handleBackspace}>←</NumericButton>
+            <NumericButton onClick={handleUnlock} disabled={lockoutTime > 0 || isUnlocking}>
+              {lockoutTime > 0 ? `Locked (${lockoutTime}s)` : 'Enter'}
+            </NumericButton>
+          </NumericPad>
         </LogoContainer>
       )}
       <ParticleContainer>

@@ -103,6 +103,10 @@ export const LogoContainer = styled.div`
   z-index: 2;
   animation: ${({ $isUnlocking }) =>
     $isUnlocking ? css`${fadeOut} 2s ease-out forwards` : css`${fadeIn} 1.5s ease-out forwards`};
+
+  ${({ $shake }) => $shake && css`
+    animation: ${shake} 0.5s ease-in-out;
+  `}
 `;
 
 export const LogoImage = styled.img`
@@ -120,46 +124,13 @@ export const LogoImage = styled.img`
   }
 `;
 
-export const PasswordInput = styled.input`
-  margin-top: 2rem;
-  padding: 0.5rem;
-  font-size: 1.5rem;
-  border: none;
-  border-radius: 5px;
-  text-align: center;
-  background-color: rgba(0, 255, 0, 0.1);
+export const PasswordDisplay = styled.div`
+  font-family: 'Courier New', monospace;
+  font-size: 24px;
   color: #00ff00;
-  border: 2px solid #00ff00;
-  z-index: 2;
-  animation: ${fadeIn} 1.5s ease-out forwards;
-  transition: all 0.3s ease;
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
-  }
-
-  &.shake {
-    animation: ${shake} 0.5s ease-in-out;
-  }
-`;
-
-export const UnlockButton = styled.button`
-  margin-top: 1rem;
-  padding: 0.5rem 2rem;
-  font-size: 1.2rem;
-  background-color: #00ff00;
-  color: #000000;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #00cc00;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 255, 0, 0.4);
-  }
+  text-shadow: 0 0 5px #00ff00;
+  margin-bottom: 10px;
+  letter-spacing: 5px;
 `;
 
 export const GlitchText = styled.h2`
@@ -194,7 +165,7 @@ export const Particle = styled.div`
 export const ProgressBar = styled.div`
   width: 100%;
   height: 5px;
-  background-color: #ddd;
+  background-color: rgba(0, 255, 0, 0.2);
   margin-top: 10px;
   position: relative;
 
@@ -205,7 +176,40 @@ export const ProgressBar = styled.div`
     left: 0;
     height: 100%;
     width: ${props => props.$progress}%;
-    background-color: #4CAF50;
+    background-color: #00ff00;
+    box-shadow: 0 0 10px #00ff00;
     transition: width 0.3s ease-in-out;
+  }
+`;
+
+export const NumericPad = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+`;
+
+export const NumericButton = styled.button`
+  background-color: rgba(0, 255, 0, 0.1);
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 10px #00ff00;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 `;
