@@ -12,7 +12,8 @@ import {
   Particle,
   ProgressBar,
   NumericPad,
-  NumericButton
+  NumericButton,
+  SuccessOverlay
 } from '../components/IntroAnimationStyles';
 import logo from '../logo.png';
 
@@ -28,6 +29,7 @@ const IntroAnimation = ({ onUnlock }) => {
   const [password, setPassword] = useState('');
   const [passwordDisplay, setPasswordDisplay] = useState('');
   const [isUnlocking, setIsUnlocking] = useState(false);
+  const [unlockSuccess, setUnlockSuccess] = useState(false);
   const [particles, setParticles] = useState([]);
   const [attempts, setAttempts] = useState(0);
   const [lockoutTime, setLockoutTime] = useState(0);
@@ -52,9 +54,12 @@ const IntroAnimation = ({ onUnlock }) => {
         setProgress(prev => {
           if (prev >= 100) {
             clearInterval(timer);
-            sessionStorage.setItem('authenticated', 'true');
-            onUnlock();
-            navigate('/home');
+            setUnlockSuccess(true);
+            setTimeout(() => {
+              sessionStorage.setItem('authenticated', 'true');
+              onUnlock();
+              navigate('/home');
+            }, 2000);
             return 100;
           }
           return prev + 1;
@@ -168,6 +173,7 @@ const IntroAnimation = ({ onUnlock }) => {
           />
         ))}
       </ParticleContainer>
+      {unlockSuccess && <SuccessOverlay />}
     </Container>
   );
 };

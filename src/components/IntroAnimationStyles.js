@@ -49,6 +49,17 @@ const shake = keyframes`
   100% { transform: translateX(0); }
 `;
 
+const successPulse = keyframes`
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(20);
+    opacity: 0;
+  }
+`;
+
 export const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -71,8 +82,8 @@ export const CodeAnimation = styled.div`
   background: rgba(0, 0, 0, 0.9);
   overflow: hidden;
   z-index: 1;
-  transition: opacity 2s ease-out;
   opacity: ${({ $isUnlocking }) => ($isUnlocking ? 0 : 1)};
+  transition: opacity 1s ease-out;
 
   & > div {
     position: absolute;
@@ -102,11 +113,15 @@ export const LogoContainer = styled.div`
   align-items: center;
   z-index: 2;
   animation: ${({ $isUnlocking }) =>
-    $isUnlocking ? css`${fadeOut} 2s ease-out forwards` : css`${fadeIn} 1.5s ease-out forwards`};
+    $isUnlocking
+      ? css`${fadeOut} 1s ease-out forwards`
+      : css`${fadeIn} 1.5s ease-out forwards`};
 
-  ${({ $shake }) => $shake && css`
-    animation: ${shake} 0.5s ease-in-out;
-  `}
+  ${({ $shake }) =>
+    $shake &&
+    css`
+      animation: ${shake} 0.5s ease-in-out;
+    `}
 `;
 
 export const LogoImage = styled.img`
@@ -212,4 +227,15 @@ export const NumericButton = styled.button`
     opacity: 0.5;
     cursor: not-allowed;
   }
+`;
+
+export const SuccessOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00ff00;
+  z-index: 1000;
+  animation: ${successPulse} 2s ease-out forwards;
 `;
