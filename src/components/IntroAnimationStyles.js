@@ -190,3 +190,22 @@ export const Particle = styled.div`
     100% { transform: translateY(-100vh) translateX(100vw); }
   `} 20s linear infinite;
 `;
+
+export const ProgressBar = styled.div`
+  width: 100%;
+  height: 5px;
+  background-color: #ddd;
+  margin-top: 10px;
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: ${props => props.$progress}%;
+    background-color: #4CAF50;
+    transition: width 0.3s ease-in-out;
+  }
+`;

@@ -16,8 +16,8 @@ export const NavContainer = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: ${({ scrolled }) => scrolled ? 'rgba(0, 20, 0, 0.9)' : 'transparent'};
-  transition: background 0.3s ease-in-out;
+  background-color: ${props => props.$scrolled ? 'rgba(0, 0, 0, 0.8)' : 'transparent'};
+  transition: background-color 0.3s ease;
   z-index: 1000;
   border-bottom: 1px solid #00ff00;
 `;
@@ -180,5 +180,39 @@ export const ThemeToggle = styled.button`
   &:hover {
     color: #00ff00;
     text-shadow: 0 0 10px #00ff00;
+  }
+`;
+
+export const MatrixToggle = styled.button`
+  background: none;
+  border: none;
+  color: ${props => props.$active ? '#00ff00' : '#ffffff'};
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #00ff00;
+  }
+  .tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  &:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
   }
 `;

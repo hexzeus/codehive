@@ -6,6 +6,7 @@ import IntroAnimation from './components/IntroAnimation';
 import ScrollToTop from './components/ScrollToTop';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingSpinner from './components/LoadingSpinner';
+import MatrixRain from './components/MatrixRain';
 
 // Lazy loading for better performance
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -14,12 +15,25 @@ const ServicesPage = lazy(() => import('./pages/ServicesPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
-const AppContent = ({ isUnlocked, onUnlock }) => {
-  const location = useLocation();
+// Add this new component
+const ToggleableMatrixRain = ({ isActive }) => {
+  if (!isActive) return null;
+  return <MatrixRain />;
+};
 
+const AppContent = ({ isUnlocked, onUnlock, isMatrixRainActive, toggleMatrixRain }) => {
+  const location = useLocation();
   return (
     <>
-      {(location.pathname !== '/' || isUnlocked) && <NavBar isUnlocked={isUnlocked} location={location.pathname} />}
+      {(location.pathname !== '/' || isUnlocked) && (
+        <NavBar
+          isUnlocked={isUnlocked}
+          location={location.pathname}
+          toggleMatrixRain={toggleMatrixRain}
+          isMatrixRainActive={isMatrixRainActive}
+        />
+      )}
+      <ToggleableMatrixRain isActive={isMatrixRainActive} />
       <ErrorBoundary>
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
@@ -39,9 +53,17 @@ const AppContent = ({ isUnlocked, onUnlock }) => {
 
 function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
+  const [isMatrixRainActive, setIsMatrixRainActive] = useState(false);
 
   const handleUnlock = () => {
     setIsUnlocked(true);
+  };
+
+  const toggleMatrixRain = () => {
+    setIsMatrixRainActive(prev => {
+      console.log('Toggling Matrix Rain:', !prev); // Add this line for debugging
+      return !prev;
+    });
   };
 
   return (
@@ -49,7 +71,12 @@ function App() {
       <GlobalStyles />
       <Router>
         <ScrollToTop />
-        <AppContent isUnlocked={isUnlocked} onUnlock={handleUnlock} />
+        <AppContent
+          isUnlocked={isUnlocked}
+          onUnlock={handleUnlock}
+          isMatrixRainActive={isMatrixRainActive}
+          toggleMatrixRain={toggleMatrixRain}
+        />
       </Router>
     </>
   );

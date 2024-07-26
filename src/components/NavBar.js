@@ -7,13 +7,13 @@ import {
   NavLink,
   DrawerLinks,
   DesktopNav,
-  ThemeToggle
+  MatrixToggle
 } from './NavBarStyles';
 import logo from '../logo.png';
 import { Link, useLocation } from 'react-router-dom';
-import { FaHome, FaInfo, FaServicestack, FaEnvelope, FaSun, FaMoon } from 'react-icons/fa';
+import { FaHome, FaInfo, FaServicestack, FaEnvelope, FaCode } from 'react-icons/fa';
 
-const NavBar = ({ toggleTheme, isDarkTheme }) => {
+const NavBar = ({ toggleMatrixRain, isMatrixRainActive }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -36,30 +36,33 @@ const NavBar = ({ toggleTheme, isDarkTheme }) => {
     };
   }, [scrolled]);
 
+  const handleMatrixToggle = (e) => {
+    e.preventDefault();
+    console.log('Matrix toggle clicked'); // Add this line for debugging
+    toggleMatrixRain();
+  };
+
   return (
-    <NavContainer scrolled={scrolled}>
+    <NavContainer $scrolled={scrolled}>
       <BrandContainer as={Link} to="/home">
         <img className="logo" src={logo} alt="Logo" />
         <span className="brand-name">IVES DESIGN</span>
       </BrandContainer>
-
       <DesktopNav>
         <NavLink to="/home" $active={location.pathname === '/home'}><FaHome /> Home</NavLink>
         <NavLink to="/about" $active={location.pathname === '/about'}><FaInfo /> About</NavLink>
         <NavLink to="/services" $active={location.pathname === '/services'}><FaServicestack /> Services</NavLink>
         <NavLink to="/contact" $active={location.pathname === '/contact'}><FaEnvelope /> Contact</NavLink>
       </DesktopNav>
-
-      <ThemeToggle onClick={toggleTheme}>
-        {isDarkTheme ? <FaSun /> : <FaMoon />}
-      </ThemeToggle>
-
+      <MatrixToggle onClick={handleMatrixToggle} $active={isMatrixRainActive}>
+        <FaCode />
+        <span className="tooltip">Toggle Matrix Rain</span>
+      </MatrixToggle>
       <MenuButton onClick={toggleDrawer} $isOpen={isOpen}>
         <span></span>
         <span></span>
         <span></span>
       </MenuButton>
-
       <Drawer $isOpen={isOpen}>
         <DrawerLinks>
           <NavLink to="/home" onClick={toggleDrawer} $active={location.pathname === '/home'}><FaHome /> Home</NavLink>

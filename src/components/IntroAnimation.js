@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { sha256 } from 'js-sha256';
 import {
   Container,
   CodeAnimation,
@@ -9,7 +10,8 @@ import {
   UnlockButton,
   GlitchText,
   ParticleContainer,
-  Particle
+  Particle,
+  ProgressBar
 } from '../components/IntroAnimationStyles';
 import logo from '../logo.png';
 
@@ -17,11 +19,18 @@ const generateBinary = () => {
   return Array(1000).fill().map(() => Math.random() > 0.5 ? '1' : '0').join('');
 };
 
+// Set your access code here
+const ACCESS_CODE = '123456';
+const ACCESS_CODE_HASH = sha256(ACCESS_CODE);
+
 const IntroAnimation = ({ onUnlock }) => {
   const [showCode, setShowCode] = useState(true);
   const [password, setPassword] = useState('');
   const [isUnlocking, setIsUnlocking] = useState(false);
   const [particles, setParticles] = useState([]);
+  const [attempts, setAttempts] = useState(0);
+  const [lockoutTime, setLockoutTime] = useState(0);
+  const [progress, setProgress] = useState(0);
   const containerRef = useRef(null);
   const navigate = useNavigate();
 
@@ -30,19 +39,26 @@ const IntroAnimation = ({ onUnlock }) => {
       onUnlock();
       navigate('/home');
     } else {
-      const timer = setTimeout(() => setShowCode(false), 3000); // 3 seconds for initial animation
+      const timer = setTimeout(() => setShowCode(false), 3000);
       return () => clearTimeout(timer);
     }
   }, [navigate, onUnlock]);
 
   useEffect(() => {
     if (isUnlocking) {
-      const timer = setTimeout(() => {
-        sessionStorage.setItem('authenticated', 'true');
-        onUnlock();
-        navigate('/home');
-      }, 3000); // 3 second delay for unlock animation
-      return () => clearTimeout(timer);
+      const timer = setInterval(() => {
+        setProgress(prev => {
+          if (prev >= 100) {
+            clearInterval(timer);
+            sessionStorage.setItem('authenticated', 'true');
+            onUnlock();
+            navigate('/home');
+            return 100;
+          }
+          return prev + 1;
+        });
+      }, 30);
+      return () => clearInterval(timer);
     }
   }, [isUnlocking, navigate, onUnlock]);
 
@@ -61,18 +77,40 @@ const IntroAnimation = ({ onUnlock }) => {
     }
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (lockoutTime > 0) {
+        setLockoutTime(time => time - 1);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [lockoutTime]);
+
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    // Update progress based on password length
+    setProgress(Math.min((newPassword.length / ACCESS_CODE.length) * 100, 100));
   };
 
   const handleUnlock = () => {
-    if (password === '55555555') {
+    if (lockoutTime > 0) return;
+
+    const hashedPassword = sha256(password);
+
+    if (hashedPassword === ACCESS_CODE_HASH) {
       setIsUnlocking(true);
     } else {
-      // Add a shake animation to the input
+      setAttempts(prev => prev + 1);
+      if (attempts >= 2) {
+        setLockoutTime(30);
+      }
       const input = document.querySelector('input');
       input.classList.add('shake');
       setTimeout(() => input.classList.remove('shake'), 500);
+      // Reset progress on failed attempt
+      setProgress(0);
+      setPassword('');
     }
   };
 
@@ -103,9 +141,11 @@ const IntroAnimation = ({ onUnlock }) => {
             onKeyDown={handleKeyDown}
             autoComplete="off"
             $isUnlocking={isUnlocking}
+            disabled={lockoutTime > 0 || isUnlocking}
           />
-          <UnlockButton onClick={handleUnlock} $isUnlocking={isUnlocking}>
-            Unlock
+          <ProgressBar $progress={progress} />
+          <UnlockButton onClick={handleUnlock} $isUnlocking={isUnlocking} disabled={lockoutTime > 0 || isUnlocking}>
+            {lockoutTime > 0 ? `Locked (${lockoutTime}s)` : 'Unlock'}
           </UnlockButton>
         </LogoContainer>
       )}
