@@ -1,5 +1,19 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+
+export const NavContainer = styled.nav`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: ${({ scrolled }) => scrolled ? 'rgba(10, 10, 10, 0.9)' : 'transparent'};
+  transition: background 0.3s ease-in-out;
+  z-index: 1000;
+`;
 
 export const Drawer = styled.div`
   position: fixed;
@@ -7,76 +21,103 @@ export const Drawer = styled.div`
   right: 0;
   height: 100%;
   width: 250px;
-  background: rgba(10, 10, 10, 0.9); /* Darker, more transparent background */
+  background: rgba(10, 10, 10, 0.95);
   display: flex;
   flex-direction: column;
   align-items: center;
   transform: ${({ $isOpen }) => ($isOpen ? 'translateX(0)' : 'translateX(100%)')};
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
-  padding-top: 3rem; /* Space for the logo */
+  padding-top: 5rem;
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
 `;
 
 export const MenuButton = styled.button`
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
+  display: none;
   background: none;
   border: none;
-  color: #e0e0e0;
-  font-size: 2rem;
   cursor: pointer;
-  z-index: 1001; /* Ensure it's above the drawer */
+  z-index: 1001;
+  
+  span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #e0e0e0;
+    margin: 5px 0;
+    transition: all 0.3s ease-in-out;
+  }
 
-  &:hover {
-    color: #1e90ff;
+  ${({ $isOpen }) => $isOpen && css`
+    span:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+  `}
+
+  @media (max-width: 768px) {
+    display: block;
   }
 `;
 
 export const BrandContainer = styled(Link)`
   display: flex;
   align-items: center;
-  background: rgba(20, 20, 20, 0.95); /* Darker, more transparent background */
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   text-decoration: none;
-  margin: 1rem;
   color: #1e90ff;
   font-weight: bold;
   font-family: 'Merriweather', serif;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-
+  
   .logo {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     margin-right: 0.5rem;
-    filter: drop-shadow(0 0 10px #1e90ff);
+    transition: transform 0.3s ease;
+  }
+  
+  .brand-name {
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
   }
 
-  .brand-name {
-    font-size: 1.5rem;
+  &:hover {
+    .logo {
+      transform: rotate(10deg);
+    }
+    .brand-name {
+      color: #ff6ad5;
+    }
   }
 `;
 
 export const NavLink = styled(Link)`
-  margin: 1rem 0;
+  margin: 0 1rem;
   font-weight: bold;
   color: #e0e0e0;
+  text-decoration: none;
   position: relative;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  transition: color 0.3s ease;
 
   &:after {
     content: '';
-    display: block;
-    width: 0;
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
     height: 2px;
-    background: #1e90ff;
-    transition: width 0.3s;
+    bottom: -5px;
+    left: 0;
+    background-color: #1e90ff;
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
   }
 
   &:hover {
@@ -84,13 +125,46 @@ export const NavLink = styled(Link)`
   }
 
   &:hover:after {
-    width: 100%;
+    transform: scaleX(1);
+    transform-origin: bottom left;
   }
+
+  ${({ $active }) => $active && css`
+    color: #1e90ff;
+    &:after {
+      transform: scaleX(1);
+    }
+  `}
 `;
 
 export const DrawerLinks = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 2rem;
+  
+  ${NavLink} {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+  }
+`;
+
+export const DesktopNav = styled.div`
+  display: flex;
+  
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+export const ThemeToggle = styled.button`
+  background: none;
+  border: none;
+  color: #e0e0e0;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #1e90ff;
+  }
 `;
