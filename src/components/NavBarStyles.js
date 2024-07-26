@@ -7,7 +7,29 @@ const glowAnimation = keyframes`
   100% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #00ff00, 0 0 20px #00ff00; }
 `;
 
-export const NavContainer = styled.nav`
+export const NavBackground = styled.div.attrs(props => ({
+  style: {
+    background: `linear-gradient(to right, 
+      rgba(0, 20, 0, ${Math.min(props.$scrollProgress / 100, 0.9)}) 0%, 
+      rgba(0, 40, 0, ${Math.min(props.$scrollProgress / 100, 0.9)}) 50%, 
+      rgba(0, 60, 0, ${Math.min(props.$scrollProgress / 100, 0.9)}) 100%)`,
+    backdropFilter: `blur(${props.$scrollProgress / 10}px)`
+  },
+}))`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  transition: all 0.3s ease;
+  z-index: 999;
+`;
+
+export const NavContainer = styled.nav.attrs(props => ({
+  style: {
+    borderBottom: `1px solid rgba(0, 255, 0, ${props.$scrollProgress / 200})`
+  },
+}))`
   position: fixed;
   top: 0;
   left: 0;
@@ -16,10 +38,9 @@ export const NavContainer = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: ${props => props.$scrolled ? 'rgba(0, 0, 0, 0.8)' : 'transparent'};
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   z-index: 1000;
-  border-bottom: 1px solid #00ff00;
+  height: 60px;
 `;
 
 export const Drawer = styled.div`
@@ -169,36 +190,24 @@ export const DesktopNav = styled.div`
   }
 `;
 
-export const ThemeToggle = styled.button`
-  background: none;
-  border: none;
-  color: #00ff00;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-
-  &:hover {
-    color: #00ff00;
-    text-shadow: 0 0 10px #00ff00;
-  }
-`;
-
 export const MatrixToggle = styled.button`
   background: none;
   border: none;
   color: ${props => props.$active ? '#00ff00' : '#ffffff'};
   font-size: 1.5rem;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
 
   &:hover {
     color: #00ff00;
+    transform: scale(1.1);
   }
+
   .tooltip {
     visibility: hidden;
     width: 120px;
-    background-color: #555;
-    color: #fff;
+    background-color: rgba(0, 20, 0, 0.9);
+    color: #00ff00;
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
@@ -208,7 +217,7 @@ export const MatrixToggle = styled.button`
     left: 50%;
     margin-left: -60px;
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s, visibility 0.3s;
   }
 
   &:hover .tooltip {
