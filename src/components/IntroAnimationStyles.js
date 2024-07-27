@@ -67,6 +67,15 @@ export const Key = styled.button`
   &:active {
     transform: scale(0.95);
   }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    &:hover, &:focus, &:active {
+      background-color: rgba(255, 255, 255, 0.05);
+      transform: none;
+    }
+  }
 `;
 
 export const StatusIndicator = styled.div`
@@ -103,4 +112,11 @@ export const TransitionOverlay = styled.div`
   ${props => props.$status === 'success' && css`
     opacity: 1;
   `}
+`;
+
+export const LockoutTimer = styled.div`
+  font-size: 24px;
+  color: #ff0000;
+  margin-top: 20px;
+  font-weight: bold;
 `;
