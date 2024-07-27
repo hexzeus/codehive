@@ -24,9 +24,19 @@ const ToggleableMatrixRain = ({ isActive }) => {
   return <MatrixRain />;
 };
 
-const AppContent = ({ isUnlocked, onUnlock, isMatrixRainActive, toggleMatrixRain, cart, fetchCart }) => {
+const AppContent = ({
+  isUnlocked,
+  onUnlock,
+  isMatrixRainActive,
+  toggleMatrixRain,
+  cart,
+  fetchCart,
+  handleUpdateCartQty,
+  handleRemoveFromCart,
+  handleEmptyCart,
+  handleAddToCart
+}) => {
   const location = useLocation();
-
   return (
     <>
       {(location.pathname !== '/' || isUnlocked) && (
@@ -47,8 +57,16 @@ const AppContent = ({ isUnlocked, onUnlock, isMatrixRainActive, toggleMatrixRain
             <Route path="/about" element={<AboutPage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/storefront" element={<StoreFront />} />
-            <Route path="/cart" element={<Cart cart={cart} fetchCart={fetchCart} />} />
+            <Route path="/storefront" element={<StoreFront handleAddToCart={handleAddToCart} />} />
+            <Route path="/cart" element={
+              <Cart
+                cart={cart}
+                fetchCart={fetchCart}
+                handleUpdateCartQty={handleUpdateCartQty}
+                handleRemoveFromCart={handleRemoveFromCart}
+                handleEmptyCart={handleEmptyCart}
+              />
+            } />
             <Route path="/checkout" element={<Checkout cart={cart} />} />
             <Route path="/404" element={<NotFoundPage />} />
             <Route path="*" element={<Navigate to="/404" replace />} />
@@ -70,6 +88,42 @@ function App() {
       setCart(retrievedCart);
     } catch (error) {
       console.error('Error fetching cart:', error);
+    }
+  }, []);
+
+  const handleAddToCart = useCallback(async (productId, quantity) => {
+    try {
+      const { cart } = await commerce.cart.add(productId, quantity);
+      setCart(cart);
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
+  }, []);
+
+  const handleUpdateCartQty = useCallback(async (lineItemId, quantity) => {
+    try {
+      const { cart } = await commerce.cart.update(lineItemId, { quantity });
+      setCart(cart);
+    } catch (error) {
+      console.error('Error updating cart quantity:', error);
+    }
+  }, []);
+
+  const handleRemoveFromCart = useCallback(async (lineItemId) => {
+    try {
+      const { cart } = await commerce.cart.remove(lineItemId);
+      setCart(cart);
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+    }
+  }, []);
+
+  const handleEmptyCart = useCallback(async () => {
+    try {
+      const { cart } = await commerce.cart.empty();
+      setCart(cart);
+    } catch (error) {
+      console.error('Error emptying cart:', error);
     }
   }, []);
 
@@ -97,6 +151,10 @@ function App() {
           toggleMatrixRain={toggleMatrixRain}
           cart={cart}
           fetchCart={fetchCart}
+          handleAddToCart={handleAddToCart}
+          handleUpdateCartQty={handleUpdateCartQty}
+          handleRemoveFromCart={handleRemoveFromCart}
+          handleEmptyCart={handleEmptyCart}
         />
       </Router>
     </>
