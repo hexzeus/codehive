@@ -225,3 +225,38 @@ export const MatrixToggle = styled.button`
     opacity: 1;
   }
 `;
+
+export const CartIcon = styled.div`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #00ff00;
+    color: #000000;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+`;
+
+export const CartLink = styled(NavLink)`
+  position: relative;
+
+  ${CartIcon} {
+    margin-right: 5px;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 20px;
+  }
+`;

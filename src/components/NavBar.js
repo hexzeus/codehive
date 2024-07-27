@@ -8,15 +8,18 @@ import {
   DrawerLinks,
   DesktopNav,
   MatrixToggle,
-  NavBackground
+  NavBackground,
+  CartIcon
 } from './NavBarStyles';
 import logo from '../logo.png';
 import { Link, useLocation } from 'react-router-dom';
-import { FaHome, FaInfo, FaServicestack, FaEnvelope, FaCode } from 'react-icons/fa';
+import { FaHome, FaInfo, FaServicestack, FaEnvelope, FaCode, FaShoppingCart } from 'react-icons/fa';
+import commerce from '../lib/commerce';
 
 const NavBar = ({ toggleMatrixRain, isMatrixRainActive }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [cartItems, setCartItems] = useState(0);
   const location = useLocation();
 
   const toggleDrawer = () => {
@@ -33,7 +36,18 @@ const NavBar = ({ toggleMatrixRain, isMatrixRainActive }) => {
       setScrollProgress(Math.min(progress, 100));
     };
 
+    const fetchCart = async () => {
+      try {
+        const cart = await commerce.cart.retrieve();
+        setCartItems(cart.total_items);
+      } catch (error) {
+        console.error('Error fetching cart:', error);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
+    fetchCart();
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -55,6 +69,13 @@ const NavBar = ({ toggleMatrixRain, isMatrixRainActive }) => {
           <NavLink to="/about" $active={location.pathname === '/about'}><FaInfo /> About</NavLink>
           <NavLink to="/services" $active={location.pathname === '/services'}><FaServicestack /> Services</NavLink>
           <NavLink to="/contact" $active={location.pathname === '/contact'}><FaEnvelope /> Contact</NavLink>
+          <NavLink to="/cart" $active={location.pathname === '/cart'}>
+            <CartIcon>
+              <FaShoppingCart />
+              {cartItems > 0 && <span className="cart-count">{cartItems}</span>}
+            </CartIcon>
+            Cart
+          </NavLink>
         </DesktopNav>
         <MatrixToggle onClick={handleMatrixToggle} $active={isMatrixRainActive}>
           <FaCode />
@@ -71,6 +92,13 @@ const NavBar = ({ toggleMatrixRain, isMatrixRainActive }) => {
             <NavLink to="/about" onClick={toggleDrawer} $active={location.pathname === '/about'}><FaInfo /> About</NavLink>
             <NavLink to="/services" onClick={toggleDrawer} $active={location.pathname === '/services'}><FaServicestack /> Services</NavLink>
             <NavLink to="/contact" onClick={toggleDrawer} $active={location.pathname === '/contact'}><FaEnvelope /> Contact</NavLink>
+            <NavLink to="/cart" onClick={toggleDrawer} $active={location.pathname === '/cart'}>
+              <CartIcon>
+                <FaShoppingCart />
+                {cartItems > 0 && <span className="cart-count">{cartItems}</span>}
+              </CartIcon>
+              Cart
+            </NavLink>
           </DrawerLinks>
         </Drawer>
       </NavContainer>
