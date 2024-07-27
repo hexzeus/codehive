@@ -6,8 +6,13 @@ const fadeIn = keyframes`
 `;
 
 const slideUp = keyframes`
-  from { transform: translateY(20px); opacity: 0; }
+  from { transform: translateY(10px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
+`;
+
+const typeWriter = keyframes`
+  from { width: 0; }
+  to { width: 100%; }
 `;
 
 export const Container = styled.div`
@@ -18,6 +23,7 @@ export const Container = styled.div`
   min-height: 100vh;
   background-color: #000;
   padding: 20px;
+  overflow: hidden;
 `;
 
 export const Logo = styled.img`
@@ -39,6 +45,16 @@ export const CodeInput = styled.input`
   color: #fff;
   margin-bottom: 30px;
   animation: ${slideUp} 0.5s ease-out;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #fff;
+  }
+`;
+
+export const KeypadWrapper = styled.div`
+  perspective: 1000px;
 `;
 
 export const Keypad = styled.div`
@@ -71,10 +87,6 @@ export const Key = styled.button`
   &:disabled {
     opacity: 0.3;
     cursor: not-allowed;
-    &:hover, &:focus, &:active {
-      background-color: rgba(255, 255, 255, 0.05);
-      transform: none;
-    }
   }
 `;
 
@@ -83,7 +95,7 @@ export const StatusIndicator = styled.div`
   height: 10px;
   border-radius: 50%;
   margin-top: 20px;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 
   ${props => props.$status === 'idle' && css`
     background-color: #333;
@@ -91,10 +103,12 @@ export const StatusIndicator = styled.div`
 
   ${props => props.$status === 'success' && css`
     background-color: #00ff00;
+    box-shadow: 0 0 10px #00ff00;
   `}
 
   ${props => props.$status === 'error' && css`
     background-color: #ff0000;
+    box-shadow: 0 0 10px #ff0000;
   `}
 `;
 
@@ -104,14 +118,39 @@ export const TransitionOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
 
-  ${props => props.$status === 'success' && css`
+  ${props => props.$show && css`
     opacity: 1;
+    visibility: visible;
   `}
+`;
+
+export const TransitionContent = styled.div`
+  color: #00ff00;
+  text-align: center;
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: ${fadeIn} 1s ease-out 0.5s forwards;
+  }
+
+  p {
+    font-size: 18px;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: 0.15em;
+    animation: ${typeWriter} 3s steps(40, end);
+  }
 `;
 
 export const LockoutTimer = styled.div`
@@ -119,4 +158,20 @@ export const LockoutTimer = styled.div`
   color: #ff0000;
   margin-top: 20px;
   font-weight: bold;
+`;
+
+export const ErrorMessage = styled.div`
+  color: #ff0000;
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+  animation: ${slideUp} 0.3s ease-out;
+`;
+
+export const SuccessMessage = styled.div`
+  color: #00ff00;
+  margin-top: 10px;
+  font-size: 18px;
+  text-align: center;
+  animation: ${slideUp} 0.3s ease-out;
 `;

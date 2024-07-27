@@ -32,8 +32,8 @@ const Step = styled.div`
 `;
 
 const StepIcon = styled.div`
-  background-color: ${props => props.active ? '#00ff00' : '#003300'};
-  color: ${props => props.active ? '#000' : '#00ff00'};
+  background-color: ${props => props.$active ? '#00ff00' : '#003300'};
+  color: ${props => props.$active ? '#000' : '#00ff00'};
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -47,7 +47,7 @@ const StepIcon = styled.div`
 
 const StepLabel = styled.span`
   font-size: 0.9rem;
-  color: ${props => props.active ? '#00ff00' : '#006600'};
+  color: ${props => props.$active ? '#00ff00' : '#006600'};
 `;
 
 const FormContainer = styled.form`
@@ -190,12 +190,12 @@ const Checkout = ({ cart }) => {
             <StepContainer>
                 {steps.map((step, index) => (
                     <Step key={step}>
-                        <StepIcon active={activeStep >= index}>
+                        <StepIcon $active={activeStep >= index}>
                             {index === 0 && <FaTruck />}
                             {index === 1 && <FaCreditCard />}
                             {index === 2 && <FaLock />}
                         </StepIcon>
-                        <StepLabel active={activeStep >= index}>{step}</StepLabel>
+                        <StepLabel $active={activeStep >= index}>{step}</StepLabel>
                     </Step>
                 ))}
             </StepContainer>

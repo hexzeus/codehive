@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import commerce from '../lib/commerce';
 import { HomePageStyles } from '../styles/HomePageStyles';
 import logo from '../logo.png';
-import Cart from '../components/Cart';
 
 const generateBinary = () => {
   return Array(1000).fill().map(() => Math.random() > 0.5 ? '1' : '0').join('');
@@ -24,23 +22,12 @@ const HomePage = () => {
     Testimonial,
     ContactCTA,
     ParticleContainer,
-    Particle,
-    ProductSection,
-    ProductCard,
-    ProductImage,
-    ProductName,
-    ProductPrice,
-    LoadingSpinner,
-    ErrorMessage
+    Particle
   } = HomePageStyles;
 
   const heroRef = useRef(null);
   const [particles, setParticles] = useState([]);
   const containerRef = useRef(null);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [cart, setCart] = useState(null);
 
   const handleScroll = useCallback(() => {
     const scrollPosition = window.scrollY;
@@ -66,43 +53,6 @@ const HomePage = () => {
           speedY: (Math.random() - 0.5) * 2
         }))
       );
-    }
-  }, []);
-
-  const fetchProducts = useCallback(async () => {
-    try {
-      setLoading(true);
-      const { data } = await commerce.products.list();
-      setProducts(data);
-      setError(null);
-    } catch (error) {
-      console.error('There was an error fetching the products', error);
-      setError('Failed to load products. Please try again later.');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  const fetchCart = useCallback(async () => {
-    try {
-      const cart = await commerce.cart.retrieve();
-      setCart(cart);
-    } catch (error) {
-      console.error('There was an error fetching the cart', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchProducts();
-    fetchCart();
-  }, [fetchProducts, fetchCart]);
-
-  const handleAddToCart = useCallback(async (productId) => {
-    try {
-      const { cart } = await commerce.cart.add(productId, 1);
-      setCart(cart);
-    } catch (error) {
-      console.error('There was an error adding the item to the cart', error);
     }
   }, []);
 
@@ -134,31 +84,6 @@ const HomePage = () => {
           <p>Creating intuitive experiences that delight users</p>
         </FeatureCard>
       </FeaturesSection>
-      <ProductSection>
-        <h2>Our Products</h2>
-        {loading && <LoadingSpinner />}
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-        {!loading && !error && products && products.length > 0 ? (
-          products.map((product) => (
-            <ProductCard key={product.id}>
-              {product.image && (
-                <ProductImage
-                  src={product.image.url}
-                  alt={product.name}
-                />
-              )}
-              <ProductName>{product.name}</ProductName>
-              <ProductPrice>{product.price.formatted_with_symbol}</ProductPrice>
-              <CTAButton onClick={() => handleAddToCart(product.id)}>
-                Add to Cart
-              </CTAButton>
-            </ProductCard>
-          ))
-        ) : (
-          !loading && !error && <p>No products available at the moment.</p>
-        )}
-      </ProductSection>
-      <Cart cart={cart} />
       <ProjectsShowcase>
         <h2>Featured Projects</h2>
         <ProjectCard>

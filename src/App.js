@@ -17,6 +17,7 @@ const ContactPage = lazy(() => import('./pages/ContactPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const Cart = lazy(() => import('./components/Cart'));
 const Checkout = lazy(() => import('./components/Checkout'));
+const StoreFront = lazy(() => import('./components/StoreFront'));
 
 const ToggleableMatrixRain = ({ isActive }) => {
   if (!isActive) return null;
@@ -46,6 +47,7 @@ const AppContent = ({ isUnlocked, onUnlock, isMatrixRainActive, toggleMatrixRain
             <Route path="/about" element={<AboutPage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/storefront" element={<StoreFront />} />
             <Route path="/cart" element={<Cart cart={cart} fetchCart={fetchCart} />} />
             <Route path="/checkout" element={<Checkout cart={cart} />} />
             <Route path="/404" element={<NotFoundPage />} />
