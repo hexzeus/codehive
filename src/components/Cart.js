@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { FaTrash, FaPlus, FaMinus, FaShoppingCart } from 'react-icons/fa';
@@ -127,39 +127,104 @@ const CheckoutButton = styled.button`
   }
 `;
 
-const Cart = ({ cart: propCart, fetchCart }) => {
-    const [cart, setCart] = useState(propCart);
+const Cart = ({ fetchCart }) => {
+    const [cart, setCart] = useState(null);
+    const [cartCache, setCartCache] = useState(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!cart && fetchCart) {
-            fetchCart();
-        }
-    }, [cart, fetchCart]);
-
-    useEffect(() => {
-        setCart(propCart);
-    }, [propCart]);
-
-    const handleUpdateCartQty = async (lineItemId, quantity) => {
+    const fetchCartData = useCallback(async () => {
         try {
-            const response = await commerce.cart.update(lineItemId, { quantity });
-            setCart(response.cart);
-            if (fetchCart) fetchCart(); // Refresh the cart in the parent component
+            const cart = await commerce.cart.retrieve();
+            setCartCache(cart);
+            setCart(cart);
         } catch (error) {
-            console.error('Error updating cart quantity:', error);
+            console.error('Error fetching cart:', error);
         }
-    };
+    }, []);
 
-    const handleRemoveFromCart = async (lineItemId) => {
-        try {
-            const response = await commerce.cart.remove(lineItemId);
-            setCart(response.cart);
-            if (fetchCart) fetchCart(); // Refresh the cart in the parent component
-        } catch (error) {
-            console.error('Error removing item from cart:', error);
+    useEffect(() => {
+        if (!cartCache) {
+            fetchCartData();
+        } else {
+            setCart(cartCache);
         }
-    };
+    }, [cartCache, fetchCartData, setCart]);
+
+    const handleUpdateCartQty = useCallback(
+        async (lineItemId, quantity) => {
+            try {
+                // Optimistically update the cart in the UI
+                setCart((prevCart) => {
+                    const updatedCart = { ...prevCart };
+                    const itemIndex = updatedCart.line_items.findIndex(
+                        (item) => item.id === lineItemId
+                    );
+                    if (itemIndex !== -1) {
+                        updatedCart.line_items[itemIndex].quantity = quantity;
+                        updatedCart.total_items = updatedCart.line_items.reduce(
+                            (total, item) => total + item.quantity,
+                            0
+                        );
+                    }
+                    return updatedCart;
+                });
+
+                // Call the Commerce.js API to update the cart
+                const response = await commerce.cart.update(lineItemId, { quantity });
+                setCartCache(response.cart);
+                setCart(response.cart);
+            } catch (error) {
+                console.error('Error updating cart quantity:', error);
+                // Revert the optimistic update if the API call fails
+                setCart((prevCart) => {
+                    const updatedCart = { ...prevCart };
+                    const itemIndex = updatedCart.line_items.findIndex(
+                        (item) => item.id === lineItemId
+                    );
+                    if (itemIndex !== -1) {
+                        updatedCart.line_items[itemIndex].quantity = prevCart.line_items[itemIndex].quantity;
+                        updatedCart.total_items = prevCart.total_items;
+                    }
+                    return updatedCart;
+                });
+            }
+        },
+        []
+    );
+
+    const handleRemoveFromCart = useCallback(
+        async (lineItemId) => {
+            try {
+                // Optimistically update the cart in the UI
+                setCart((prevCart) => {
+                    const updatedCart = { ...prevCart };
+                    updatedCart.line_items = updatedCart.line_items.filter(
+                        (item) => item.id !== lineItemId
+                    );
+                    updatedCart.total_items -= 1;
+                    return updatedCart;
+                });
+
+                // Call the Commerce.js API to remove the item from the cart
+                const response = await commerce.cart.remove(lineItemId);
+                setCartCache(response.cart);
+                setCart(response.cart);
+            } catch (error) {
+                console.error('Error removing item from cart:', error);
+                // Revert the optimistic update if the API call fails
+                setCart((prevCart) => {
+                    const updatedCart = { ...prevCart };
+                    const removedItem = prevCart.line_items.find((item) => item.id === lineItemId);
+                    if (removedItem) {
+                        updatedCart.line_items.push(removedItem);
+                        updatedCart.total_items += 1;
+                    }
+                    return updatedCart;
+                });
+            }
+        },
+        []
+    );
 
     const handleCheckout = () => {
         navigate('/checkout');
