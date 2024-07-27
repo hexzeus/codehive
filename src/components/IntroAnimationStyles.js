@@ -2,126 +2,77 @@ import styled, { keyframes, css } from 'styled-components';
 
 const glitch = keyframes`
   0% {
-    clip: rect(64px, 9999px, 36px, 0);
-    transform: skew(0.5deg);
+    text-shadow: 0.05em 0 0 rgba(255,0,0,0.75), -0.05em -0.025em 0 rgba(0,255,0,0.75), -0.025em 0.05em 0 rgba(0,0,255,0.75);
   }
-  5% {
-    clip: rect(20px, 9999px, 58px, 0);
-    transform: skew(0.8deg);
-  }
-  10% {
-    clip: rect(90px, 9999px, 89px, 0);
-    transform: skew(0.2deg);
+  14% {
+    text-shadow: 0.05em 0 0 rgba(255,0,0,0.75), -0.05em -0.025em 0 rgba(0,255,0,0.75), -0.025em 0.05em 0 rgba(0,0,255,0.75);
   }
   15% {
-    clip: rect(87px, 9999px, 50px, 0);
-    transform: skew(0.7deg);
+    text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.75), 0.025em 0.025em 0 rgba(0,255,0,0.75), -0.05em -0.05em 0 rgba(0,0,255,0.75);
   }
-  20% {
-    clip: rect(55px, 9999px, 17px, 0);
-    transform: skew(0.4deg);
-  }
-  25% {
-    clip: rect(50px, 9999px, 4px, 0);
-    transform: skew(0.9deg);
-  }
-  30% {
-    clip: rect(22px, 9999px, 88px, 0);
-    transform: skew(0.6deg);
-  }
-  35% {
-    clip: rect(76px, 9999px, 81px, 0);
-    transform: skew(0.3deg);
-  }
-  40% {
-    clip: rect(91px, 9999px, 15px, 0);
-    transform: skew(0.2deg);
-  }
-  45% {
-    clip: rect(44px, 9999px, 30px, 0);
-    transform: skew(0.7deg);
+  49% {
+    text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.75), 0.025em 0.025em 0 rgba(0,255,0,0.75), -0.05em -0.05em 0 rgba(0,0,255,0.75);
   }
   50% {
-    clip: rect(27px, 9999px, 76px, 0);
-    transform: skew(0.5deg);
+    text-shadow: 0.025em 0.05em 0 rgba(255,0,0,0.75), 0.05em 0 0 rgba(0,255,0,0.75), 0 -0.05em 0 rgba(0,0,255,0.75);
   }
-  55% {
-    clip: rect(35px, 9999px, 64px, 0);
-    transform: skew(0.8deg);
-  }
-  60% {
-    clip: rect(50px, 9999px, 28px, 0);
-    transform: skew(0.3deg);
-  }
-  65% {
-    clip: rect(14px, 9999px, 61px, 0);
-    transform: skew(0.6deg);
-  }
-  70% {
-    clip: rect(23px, 9999px, 8px, 0);
-    transform: skew(0.9deg);
-  }
-  75% {
-    clip: rect(66px, 9999px, 94px, 0);
-    transform: skew(0.4deg);
-  }
-  80% {
-    clip: rect(18px, 9999px, 40px, 0);
-    transform: skew(0.2deg);
-  }
-  85% {
-    clip: rect(40px, 9999px, 64px, 0);
-    transform: skew(0.7deg);
-  }
-  90% {
-    clip: rect(35px, 9999px, 30px, 0);
-    transform: skew(0.5deg);
-  }
-  95% {
-    clip: rect(21px, 9999px, 71px, 0);
-    transform: skew(0.8deg);
+  99% {
+    text-shadow: 0.025em 0.05em 0 rgba(255,0,0,0.75), 0.05em 0 0 rgba(0,255,0,0.75), 0 -0.05em 0 rgba(0,0,255,0.75);
   }
   100% {
-    clip: rect(1px, 9999px, 40px, 0);
-    transform: skew(0.3deg);
+    text-shadow: -0.025em 0 0 rgba(255,0,0,0.75), -0.025em -0.025em 0 rgba(0,255,0,0.75), -0.025em -0.05em 0 rgba(0,0,255,0.75);
   }
 `;
 
 const matrixFall = keyframes`
   0% {
+    top: -50%;
     opacity: 0;
-    transform: translateY(-100%);
   }
-  5%, 95% {
+  30% {
+    opacity: 1;
+  }
+  70% {
     opacity: 1;
   }
   100% {
+    top: 110%;
     opacity: 0;
-    transform: translateY(100%);
+  }
+`;
+
+const pulse = keyframes`
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
   }
 `;
 
 const unlockAnimation = keyframes`
   0% {
+    transform: scale(0) rotate(0deg);
     opacity: 0;
-    transform: scale(0);
   }
   50% {
+    transform: scale(1.5) rotate(360deg);
     opacity: 1;
-    transform: scale(1.2);
   }
   100% {
+    transform: scale(1) rotate(720deg);
     opacity: 1;
-    transform: scale(1);
   }
 `;
 
-const fadeIn = keyframes`
-  0% {
+const fadeInUp = keyframes`
+  from {
     opacity: 0;
     transform: translateY(20px);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
@@ -145,24 +96,24 @@ export const MatrixBackground = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.8);
   overflow: hidden;
-  display: flex;
-  justify-content: center;
   opacity: ${({ $isUnlocking }) => ($isUnlocking ? 0 : 1)};
   transition: opacity 1s ease-out;
 `;
 
 export const MatrixColumn = styled.div`
+  position: absolute;
+  top: -50%;
   font-family: 'Matrix Code NFI', monospace;
   font-size: 24px;
   color: #0f0;
   text-shadow: 0 0 5px #0f0;
   white-space: nowrap;
-  margin: 0 10px;
-  animation: ${matrixFall} 3s linear infinite;
-  animation-delay: ${() => Math.random() * 3}s;
+  animation: ${matrixFall} ${() => 3 + Math.random() * 5}s linear infinite;
+  animation-delay: ${({ $delay }) => $delay}s;
+  left: ${() => Math.random() * 100}%;
 
-  &:before {
-    content: '${() => String.fromCharCode(0x30A0 + Math.random() * 96)}';
+  &::before {
+    content: '${() => String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96))}';
   }
 `;
 
@@ -172,13 +123,13 @@ export const LogoContainer = styled.div`
   align-items: center;
   z-index: 2;
   opacity: ${({ $isUnlocking }) => ($isUnlocking ? 0 : 1)};
-  transition: opacity 1s ease-out;
-  animation: ${fadeIn} 1s ease-out;
+  transition: opacity 1s ease-out, transform 0.3s ease-out;
+  animation: ${fadeInUp} 1s ease-out;
 
   ${({ $shake }) =>
     $shake &&
     css`
-      animation: ${glitch} 0.5s linear infinite;
+      animation: ${glitch} 0.3s linear;
     `}
 `;
 
@@ -189,27 +140,31 @@ export const LogoImage = styled.img`
   transform: translateZ(0);
   perspective: 1000px;
   transition: all 0.3s ease;
-  animation: ${fadeIn} 1s ease-out;
+  animation: ${pulse} 2s infinite ease-in-out;
 
   &:hover {
     filter: drop-shadow(0 0 20px #0f0);
+    transform: scale(1.05);
   }
 `;
 
 export const PasswordDisplay = styled.div`
-  font-family: 'Matrix Code NFI', monospace;
-  font-size: 24px;
+  font-family: 'Courier New', monospace;
+  font-size: 28px;
   color: #0f0;
   text-shadow: 0 0 5px #0f0;
-  margin-bottom: 10px;
+  margin: 20px 0;
   letter-spacing: 5px;
+  min-height: 30px;
+  transition: all 0.3s ease;
 `;
 
 export const GlitchText = styled.h2`
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #0f0;
   text-shadow: 0 0 5px #0f0;
-  animation: ${glitch} 1s linear infinite;
+  animation: ${glitch} 3s linear infinite;
+  margin-bottom: 20px;
 `;
 
 export const ProgressBar = styled.div`
@@ -218,8 +173,10 @@ export const ProgressBar = styled.div`
   background-color: rgba(0, 255, 0, 0.2);
   margin-top: 10px;
   position: relative;
+  overflow: hidden;
+  border-radius: 2.5px;
 
-  &:after {
+  &::after {
     content: '';
     position: absolute;
     top: 0;
@@ -235,39 +192,43 @@ export const ProgressBar = styled.div`
 export const NumericPad = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 20px;
-  padding: 20px;
+  gap: 15px;
+  margin-top: 30px;
+  padding: 25px;
   background-color: rgba(0, 0, 0, 0.8);
   border: 2px solid #0f0;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-  animation: ${fadeIn} 1s ease-out;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+  animation: ${fadeInUp} 1s ease-out 0.5s both;
 `;
 
 export const NumericButton = styled.button`
   background-color: rgba(0, 255, 0, 0.1);
   border: 1px solid #0f0;
   color: #0f0;
-  font-family: 'Matrix Code NFI', monospace;
-  font-size: 18px;
-  padding: 15px;
+  font-family: 'Courier New', monospace;
+  font-size: 20px;
+  padding: 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 5px;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  outline: none;
 
   &:hover {
     background-color: rgba(0, 255, 0, 0.3);
-    box-shadow: 0 0 10px #0f0;
+    box-shadow: 0 0 15px #0f0;
+    transform: translateY(-2px);
   }
 
   &:active {
-    transform: scale(0.95);
+    transform: scale(0.95) translateY(0);
   }
 
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
   }
 `;
 
@@ -280,16 +241,17 @@ export const UnlockingOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #000;
+  background: radial-gradient(circle, rgba(0,255,0,0.2) 0%, rgba(0,0,0,1) 70%);
   z-index: 999;
   animation: ${unlockAnimation} 3s ease-out forwards;
 
-  &:after {
+  &::after {
     content: 'ACCESS GRANTED';
     color: #0f0;
-    font-family: 'Matrix Code NFI', monospace;
+    font-family: 'Courier New', monospace;
     font-size: 3rem;
     text-shadow: 0 0 10px #0f0;
     animation: ${glitch} 1s linear infinite;
+    letter-spacing: 5px;
   }
 `;
