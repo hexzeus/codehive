@@ -28,6 +28,10 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
         firstName: '', lastName: '', email: '', address: '',
         city: '', postalCode: '', country: '', subdivision: ''
     });
+    const [billingData, setBillingData] = useState({
+        firstName: '', lastName: '', address: '',
+        city: '', postalCode: '', country: '', subdivision: ''
+    });
     const [shippingCountries, setShippingCountries] = useState({});
     const [shippingSubdivisions, setShippingSubdivisions] = useState({});
     const [shippingOptions, setShippingOptions] = useState([]);
@@ -37,10 +41,62 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
     const [loading, setLoading] = useState(true);
     const [orderComplete, setOrderComplete] = useState(false);
 
-    const steps = ['Shipping address', 'Payment details', 'Review your order'];
+    const steps = ['Shipping address', 'Billing address', 'Payment details', 'Review your order'];
+
+    const refreshCart = useCallback(async () => {
+        try {
+            const newCart = await commerce.cart.refresh();
+            return newCart;
+        } catch (error) {
+            console.error('Error refreshing cart', error);
+            setError('Error refreshing cart. Please try again.');
+            return null;
+        }
+    }, []);
+
+    const generateToken = useCallback(async (cartId) => {
+        try {
+            const token = await commerce.checkout.generateToken(cartId, { type: 'cart' });
+            setCheckoutToken(token);
+            return token;
+        } catch (error) {
+            console.error('Error generating token', error);
+            setError('Error initializing checkout. Please try again.');
+            return null;
+        }
+    }, []);
+
+    const fetchShippingCountries = useCallback(async (checkoutTokenId) => {
+        try {
+            const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
+            setShippingCountries(countries);
+            const firstCountry = Object.keys(countries)[0];
+            setShippingData(prev => ({ ...prev, country: firstCountry }));
+            setBillingData(prev => ({ ...prev, country: firstCountry }));
+            return firstCountry;
+        } catch (error) {
+            console.error('Error fetching shipping countries', error);
+            setError('Error fetching shipping countries. Please try again.');
+            return null;
+        }
+    }, []);
+
+    const fetchSubdivisions = useCallback(async (countryCode) => {
+        try {
+            const { subdivisions } = await commerce.services.localeListSubdivisions(countryCode);
+            setShippingSubdivisions(subdivisions);
+            const firstSubdivision = Object.keys(subdivisions)[0];
+            setShippingData(prev => ({ ...prev, subdivision: firstSubdivision }));
+            setBillingData(prev => ({ ...prev, subdivision: firstSubdivision }));
+            return firstSubdivision;
+        } catch (error) {
+            console.error('Error fetching subdivisions', error);
+            setError('Error fetching subdivisions. Please try again.');
+            return null;
+        }
+    }, []);
 
     const fetchShippingOptions = useCallback(async (checkoutTokenId, country, region = null) => {
-        if (!country) return;
         try {
             const options = await commerce.checkout.getShippingOptions(checkoutTokenId, { country, region });
             setShippingOptions(options);
@@ -51,53 +107,45 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
         }
     }, []);
 
-    const fetchSubdivisions = useCallback(async (countryCode) => {
-        if (!countryCode) return;
+    const initializeCheckout = useCallback(async () => {
+        setLoading(true);
+        setError('');
         try {
-            const { subdivisions } = await commerce.services.localeListSubdivisions(countryCode);
-            setShippingSubdivisions(subdivisions);
-            const firstSubdivision = Object.keys(subdivisions)[0];
-            setShippingData(prev => ({ ...prev, subdivision: firstSubdivision || '' }));
-            if (checkoutToken) {
-                fetchShippingOptions(checkoutToken.id, countryCode, firstSubdivision);
+            let currentCart = cart;
+            if (!currentCart || !currentCart.id) {
+                currentCart = await refreshCart();
+                if (!currentCart) {
+                    throw new Error('Unable to create or refresh cart');
+                }
             }
-        } catch (error) {
-            console.error('Error fetching subdivisions', error);
-            setError('Error fetching subdivisions. Please try again.');
-        }
-    }, [checkoutToken, fetchShippingOptions]);
 
-    const fetchShippingCountries = useCallback(async (checkoutTokenId) => {
-        try {
-            const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
-            setShippingCountries(countries);
-            const firstCountry = Object.keys(countries)[0];
-            setShippingData(prev => ({ ...prev, country: firstCountry }));
-            await fetchSubdivisions(firstCountry);
+            const token = await generateToken(currentCart.id);
+            if (!token) {
+                throw new Error('Unable to generate checkout token');
+            }
+
+            const shippingCountry = await fetchShippingCountries(token.id);
+            if (!shippingCountry) {
+                throw new Error('Unable to fetch shipping countries');
+            }
+
+            const subdivision = await fetchSubdivisions(shippingCountry);
+            if (!subdivision) {
+                throw new Error('Unable to fetch subdivisions');
+            }
+
+            await fetchShippingOptions(token.id, shippingCountry, subdivision);
         } catch (error) {
-            console.error('Error fetching shipping countries', error);
-            setError('Error fetching shipping countries. Please try again.');
+            console.error('Error initializing checkout', error);
+            setError(`Error initializing checkout: ${error.message}`);
+        } finally {
+            setLoading(false);
         }
-    }, [fetchSubdivisions]);
+    }, [cart, refreshCart, generateToken, fetchShippingCountries, fetchSubdivisions, fetchShippingOptions]);
 
     useEffect(() => {
-        const generateToken = async () => {
-            try {
-                const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
-                setCheckoutToken(token);
-                await fetchShippingCountries(token.id);
-            } catch (error) {
-                console.error('There was an error in generating a token', error);
-                setError('Error generating checkout. Please try again.');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (cart?.id) {
-            generateToken();
-        }
-    }, [cart, fetchShippingCountries]);
+        initializeCheckout();
+    }, [initializeCheckout]);
 
     const handleNext = () => setActiveStep(prevStep => prevStep + 1);
     const handleBack = () => setActiveStep(prevStep => prevStep - 1);
@@ -112,29 +160,39 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
         }
     };
 
+    const handleBillingChange = (e) => {
+        const { name, value } = e.target;
+        setBillingData(prev => ({ ...prev, [name]: value }));
+    };
+
     const handlePaymentChange = (e) => {
         const { name, value } = e.target;
         setPaymentData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleShippingSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        if (!shippingData.country || !shippingData.subdivision || !shippingOption) {
-            setError('Please fill in all required fields');
-            return;
-        }
         handleNext();
     };
 
-    const handlePaymentSubmit = (e) => {
-        e.preventDefault();
-        handleNext();
+    const validateData = () => {
+        if (shippingData.subdivision !== billingData.subdivision) {
+            setError('Shipping and billing states must match.');
+            return false;
+        }
+        return true;
     };
 
     const handleCaptureCheckout = async () => {
+        setLoading(true);
+        setError('');
+        if (!validateData()) {
+            setLoading(false);
+            return;
+        }
         try {
             const orderData = {
-                line_items: checkoutToken.live.line_items,
+                line_items: checkoutToken.line_items,
                 customer: {
                     firstname: shippingData.firstName,
                     lastname: shippingData.lastName,
@@ -148,6 +206,14 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
                     postal_zip_code: shippingData.postalCode,
                     country: shippingData.country
                 },
+                billing: {
+                    name: `${billingData.firstName} ${billingData.lastName}`,
+                    street: billingData.address,
+                    town_city: billingData.city,
+                    county_state: billingData.subdivision,
+                    postal_zip_code: billingData.postalCode,
+                    country: billingData.country
+                },
                 fulfillment: { shipping_method: shippingOption },
                 payment: {
                     gateway: 'test_gateway',
@@ -156,16 +222,25 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
                         expiry_month: paymentData.expiryDate.split('/')[0],
                         expiry_year: paymentData.expiryDate.split('/')[1],
                         cvc: paymentData.cvv,
-                        postal_zip_code: shippingData.postalCode
+                        postal_zip_code: billingData.postalCode
                     }
                 }
             };
-            await onCaptureCheckout(checkoutToken.id, orderData);
+
+            const order = await commerce.checkout.capture(checkoutToken.id, orderData);
+            if (typeof onCaptureCheckout === 'function') {
+                onCaptureCheckout(order);
+            }
             setOrderComplete(true);
             handleNext();
         } catch (error) {
             console.error('Error capturing checkout', error);
-            setError('Error processing your order. Please try again.');
+            setError(`Error processing your order: ${error.message || 'Unknown error occurred'}`);
+            if (error.statusCode === 404) {
+                await initializeCheckout();
+            }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -173,7 +248,7 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
         switch (activeStep) {
             case 0:
                 return (
-                    <FormContainer onSubmit={handleShippingSubmit}>
+                    <FormContainer onSubmit={handleSubmit}>
                         <Input name="firstName" placeholder="First Name" required value={shippingData.firstName} onChange={handleShippingChange} />
                         <Input name="lastName" placeholder="Last Name" required value={shippingData.lastName} onChange={handleShippingChange} />
                         <Input name="email" placeholder="Email" type="email" required value={shippingData.email} onChange={handleShippingChange} />
@@ -187,7 +262,7 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
                             ))}
                         </Select>
                         <Select name="subdivision" value={shippingData.subdivision} onChange={handleShippingChange} required>
-                            <option value="">Select Subdivision</option>
+                            <option value="">Select State</option>
                             {Object.entries(shippingSubdivisions).map(([code, name]) => (
                                 <option key={code} value={code}>{name}</option>
                             ))}
@@ -198,13 +273,36 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
                                 <option key={option.id} value={option.id}>{`${option.description} - ${option.price.formatted_with_symbol}`}</option>
                             ))}
                         </Select>
-                        {error && <ErrorMessage>{error}</ErrorMessage>}
                         <Button type="submit">Next</Button>
                     </FormContainer>
                 );
             case 1:
                 return (
-                    <FormContainer onSubmit={handlePaymentSubmit}>
+                    <FormContainer onSubmit={handleSubmit}>
+                        <Input name="firstName" placeholder="First Name" required value={billingData.firstName} onChange={handleBillingChange} />
+                        <Input name="lastName" placeholder="Last Name" required value={billingData.lastName} onChange={handleBillingChange} />
+                        <Input name="address" placeholder="Address" required value={billingData.address} onChange={handleBillingChange} />
+                        <Input name="city" placeholder="City" required value={billingData.city} onChange={handleBillingChange} />
+                        <Input name="postalCode" placeholder="Postal Code" required value={billingData.postalCode} onChange={handleBillingChange} />
+                        <Select name="country" value={billingData.country} onChange={handleBillingChange} required>
+                            <option value="">Select Country</option>
+                            {Object.entries(shippingCountries).map(([code, name]) => (
+                                <option key={code} value={code}>{name}</option>
+                            ))}
+                        </Select>
+                        <Select name="subdivision" value={billingData.subdivision} onChange={handleBillingChange} required>
+                            <option value="">Select State</option>
+                            {Object.entries(shippingSubdivisions).map(([code, name]) => (
+                                <option key={code} value={code}>{name}</option>
+                            ))}
+                        </Select>
+                        <Button type="button" onClick={handleBack}>Back</Button>
+                        <Button type="submit">Next</Button>
+                    </FormContainer>
+                );
+            case 2:
+                return (
+                    <FormContainer onSubmit={handleSubmit}>
                         <Input name="cardNumber" placeholder="Card Number" required value={paymentData.cardNumber} onChange={handlePaymentChange} />
                         <Input name="expiryDate" placeholder="Expiry Date (MM/YY)" required value={paymentData.expiryDate} onChange={handlePaymentChange} />
                         <Input name="cvv" placeholder="CVV" required value={paymentData.cvv} onChange={handlePaymentChange} />
@@ -212,11 +310,12 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
                         <Button type="submit">Next</Button>
                     </FormContainer>
                 );
-            case 2:
+            case 3:
                 return (
                     <FormContainer>
                         <h3>Review Your Order</h3>
-                        <p>Shipping to: {shippingData.address}, {shippingData.city}, {shippingData.postalCode}</p>
+                        <p>Shipping to: {shippingData.address}, {shippingData.city}, {shippingData.subdivision}, {shippingData.postalCode}</p>
+                        <p>Billing to: {billingData.address}, {billingData.city}, {billingData.subdivision}, {billingData.postalCode}</p>
                         <p>Payment: Card ending in {paymentData.cardNumber.slice(-4)}</p>
                         <Button type="button" onClick={handleBack}>Back</Button>
                         <Button type="button" onClick={handleCaptureCheckout}>Place Order</Button>
@@ -257,8 +356,9 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
                     <Step key={step}>
                         <StepIcon $active={activeStep >= index}>
                             {index === 0 && <FaTruck />}
-                            {index === 1 && <FaCreditCard />}
-                            {index === 2 && <FaLock />}
+                            {index === 1 && <FaTruck />}
+                            {index === 2 && <FaCreditCard />}
+                            {index === 3 && <FaLock />}
                         </StepIcon>
                         <StepLabel $active={activeStep >= index}>{step}</StepLabel>
                     </Step>
