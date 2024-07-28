@@ -1,136 +1,39 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import styled from 'styled-components';
-import commerce from '../lib/commerce';
 import { FaLock, FaTruck, FaCreditCard } from 'react-icons/fa';
-
-export const Container = styled.div`
-  background-color: #000;
-  color: #00ff00;
-  min-height: 100vh;
-  padding: 2rem;
-  font-family: 'Courier New', monospace;
-`;
-
-export const Title = styled.h2`
-  font-size: 2.5rem;
-  text-align: center;
-  margin-bottom: 2rem;
-  text-shadow: 0 0 10px #00ff00;
-`;
-
-export const StepContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 2rem;
-`;
-
-export const Step = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-`;
-
-export const StepIcon = styled.div`
-  background-color: ${props => props.$active ? '#00ff00' : '#003300'};
-  color: ${props => props.$active ? '#000' : '#00ff00'};
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  transition: all 0.3s ease;
-`;
-
-export const StepLabel = styled.span`
-  font-size: 0.9rem;
-  color: ${props => props.$active ? '#00ff00' : '#006600'};
-`;
-
-export const FormContainer = styled.form`
-  background-color: rgba(0, 50, 0, 0.5);
-  padding: 2rem;
-  border-radius: 10px;
-`;
-
-export const Input = styled.input`
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  background-color: rgba(0, 20, 0, 0.8);
-  border: 1px solid #00ff00;
-  color: #00ff00;
-  font-family: 'Courier New', monospace;
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 10px #00ff00;
-  }
-`;
-
-export const Button = styled.button`
-  background-color: #00ff00;
-  color: #000;
-  border: none;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-right: 1rem;
-
-  &:hover {
-    background-color: #00cc00;
-    box-shadow: 0 0 15px #00ff00;
-  }
-`;
-
-export const Select = styled.select`
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  background-color: rgba(0, 20, 0, 0.8);
-  border: 1px solid #00ff00;
-  color: #00ff00;
-  font-family: 'Courier New', monospace;
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 10px #00ff00;
-  }
-`;
-
-export const ErrorMessage = styled.p`
-  color: #ff0000;
-  margin-bottom: 1rem;
-`;
+import commerce from '../lib/commerce';
+import {
+    Container,
+    Title,
+    StepContainer,
+    Step,
+    StepIcon,
+    StepLabel,
+    FormContainer,
+    Input,
+    Button,
+    Select,
+    ErrorMessage,
+    LoadingSpinner,
+    ConfirmationContainer,
+    ConfirmationTitle,
+    ConfirmationText
+} from '../styles/CheckoutStyles';
 
 const Checkout = ({ cart, onCaptureCheckout }) => {
     const [checkoutToken, setCheckoutToken] = useState(null);
     const [activeStep, setActiveStep] = useState(0);
     const [shippingData, setShippingData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        address: '',
-        city: '',
-        postalCode: '',
-        country: '',
-        subdivision: ''
+        firstName: '', lastName: '', email: '', address: '',
+        city: '', postalCode: '', country: '', subdivision: ''
     });
     const [shippingCountries, setShippingCountries] = useState({});
     const [shippingSubdivisions, setShippingSubdivisions] = useState({});
     const [shippingOptions, setShippingOptions] = useState([]);
     const [shippingOption, setShippingOption] = useState('');
-    const [paymentData, setPaymentData] = useState({
-        cardNumber: '',
-        expiryDate: '',
-        cvv: ''
-    });
+    const [paymentData, setPaymentData] = useState({ cardNumber: '', expiryDate: '', cvv: '' });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
+    const [orderComplete, setOrderComplete] = useState(false);
 
     const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
@@ -243,9 +146,7 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
                     postal_zip_code: shippingData.postalCode,
                     country: shippingData.country
                 },
-                fulfillment: {
-                    shipping_method: shippingOption
-                },
+                fulfillment: { shipping_method: shippingOption },
                 payment: {
                     gateway: 'test_gateway',
                     card: {
@@ -258,6 +159,7 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
                 }
             };
             await onCaptureCheckout(checkoutToken.id, orderData);
+            setOrderComplete(true);
             handleNext();
         } catch (error) {
             console.error('Error capturing checkout', error);
@@ -324,15 +226,16 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
     };
 
     const Confirmation = () => (
-        <div>
-            <h3>Thank you for your purchase!</h3>
-            <p>Order ref: {checkoutToken && checkoutToken.id}</p>
-        </div>
+        <ConfirmationContainer>
+            <ConfirmationTitle>Thank you for your purchase!</ConfirmationTitle>
+            <ConfirmationText>Order ref: {checkoutToken && checkoutToken.id}</ConfirmationText>
+            <Button onClick={() => window.location.href = '/'}>Back to Home</Button>
+        </ConfirmationContainer>
     );
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <LoadingSpinner />;
     if (error) return <ErrorMessage>{error}</ErrorMessage>;
-    if (!checkoutToken) return <div>Loading...</div>;
+    if (!checkoutToken) return <LoadingSpinner />;
 
     return (
         <Container>
@@ -349,7 +252,7 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
                     </Step>
                 ))}
             </StepContainer>
-            {activeStep === steps.length ? <Confirmation /> : renderForm()}
+            {orderComplete ? <Confirmation /> : renderForm()}
         </Container>
     );
 };
