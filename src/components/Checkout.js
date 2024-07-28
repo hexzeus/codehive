@@ -85,10 +85,7 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
         try {
             const { subdivisions } = await commerce.services.localeListSubdivisions(countryCode);
             setShippingSubdivisions(subdivisions);
-            const firstSubdivision = Object.keys(subdivisions)[0];
-            setShippingData(prev => ({ ...prev, subdivision: firstSubdivision }));
-            setBillingData(prev => ({ ...prev, subdivision: firstSubdivision }));
-            return firstSubdivision;
+            return subdivisions;
         } catch (error) {
             console.error('Error fetching subdivisions', error);
             setError('Error fetching subdivisions. Please try again.');
@@ -129,12 +126,8 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
                 throw new Error('Unable to fetch shipping countries');
             }
 
-            const subdivision = await fetchSubdivisions(shippingCountry);
-            if (!subdivision) {
-                throw new Error('Unable to fetch subdivisions');
-            }
-
-            await fetchShippingOptions(token.id, shippingCountry, subdivision);
+            await fetchSubdivisions(shippingCountry);
+            await fetchShippingOptions(token.id, shippingCountry);
         } catch (error) {
             console.error('Error initializing checkout', error);
             setError(`Error initializing checkout: ${error.message}`);
@@ -155,6 +148,8 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
         setShippingData(prev => ({ ...prev, [name]: value }));
         if (name === 'country') {
             fetchSubdivisions(value);
+            setShippingData(prev => ({ ...prev, subdivision: '' }));
+            setBillingData(prev => ({ ...prev, country: value, subdivision: '' }));
         } else if (name === 'subdivision' && checkoutToken) {
             fetchShippingOptions(checkoutToken.id, shippingData.country, value);
         }
