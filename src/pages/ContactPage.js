@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Container,
   CodeAnimation,
+  Section,
   Title,
   Subtitle,
   Form,
@@ -16,7 +17,7 @@ import {
   ErrorMessage,
   LoadingSpinner
 } from '../styles/ContactPageStyles';
-import { FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
+import { FaTwitter, FaLinkedin, FaGithub, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 
 const ContactPage = () => {
   const [formState, setFormState] = useState({
@@ -53,6 +54,7 @@ const ContactPage = () => {
     setTimeout(() => {
       if (Math.random() > 0.5) {
         setStatus('success');
+        setFormState({ name: '', email: '', message: '' });
       } else {
         setStatus('error');
       }
@@ -63,56 +65,64 @@ const ContactPage = () => {
     <Container>
       <CodeAnimation>
         {[...Array(50)].map((_, index) => (
-          <span key={index}>{Math.random().toString(2).substr(2, 8)}</span>
+          <span key={index} style={{ left: `${Math.random() * 100}%`, animationDuration: `${Math.random() * 10 + 5}s` }}>
+            {Math.random().toString(2).substr(2, 8)}
+          </span>
         ))}
       </CodeAnimation>
-      <Title>Initialize Contact</Title>
-      <Subtitle>Connect with IVES HUB</Subtitle>
-      <Form onSubmit={handleSubmit}>
-        <Input
-          type="text"
-          name="name"
-          placeholder="Enter Your Name"
-          required
-          value={formState.name}
-          onChange={handleChange}
-          className={invalidFields.includes('name') ? 'invalid' : ''}
-        />
-        <Input
-          type="email"
-          name="email"
-          placeholder="Enter Your Email"
-          required
-          value={formState.email}
-          onChange={handleChange}
-          className={invalidFields.includes('email') ? 'invalid' : ''}
-        />
-        <TextArea
-          name="message"
-          placeholder="Your Message"
-          rows="5"
-          required
-          value={formState.message}
-          onChange={handleChange}
-          className={invalidFields.includes('message') ? 'invalid' : ''}
-        />
-        <Button type="submit" disabled={status === 'loading'}>
-          {status === 'loading' ? <LoadingSpinner /> : 'Transmit Message'}
-        </Button>
-      </Form>
-      {status === 'success' && <SuccessMessage>Message successfully transmitted!</SuccessMessage>}
-      {status === 'error' && <ErrorMessage>Transmission error. Please try again.</ErrorMessage>}
-      <ContactInfo>
-        <h3>Contact Information</h3>
-        <p>📍 123 Cyber Street, Digital City, 12345</p>
-        <p>📞 +1 (123) 456-7890</p>
-        <p>✉️ contact@iveshub.com</p>
-      </ContactInfo>
-      <SocialLinks>
-        <SocialIcon href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /></SocialIcon>
-        <SocialIcon href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><FaLinkedin /></SocialIcon>
-        <SocialIcon href="https://github.com" target="_blank" rel="noopener noreferrer"><FaGithub /></SocialIcon>
-      </SocialLinks>
+      <Section>
+        <Title>Initialize Contact</Title>
+        <Subtitle>Connect with IVES HUB - Your Gateway to Digital Innovation</Subtitle>
+      </Section>
+      <Section>
+        <Form onSubmit={handleSubmit}>
+          <Input
+            type="text"
+            name="name"
+            placeholder="Enter Your Name"
+            required
+            value={formState.name}
+            onChange={handleChange}
+            className={invalidFields.includes('name') ? 'invalid' : ''}
+          />
+          <Input
+            type="email"
+            name="email"
+            placeholder="Enter Your Email"
+            required
+            value={formState.email}
+            onChange={handleChange}
+            className={invalidFields.includes('email') ? 'invalid' : ''}
+          />
+          <TextArea
+            name="message"
+            placeholder="Your Message"
+            rows="5"
+            required
+            value={formState.message}
+            onChange={handleChange}
+            className={invalidFields.includes('message') ? 'invalid' : ''}
+          />
+          <Button type="submit" disabled={status === 'loading'}>
+            {status === 'loading' ? <LoadingSpinner /> : 'Transmit Message'}
+          </Button>
+        </Form>
+        {status === 'success' && <SuccessMessage>Message successfully transmitted!</SuccessMessage>}
+        {status === 'error' && <ErrorMessage>Transmission error. Please try again.</ErrorMessage>}
+      </Section>
+      <Section>
+        <ContactInfo>
+          <h3>Contact Information</h3>
+          <p><FaMapMarkerAlt /> 123 Cyber Street, Digital City, 12345</p>
+          <p><FaPhone /> +1 (123) 456-7890</p>
+          <p><FaEnvelope /> contact@iveshub.com</p>
+        </ContactInfo>
+        <SocialLinks>
+          <SocialIcon href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><FaTwitter /></SocialIcon>
+          <SocialIcon href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedin /></SocialIcon>
+          <SocialIcon href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FaGithub /></SocialIcon>
+        </SocialLinks>
+      </Section>
       <MapContainer>
         <iframe
           title="IVES HUB Location"

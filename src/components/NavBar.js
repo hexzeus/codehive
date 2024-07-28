@@ -66,10 +66,10 @@ const NavBar = ({ toggleMatrixRain, isMatrixRainActive }) => {
         </BrandContainer>
         <DesktopNav>
           <NavLink to="/home" $active={location.pathname === '/home'}><FaHome /> Home</NavLink>
+          <NavLink to="/storefront" $active={location.pathname === '/storefront'}><FaStore /> Merch</NavLink>
           <NavLink to="/about" $active={location.pathname === '/about'}><FaInfo /> About</NavLink>
           <NavLink to="/services" $active={location.pathname === '/services'}><FaServicestack /> Services</NavLink>
           <NavLink to="/contact" $active={location.pathname === '/contact'}><FaEnvelope /> Contact</NavLink>
-          <NavLink to="/storefront" $active={location.pathname === '/storefront'}><FaStore /> Merch</NavLink>
           <NavLink to="/cart" $active={location.pathname === '/cart'}>
             <CartIcon>
               <FaShoppingCart />
@@ -90,10 +90,10 @@ const NavBar = ({ toggleMatrixRain, isMatrixRainActive }) => {
         <Drawer $isOpen={isOpen}>
           <DrawerLinks>
             <NavLink to="/home" onClick={toggleDrawer} $active={location.pathname === '/home'}><FaHome /> Home</NavLink>
+            <NavLink to="/storefront" onClick={toggleDrawer} $active={location.pathname === '/storefront'}><FaStore /> Merch</NavLink>
             <NavLink to="/about" onClick={toggleDrawer} $active={location.pathname === '/about'}><FaInfo /> About</NavLink>
             <NavLink to="/services" onClick={toggleDrawer} $active={location.pathname === '/services'}><FaServicestack /> Services</NavLink>
             <NavLink to="/contact" onClick={toggleDrawer} $active={location.pathname === '/contact'}><FaEnvelope /> Contact</NavLink>
-            <NavLink to="/storefront" onClick={toggleDrawer} $active={location.pathname === '/storefront'}><FaStore /> Merch</NavLink>
             <NavLink to="/cart" onClick={toggleDrawer} $active={location.pathname === '/cart'}>
               <CartIcon>
                 <FaShoppingCart />

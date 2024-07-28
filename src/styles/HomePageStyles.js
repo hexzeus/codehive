@@ -55,6 +55,11 @@ const glitch = keyframes`
   }
 `;
 
+const spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
 export const Container = styled.div`
   background: #000000;
   color: #00ff00;
@@ -87,7 +92,7 @@ export const CodeAnimation = styled.div`
     font-family: 'Courier New', monospace;
     font-size: 1rem;
     text-shadow: 0 0 5px #00ff00;
-    animation: ${matrixRain} 10s linear infinite;
+    animation: ${matrixRain} linear infinite;
     opacity: 0.8;
   }
 `;
@@ -135,6 +140,9 @@ export const CTAButton = styled(Link)`
   text-decoration: none;
   transition: all 0.3s ease;
   animation: ${fadeInUp} 1s ease-out 1s both;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
 
   &:hover {
     background: #00cc00;
@@ -148,12 +156,28 @@ export const CTAButton = styled(Link)`
   }
 `;
 
-export const FeaturesSection = styled.section`
+export const Section = styled.section`
+  padding: 6rem 2rem;
+  position: relative;
+`;
+
+export const SectionTitle = styled.h2`
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: #00ff00;
+  text-shadow: 0 0 10px #00ff00;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+`;
+
+export const FeaturesSection = styled.div`
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  padding: 4rem 2rem;
-  background: rgba(0, 255, 0, 0.05);
+  gap: 2rem;
 `;
 
 export const FeatureCard = styled.div`
@@ -161,14 +185,19 @@ export const FeatureCard = styled.div`
   border: 1px solid #00ff00;
   border-radius: 20px;
   padding: 2rem;
-  margin: 1rem;
   width: 300px;
   text-align: center;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
 
   &:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 20px rgba(0, 255, 0, 0.2);
+  }
+
+  svg {
+    font-size: 3rem;
+    color: #00ff00;
+    margin-bottom: 1rem;
   }
 
   h3 {
@@ -187,33 +216,20 @@ export const FeatureCard = styled.div`
   }
 `;
 
-export const ProjectsShowcase = styled.section`
-  padding: 4rem 2rem;
-  text-align: center;
-
-  h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: #00ff00;
-    text-shadow: 0 0 10px #00ff00;
-  }
-
-  @media (max-width: 768px) {
-    h2 {
-      font-size: 2rem;
-    }
-  }
+export const ProjectsShowcase = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
 `;
 
 export const ProjectCard = styled.div`
-  display: inline-block;
   width: 300px;
-  margin: 1rem;
   background: rgba(0, 255, 0, 0.1);
   border: 1px solid #00ff00;
   border-radius: 20px;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
 
   &:hover {
     transform: scale(1.05);
@@ -228,7 +244,7 @@ export const ProjectCard = styled.div`
 
   h3 {
     font-size: 1.2rem;
-    margin: 1rem 0;
+    margin: 1rem;
     color: #00ff00;
   }
 
@@ -243,9 +259,7 @@ export const ProjectCard = styled.div`
   }
 `;
 
-export const TestimonialSection = styled.section`
-  padding: 4rem 2rem;
-  text-align: center;
+export const TestimonialSection = styled(Section)`
   background: rgba(0, 255, 0, 0.05);
 `;
 
@@ -258,11 +272,32 @@ export const Testimonial = styled.div`
     font-style: italic;
     margin-bottom: 1rem;
     color: #00ff00;
+    position: relative;
+    padding: 0 2rem;
+
+    &::before, &::after {
+      content: '"';
+      font-size: 4rem;
+      position: absolute;
+      opacity: 0.5;
+    }
+
+    &::before {
+      top: -1rem;
+      left: -1rem;
+    }
+
+    &::after {
+      bottom: -2rem;
+      right: -1rem;
+    }
   }
 
   cite {
     font-size: 1.2rem;
     color: #00cc00;
+    display: block;
+    margin-top: 1rem;
   }
 
   @media (max-width: 768px) {
@@ -275,21 +310,29 @@ export const Testimonial = styled.div`
   }
 `;
 
-export const ContactCTA = styled.section`
-  padding: 4rem 2rem;
-  text-align: center;
+export const ContactCTA = styled(Section)`
   background: rgba(0, 255, 0, 0.05);
+  text-align: center;
 
   h2 {
     font-size: 2.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     color: #00ff00;
     text-shadow: 0 0 10px #00ff00;
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #00cc00;
   }
 
   @media (max-width: 768px) {
     h2 {
       font-size: 2rem;
+    }
+    p {
+      font-size: 1rem;
     }
   }
 `;
@@ -313,12 +356,15 @@ export const Particle = styled.div`
   z-index: 1;
 `;
 
-
-const spin = keyframes`
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+export const ScrollPrompt = styled.div`
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #00ff00;
+  font-size: 1rem;
+  animation: ${fadeInUp} 1s ease-out infinite alternate;
 `;
-
 
 export const HomePageStyles = {
   Container,
@@ -327,6 +373,8 @@ export const HomePageStyles = {
   LogoImage,
   Tagline,
   CTAButton,
+  Section,
+  SectionTitle,
   FeaturesSection,
   FeatureCard,
   ProjectsShowcase,
@@ -336,6 +384,7 @@ export const HomePageStyles = {
   ContactCTA,
   ParticleContainer,
   Particle,
+  ScrollPrompt,
   // Animations
   matrixRain,
   fadeInUp,

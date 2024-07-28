@@ -4,10 +4,8 @@ import {
   Section,
   Title,
   Subtitle,
-  Team,
-  Member,
-  History,
-  HistoryItem,
+  JourneyTimeline,
+  TimelineItem,
   ValueProposition,
   Testimonial,
   Awards,
@@ -19,88 +17,82 @@ import {
 const AboutPage = () => (
   <Container>
     <Section>
-      <Title>Redefining Digital Experiences</Title>
-      <Subtitle>At IVES HUB, we're not just building websites and apps. We're crafting digital solutions that transform businesses and delight users.</Subtitle>
+      <Title>Pioneering the Future of Digital Innovation</Title>
+      <Subtitle>At IVES HUB, we're on a mission to redefine the digital landscape through cutting-edge technology and visionary design.</Subtitle>
     </Section>
 
     <ValueProposition>
-      <h2>Our Approach</h2>
+      <h2>Our Core Values</h2>
       <div>
-        <h3>Innovate</h3>
-        <p>We push the boundaries of what's possible in web and mobile development.</p>
+        <h3>Innovation</h3>
+        <p>Pushing boundaries and exploring new frontiers in technology.</p>
       </div>
       <div>
-        <h3>Value</h3>
-        <p>We create solutions that deliver tangible business results and user satisfaction.</p>
+        <h3>Vision</h3>
+        <p>Anticipating future trends and staying ahead of the curve.</p>
       </div>
       <div>
-        <h3>Evolve</h3>
-        <p>We continuously adapt to the ever-changing digital landscape.</p>
+        <h3>Excellence</h3>
+        <p>Delivering unparalleled quality in every project we undertake.</p>
       </div>
       <div>
-        <h3>Succeed</h3>
-        <p>We measure our success by the success of our clients and their users.</p>
+        <h3>Synergy</h3>
+        <p>Fostering collaboration between AI and human creativity.</p>
       </div>
     </ValueProposition>
 
-    <Team>
-      <h2>The Minds Behind IVES HUB</h2>
-      <Member>
-        <img src="/path/to/john-doe.jpg" alt="John Doe" />
-        <h3>John Doe</h3>
-        <p>Visionary & Founder</p>
-        <p>With 15+ years in tech, John leads our team with passion and innovation.</p>
-      </Member>
-      <Member>
-        <img src="/path/to/jane-smith.jpg" alt="Jane Smith" />
-        <h3>Jane Smith</h3>
-        <p>Tech Maestro</p>
-        <p>Jane's expertise in cutting-edge technologies drives our development process.</p>
-      </Member>
-      <Member>
-        <img src="/path/to/emily-johnson.jpg" alt="Emily Johnson" />
-        <h3>Emily Johnson</h3>
-        <p>Design Alchemist</p>
-        <p>Emily transforms complex ideas into beautiful, intuitive user experiences.</p>
-      </Member>
-    </Team>
-
-    <History>
-      <h2>Our Journey</h2>
-      <HistoryItem>
-        <h3>2021: The Genesis</h3>
-        <p>IVES Design was born from a vision to revolutionize digital experiences.</p>
-      </HistoryItem>
-      <HistoryItem>
-        <h3>2022: Expanding Horizons</h3>
-        <p>We ventured into mobile development, broadening our impact across platforms.</p>
-      </HistoryItem>
-      <HistoryItem>
-        <h3>2023: Scaling New Heights</h3>
-        <p>Our team grew, our projects flourished, and our reputation soared.</p>
-      </HistoryItem>
-    </History>
+    <JourneyTimeline>
+      <h2>Our Extraordinary Journey</h2>
+      <TimelineItem>
+        <h3>The Spark of Innovation</h3>
+        <p>From humble beginnings with Python snippets to an obsession with AI-powered programming.</p>
+      </TimelineItem>
+      <TimelineItem>
+        <h3>Web Development Genesis</h3>
+        <p>Mastering HTML and creating captivating websites with AI assistance.</p>
+      </TimelineItem>
+      <TimelineItem>
+        <h3>The Anvil Revolution</h3>
+        <p>Discovering Anvil and sharing our creations with the world.</p>
+      </TimelineItem>
+      <TimelineItem>
+        <h3>Ascending to React</h3>
+        <p>Embracing Node.js and React, elevating our development capabilities.</p>
+      </TimelineItem>
+      <TimelineItem>
+        <h3>Commerce Integration Milestone</h3>
+        <p>Successfully integrating Commerce.js, opening new possibilities for our platform.</p>
+      </TimelineItem>
+      <TimelineItem>
+        <h3>The Future Unleashed</h3>
+        <p>Continuously evolving, innovating, and pushing the boundaries of what's possible in the digital realm.</p>
+      </TimelineItem>
+    </JourneyTimeline>
 
     <Testimonial>
-      <blockquote>"IVES HUB didn't just meet our expectations—they shattered them. Their work has been transformative for our business."</blockquote>
-      — Alex Thompson, CEO of InnoTech Solutions
+      <blockquote>"IVES HUB isn't just a development company; they're visionaries crafting the future of digital experiences. Their innovative approach and technical prowess are truly game-changing."</blockquote>
+      — Dr. Evelyn Chen, CTO of FutureTech Industries
     </Testimonial>
 
     <Awards>
-      <h2>Recognition</h2>
+      <h2>Accolades & Recognition</h2>
       <AwardItem>
-        <img src="/path/to/award1.svg" alt="Best in Innovation 2023" />
-        <p>Best in Innovation 2023</p>
+        <img src="/path/to/award1.svg" alt="Innovator of the Year 2023" />
+        <p>Innovator of the Year 2023</p>
       </AwardItem>
       <AwardItem>
-        <img src="/path/to/award2.svg" alt="Top Web Design Firm 2022" />
-        <p>Top Web Design Firm 2022</p>
+        <img src="/path/to/award2.svg" alt="Best AI Integration 2022" />
+        <p>Best AI Integration 2022</p>
+      </AwardItem>
+      <AwardItem>
+        <img src="/path/to/award3.svg" alt="Top Emerging Tech Company 2021" />
+        <p>Top Emerging Tech Company 2021</p>
       </AwardItem>
     </Awards>
 
     <CTASection>
-      <h2>Ready to Elevate Your Digital Presence?</h2>
-      <CTAButton to="/contact">Let's Create Something Amazing</CTAButton>
+      <h2>Ready to Revolutionize Your Digital Presence?</h2>
+      <CTAButton to="/contact">Embark on Your Digital Transformation</CTAButton>
     </CTASection>
   </Container>
 );

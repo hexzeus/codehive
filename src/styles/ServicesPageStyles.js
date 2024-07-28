@@ -49,14 +49,14 @@ const glitch = keyframes`
 `;
 
 export const Container = styled.div`
-  padding: 6rem 2rem;
+  padding: 8rem 2rem 6rem; // Increased top padding
   text-align: center;
   background: #000000;
   color: #00ff00;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; // Changed from center to flex-start
   align-items: center;
   position: relative;
   overflow: hidden;
@@ -78,12 +78,12 @@ export const CodeAnimation = styled.div`
     color: #00ff00;
     font-size: 1rem;
     text-shadow: 0 0 5px #00ff00;
-    animation: ${matrixRain} 10s linear infinite;
+    animation: ${matrixRain} linear infinite;
   }
 `;
 
 export const Section = styled.section`
-  margin-bottom: 3rem;
+  margin-bottom: 4rem; // Increased from 3rem to 4rem
   position: relative;
   z-index: 1;
 `;
@@ -216,6 +216,9 @@ export const CTAButton = styled(Link)`
   border-radius: 50px;
   text-decoration: none;
   transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
 
   &:hover {
     background: #00cc00;

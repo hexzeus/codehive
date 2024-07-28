@@ -143,6 +143,19 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
     const handleNext = () => setActiveStep(prevStep => prevStep + 1);
     const handleBack = () => setActiveStep(prevStep => prevStep - 1);
 
+    const handleSameAsShipping = () => {
+        setBillingData({
+            ...shippingData,
+            firstName: shippingData.firstName,
+            lastName: shippingData.lastName,
+            address: shippingData.address,
+            city: shippingData.city,
+            postalCode: shippingData.postalCode,
+            country: shippingData.country,
+            subdivision: shippingData.subdivision
+        });
+    };
+
     const handleShippingChange = (e) => {
         const { name, value } = e.target;
         setShippingData(prev => ({ ...prev, [name]: value }));
@@ -274,6 +287,7 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
             case 1:
                 return (
                     <FormContainer onSubmit={handleSubmit}>
+                        <Button type="button" onClick={handleSameAsShipping}>Same as Shipping</Button>
                         <Input name="firstName" placeholder="First Name" required value={billingData.firstName} onChange={handleBillingChange} />
                         <Input name="lastName" placeholder="Last Name" required value={billingData.lastName} onChange={handleBillingChange} />
                         <Input name="address" placeholder="Address" required value={billingData.address} onChange={handleBillingChange} />

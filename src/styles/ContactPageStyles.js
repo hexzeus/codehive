@@ -56,14 +56,14 @@ const shake = keyframes`
 `;
 
 export const Container = styled.div`
-  padding: 6rem 2rem;
+  padding: 8rem 2rem 6rem;
   text-align: center;
   background: #000000;
   color: #00ff00;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   position: relative;
   overflow: hidden;
@@ -85,8 +85,16 @@ export const CodeAnimation = styled.div`
     color: #00ff00;
     font-size: 1rem;
     text-shadow: 0 0 5px #00ff00;
-    animation: ${matrixRain} 10s linear infinite;
+    animation: ${matrixRain} linear infinite;
   }
+`;
+
+export const Section = styled.section`
+  margin-bottom: 4rem;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
 `;
 
 export const Title = styled.h1`
@@ -130,7 +138,7 @@ export const Form = styled.form`
 export const Input = styled.input`
   padding: 1rem;
   margin-bottom: 1rem;
-  border: none;
+  border: 1px solid #00ff00;
   border-radius: 5px;
   background-color: rgba(0, 255, 0, 0.1);
   color: #00ff00;
@@ -162,7 +170,7 @@ export const Input = styled.input`
 export const TextArea = styled.textarea`
   padding: 1rem;
   margin-bottom: 1rem;
-  border: none;
+  border: 1px solid #00ff00;
   border-radius: 5px;
   background-color: rgba(0, 255, 0, 0.1);
   color: #00ff00;
@@ -198,14 +206,17 @@ export const Button = styled.button`
   color: #000000;
   background: #00ff00;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
 
   &:hover {
     background: #00cc00;
-    transform: translateY(-3px);
+    transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 255, 0, 0.3);
   }
 
@@ -227,15 +238,23 @@ export const ContactInfo = styled.div`
   z-index: 1;
 
   h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
     color: #00ff00;
     text-shadow: 0 0 5px #00ff00;
   }
 
   p {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     color: #00cc00;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      margin-right: 10px;
+    }
   }
 `;
 
@@ -251,7 +270,7 @@ export const SocialLinks = styled.div`
 export const SocialIcon = styled.a`
   margin: 0 1rem;
   color: #00ff00;
-  font-size: 1.5rem;
+  font-size: 2rem;
   transition: all 0.3s ease;
 
   &:hover {
@@ -264,8 +283,8 @@ export const SocialIcon = styled.a`
 export const MapContainer = styled.div`
   width: 100%;
   max-width: 800px;
-  height: 300px;
-  margin-top: 3rem;
+  height: 400px;
+  margin-top: 4rem;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 255, 0, 0.2);
@@ -279,6 +298,8 @@ export const SuccessMessage = styled.div`
   margin-top: 1rem;
   animation: ${fadeInUp} 0.5s ease-out;
   text-shadow: 0 0 5px #00ff00;
+  font-size: 1.2rem;
+  font-weight: bold;
 `;
 
 export const ErrorMessage = styled.div`
@@ -286,6 +307,8 @@ export const ErrorMessage = styled.div`
   margin-top: 1rem;
   animation: ${fadeInUp} 0.5s ease-out;
   text-shadow: 0 0 5px #ff0000;
+  font-size: 1.2rem;
+  font-weight: bold;
 `;
 
 export const LoadingSpinner = styled.div`

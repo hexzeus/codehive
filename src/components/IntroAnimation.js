@@ -13,9 +13,15 @@ import {
   KeypadWrapper,
   ErrorMessage,
   SuccessMessage,
-  TransitionContent
+  TransitionContent,
+  MatrixBackground,
+  AccessPanel,
+  KeypadContainer,
+  KeyIcon,
+  StatusMessage
 } from './IntroAnimationStyles';
 import logo from '../logo.png';
+import { FaBackspace, FaLock, FaUnlock } from 'react-icons/fa';
 
 const ACCESS_CODE = '18005555';
 const ACCESS_CODE_HASH = sha256(ACCESS_CODE);
@@ -75,9 +81,9 @@ const IntroAnimation = ({ onUnlock }) => {
       setAttempts(prev => prev + 1);
       if (attempts + 1 >= MAX_ATTEMPTS) {
         setLockout(LOCKOUT_DURATION);
-        setErrorMessage('Too many attempts. Please wait.');
+        setErrorMessage('Maximum attempts reached. System locked.');
       } else {
-        setErrorMessage('Incorrect code. Please try again.');
+        setErrorMessage('Invalid access code. Please try again.');
       }
       setTimeout(() => setStatus('idle'), 1000);
     }
@@ -95,26 +101,37 @@ const IntroAnimation = ({ onUnlock }) => {
 
   return (
     <Container>
-      <Logo src={logo} alt="Logo" />
-      <CodeInput value={'•'.repeat(code.length)} readOnly maxLength={8} />
-      <KeypadWrapper ref={keypadRef}>
-        <Keypad>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map(num => (
-            <Key key={num} onClick={() => handleInput(num.toString())} disabled={lockout > 0}>
-              {num}
-            </Key>
-          ))}
-          <Key onClick={handleDelete} disabled={lockout > 0}>←</Key>
-          <Key onClick={handleSubmit} disabled={lockout > 0}>Enter</Key>
-        </Keypad>
-      </KeypadWrapper>
-      <StatusIndicator $status={status} />
-      {lockout > 0 && <LockoutTimer>{lockout}</LockoutTimer>}
-      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-      {status === 'success' && <SuccessMessage>Access Granted</SuccessMessage>}
+      <MatrixBackground />
+      <AccessPanel>
+        <Logo src={logo} alt="IVES HUB Logo" />
+        <CodeInput value={'•'.repeat(code.length)} readOnly maxLength={8} />
+        <KeypadContainer>
+          <KeypadWrapper ref={keypadRef}>
+            <Keypad>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map(num => (
+                <Key key={num} onClick={() => handleInput(num.toString())} disabled={lockout > 0}>
+                  {num}
+                </Key>
+              ))}
+              <Key onClick={handleDelete} disabled={lockout > 0}>
+                <KeyIcon><FaBackspace /></KeyIcon>
+              </Key>
+              <Key onClick={handleSubmit} disabled={lockout > 0}>
+                <KeyIcon>{status === 'success' ? <FaUnlock /> : <FaLock />}</KeyIcon>
+              </Key>
+            </Keypad>
+          </KeypadWrapper>
+        </KeypadContainer>
+        <StatusIndicator $status={status} />
+        {lockout > 0 && <LockoutTimer>{lockout}</LockoutTimer>}
+        <StatusMessage>
+          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+          {status === 'success' && <SuccessMessage>Access Granted</SuccessMessage>}
+        </StatusMessage>
+      </AccessPanel>
       <TransitionOverlay $show={showTransition}>
         <TransitionContent>
-          <h1>Welcome</h1>
+          <h1>Welcome to IVES HUB</h1>
           <p>Initializing secure environment...</p>
         </TransitionContent>
       </TransitionOverlay>
