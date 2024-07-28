@@ -33,24 +33,22 @@ const StoreFront = () => {
             const { data: productsData } = await commerce.products.list();
             setProducts(productsData);
 
-            let categoriesData = [];
             try {
                 const categoriesResponse = await commerce.categories.list();
+                console.log('Categories response:', categoriesResponse);
                 if (categoriesResponse && categoriesResponse.data) {
-                    categoriesData = categoriesResponse.data;
+                    setCategories(prevCategories => {
+                        const allCategory = prevCategories.find(cat => cat.id === 'all');
+                        return allCategory
+                            ? [allCategory, ...categoriesResponse.data]
+                            : [{ id: 'all', name: 'All' }, ...categoriesResponse.data];
+                    });
                 } else {
                     console.error('Unexpected categories response structure:', categoriesResponse);
                 }
             } catch (categoryError) {
                 console.error('Error fetching categories:', categoryError);
             }
-
-            setCategories(prevCategories => {
-                const allCategory = prevCategories.find(cat => cat.id === 'all');
-                return allCategory
-                    ? [allCategory, ...categoriesData]
-                    : [{ id: 'all', name: 'All' }, ...categoriesData];
-            });
 
             setError(null);
         } catch (error) {
