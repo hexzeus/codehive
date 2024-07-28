@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
+import { motion } from 'framer-motion';
 
 const glitch = keyframes`
   0% {
@@ -36,12 +37,6 @@ const spin = keyframes`
   100% { transform: rotate(360deg); }
 `;
 
-const glowingAnimation = keyframes`
-  0% { box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); }
-  50% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.8); }
-  100% { box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); }
-`;
-
 export const Container = styled.div`
   max-width: 1400px;
   margin: 0 auto;
@@ -74,6 +69,7 @@ export const ProductCard = styled.div`
   overflow: hidden;
   transition: all 0.3s ease;
   cursor: pointer;
+  position: relative;
 
   &:hover {
     transform: translateY(-10px) scale(1.03);
@@ -90,6 +86,7 @@ export const ProductImage = styled.img`
 
 export const ProductInfo = styled.div`
   padding: 1rem;
+  position: relative;
 `;
 
 export const ProductName = styled.h3`
@@ -122,6 +119,11 @@ export const CTAButton = styled.button`
   letter-spacing: 1px;
   width: 100%;
   margin-top: 0.5rem;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background-color: #00ff00;
@@ -132,6 +134,19 @@ export const CTAButton = styled.button`
     background-color: #00ff00;
     box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
   `}
+
+  ${props => props.$loading && css`
+    pointer-events: none;
+    opacity: 0.7;
+  `}
+`;
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 `;
 
 export const LoadingSpinner = styled.div`
@@ -141,7 +156,13 @@ export const LoadingSpinner = styled.div`
   width: 50px;
   height: 50px;
   animation: ${spin} 1s linear infinite;
-  margin: 2rem auto;
+  margin-bottom: 1rem;
+`;
+
+export const LoadingText = styled.p`
+  color: #0f0;
+  font-size: 1.2rem;
+  text-align: center;
 `;
 
 export const ErrorMessage = styled.div`
@@ -189,80 +210,6 @@ export const SearchBar = styled.input`
   }
 `;
 
-export const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-`;
-
-export const ModalContent = styled.div`
-  background: #000;
-  padding: 2rem;
-  border-radius: 15px;
-  max-width: 600px;
-  width: 90%;
-  border: 1px solid #0f0;
-  box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-  animation: ${glowingAnimation} 3s infinite;
-`;
-
-export const ModalImage = styled.img`
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-`;
-
-export const ModalClose = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  color: #0f0;
-  font-size: 1.5rem;
-  cursor: pointer;
-`;
-
-export const QuantityControl = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 1rem 0;
-
-  button {
-    background: #0f0;
-    color: #000;
-    border: none;
-    width: 30px;
-    height: 30px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 0.5rem;
-
-    &:hover {
-      background: #00ff00;
-    }
-  }
-
-  span {
-    font-size: 1.2rem;
-    color: #0f0;
-  }
-`;
-
 export const PlaceholderImage = styled.div`
   width: 100%;
   height: 250px;
@@ -274,4 +221,39 @@ export const PlaceholderImage = styled.div`
   font-size: 14px;
   border: 1px solid #0f0;
   border-radius: 15px;
+`;
+
+export const AddedToCartMessage = styled(motion.div)`
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #0f0;
+  color: #000;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0, 255, 0, 0.3);
+  z-index: 10;
+  white-space: nowrap;
+`;
+
+export const LoadingOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+`;
+
+export const LoadingSpinnerOverlay = styled(LoadingSpinner)`
+  position: absolute;
+  z-index: 101;
 `;

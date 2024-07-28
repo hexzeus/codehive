@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import LazyLoad from 'react-lazyload';
 import commerce from '../lib/commerce';
-import Cart from '../components/Cart';
-import ProductModal from '../components/ProductModal';
+import { AnimatePresence } from 'framer-motion';
 import {
     Container,
     ProductGrid,
@@ -17,17 +16,22 @@ import {
     CategoryFilter,
     SearchBar,
     PlaceholderImage,
+    LoadingContainer,
+    LoadingText,
+    AddedToCartMessage,
+    LoadingOverlay,
+    LoadingSpinnerOverlay
 } from '../styles/StoreFrontStyles';
 
 const StoreFront = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [cart, setCart] = useState(null);
-    const [selectedProduct, setSelectedProduct] = useState(null);
     const [categories, setCategories] = useState([{ id: 'all', name: 'All' }]);
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
+    const [addedToCart, setAddedToCart] = useState(null);
+    const [isAddingToCart, setIsAddingToCart] = useState(false);
 
     const fetchProducts = useCallback(async () => {
         try {
@@ -55,27 +59,21 @@ const StoreFront = () => {
         }
     }, []);
 
-    const fetchCart = useCallback(async () => {
-        try {
-            const cart = await commerce.cart.retrieve();
-            setCart(cart);
-        } catch (error) {
-            console.error('There was an error fetching the cart', error);
-        }
-    }, []);
-
     useEffect(() => {
         fetchProducts();
-        fetchCart();
-    }, [fetchProducts, fetchCart]);
+    }, [fetchProducts]);
 
     const handleAddToCart = useCallback(async (productId, quantity = 1) => {
         try {
-            const { cart } = await commerce.cart.add(productId, quantity);
-            setCart(cart);
+            setIsAddingToCart(true);
+            await commerce.cart.add(productId, quantity);
+            setAddedToCart(productId);
+            setTimeout(() => setAddedToCart(null), 2000);
         } catch (error) {
             console.error('There was an error adding the item to the cart', error);
             setError('Failed to add item to cart. Please try again.');
+        } finally {
+            setIsAddingToCart(false);
         }
     }, []);
 
@@ -93,18 +91,23 @@ const StoreFront = () => {
         setSearchTerm(e.target.value);
     }, []);
 
-    const handleProductSelect = useCallback((product) => {
-        setSelectedProduct(product);
-    }, []);
-
-    const handleModalClose = useCallback(() => {
-        setSelectedProduct(null);
-    }, []);
-
     const handleImageError = useCallback((e) => {
         e.target.onerror = null;
-        e.target.src = '/path/to/fallback/image.jpg'; // Replace with your fallback image path
+        e.target.src = '/path/to/fallback/image.jpg';
     }, []);
+
+    if (loading) {
+        return (
+            <LoadingContainer>
+                <LoadingSpinner />
+                <LoadingText>Loading products...</LoadingText>
+            </LoadingContainer>
+        );
+    }
+
+    if (error) {
+        return <ErrorMessage>{error}</ErrorMessage>;
+    }
 
     return (
         <Container>
@@ -126,43 +129,58 @@ const StoreFront = () => {
                 value={searchTerm}
                 onChange={handleSearchChange}
             />
-            {loading && <LoadingSpinner />}
-            {error && <ErrorMessage>{error}</ErrorMessage>}
-            {!loading && !error && (
-                <ProductGrid>
-                    {filteredProducts.map((product) => (
-                        <ProductCard key={product.id} onClick={() => handleProductSelect(product)}>
-                            <LazyLoad
-                                height={200}
-                                once
-                                placeholder={<PlaceholderImage />}
-                                debounce={300}
+            <ProductGrid>
+                {filteredProducts.map((product) => (
+                    <ProductCard key={product.id}>
+                        <LazyLoad
+                            height={250}
+                            once
+                            placeholder={<PlaceholderImage />}
+                            debounce={300}
+                        >
+                            <ProductImage
+                                src={product.image?.url}
+                                alt={product.name}
+                                onError={handleImageError}
+                            />
+                        </LazyLoad>
+                        <ProductInfo>
+                            <ProductName>{product.name}</ProductName>
+                            <ProductPrice>{product.price.formatted_with_symbol}</ProductPrice>
+                            <CTAButton
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleAddToCart(product.id);
+                                }}
+                                $loading={isAddingToCart}
                             >
-                                <ProductImage
-                                    src={product.image?.url}
-                                    alt={product.name}
-                                    onError={handleImageError}
-                                />
-                            </LazyLoad>
-                            <ProductInfo>
-                                <ProductName>{product.name}</ProductName>
-                                <ProductPrice>{product.price.formatted_with_symbol}</ProductPrice>
-                                <CTAButton onClick={(e) => { e.stopPropagation(); handleAddToCart(product.id); }}>
-                                    Add to Cart
-                                </CTAButton>
-                            </ProductInfo>
-                        </ProductCard>
-                    ))}
-                </ProductGrid>
-            )}
-            {selectedProduct && (
-                <ProductModal
-                    product={selectedProduct}
-                    onClose={handleModalClose}
-                    onAddToCart={handleAddToCart}
-                />
-            )}
-            <Cart cart={cart} />
+                                {isAddingToCart && addedToCart === product.id ? (
+                                    <>
+                                        <LoadingOverlay>
+                                            <LoadingSpinnerOverlay />
+                                        </LoadingOverlay>
+                                        Loading...
+                                    </>
+                                ) : (
+                                    'Add to Cart'
+                                )}
+                            </CTAButton>
+                            <AnimatePresence>
+                                {addedToCart === product.id && (
+                                    <AddedToCartMessage
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        Added to Cart!
+                                    </AddedToCartMessage>
+                                )}
+                            </AnimatePresence>
+                        </ProductInfo>
+                    </ProductCard>
+                ))}
+            </ProductGrid>
         </Container>
     );
 };
