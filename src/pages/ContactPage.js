@@ -67,7 +67,7 @@ const ContactPage = () => {
         ))}
       </CodeAnimation>
       <Title>Initialize Contact</Title>
-      <Subtitle>Connect with IVES DESIGN</Subtitle>
+      <Subtitle>Connect with IVES HUB</Subtitle>
       <Form onSubmit={handleSubmit}>
         <Input
           type="text"
@@ -106,7 +106,7 @@ const ContactPage = () => {
         <h3>Contact Information</h3>
         <p>📍 123 Cyber Street, Digital City, 12345</p>
         <p>📞 +1 (123) 456-7890</p>
-        <p>✉️ contact@ivesdesign.com</p>
+        <p>✉️ contact@iveshub.com</p>
       </ContactInfo>
       <SocialLinks>
         <SocialIcon href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /></SocialIcon>
@@ -115,7 +115,7 @@ const ContactPage = () => {
       </SocialLinks>
       <MapContainer>
         <iframe
-          title="IVES Design Location"
+          title="IVES HUB Location"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1847827911267!2d-73.9859759848615!3d40.748440779328146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1625684879687!5m2!1sen!2sus"
           width="100%"
           height="100%"

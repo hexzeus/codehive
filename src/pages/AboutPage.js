@@ -20,7 +20,7 @@ const AboutPage = () => (
   <Container>
     <Section>
       <Title>Redefining Digital Experiences</Title>
-      <Subtitle>At IVES Design, we're not just building websites and apps. We're crafting digital solutions that transform businesses and delight users.</Subtitle>
+      <Subtitle>At IVES HUB, we're not just building websites and apps. We're crafting digital solutions that transform businesses and delight users.</Subtitle>
     </Section>
 
     <ValueProposition>
@@ -44,7 +44,7 @@ const AboutPage = () => (
     </ValueProposition>
 
     <Team>
-      <h2>The Minds Behind IVES Design</h2>
+      <h2>The Minds Behind IVES HUB</h2>
       <Member>
         <img src="/path/to/john-doe.jpg" alt="John Doe" />
         <h3>John Doe</h3>
@@ -82,7 +82,7 @@ const AboutPage = () => (
     </History>
 
     <Testimonial>
-      <blockquote>"IVES Design didn't just meet our expectations—they shattered them. Their work has been transformative for our business."</blockquote>
+      <blockquote>"IVES HUB didn't just meet our expectations—they shattered them. Their work has been transformative for our business."</blockquote>
       — Alex Thompson, CEO of InnoTech Solutions
     </Testimonial>
 

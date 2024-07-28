@@ -13,7 +13,9 @@ import {
     Button,
     Select,
     ErrorMessage,
+    LoadingContainer,
     LoadingSpinner,
+    LoadingText,
     ConfirmationContainer,
     ConfirmationTitle,
     ConfirmationText
@@ -233,9 +235,19 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
         </ConfirmationContainer>
     );
 
-    if (loading) return <LoadingSpinner />;
+    if (loading) return (
+        <LoadingContainer>
+            <LoadingSpinner />
+            <LoadingText>Processing your order...</LoadingText>
+        </LoadingContainer>
+    );
     if (error) return <ErrorMessage>{error}</ErrorMessage>;
-    if (!checkoutToken) return <LoadingSpinner />;
+    if (!checkoutToken) return (
+        <LoadingContainer>
+            <LoadingSpinner />
+            <LoadingText>Initializing checkout...</LoadingText>
+        </LoadingContainer>
+    );
 
     return (
         <Container>

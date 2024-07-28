@@ -17,7 +17,7 @@ import {
 } from './IntroAnimationStyles';
 import logo from '../logo.png';
 
-const ACCESS_CODE = '55005500';
+const ACCESS_CODE = '18005555';
 const ACCESS_CODE_HASH = sha256(ACCESS_CODE);
 const MAX_ATTEMPTS = 3;
 const LOCKOUT_DURATION = 30;

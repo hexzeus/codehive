@@ -69,7 +69,7 @@ const NavBar = ({ toggleMatrixRain, isMatrixRainActive }) => {
           <NavLink to="/about" $active={location.pathname === '/about'}><FaInfo /> About</NavLink>
           <NavLink to="/services" $active={location.pathname === '/services'}><FaServicestack /> Services</NavLink>
           <NavLink to="/contact" $active={location.pathname === '/contact'}><FaEnvelope /> Contact</NavLink>
-          <NavLink to="/storefront" $active={location.pathname === '/storefront'}><FaStore /> Store</NavLink>
+          <NavLink to="/storefront" $active={location.pathname === '/storefront'}><FaStore /> Merch</NavLink>
           <NavLink to="/cart" $active={location.pathname === '/cart'}>
             <CartIcon>
               <FaShoppingCart />

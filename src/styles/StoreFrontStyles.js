@@ -1,5 +1,36 @@
 import styled, { keyframes, css } from 'styled-components';
 
+const glitch = keyframes`
+  0% {
+    text-shadow: 0.05em 0 0 #00fffc, -0.05em -0.025em 0 #fc00ff,
+      0.025em 0.05em 0 #fffc00;
+  }
+  14% {
+    text-shadow: 0.05em 0 0 #00fffc, -0.05em -0.025em 0 #fc00ff,
+      0.025em 0.05em 0 #fffc00;
+  }
+  15% {
+    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.025em 0 #fc00ff,
+      -0.05em -0.05em 0 #fffc00;
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.025em 0 #fc00ff,
+      -0.05em -0.05em 0 #fffc00;
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 #00fffc, 0.05em 0 0 #fc00ff,
+      0 -0.05em 0 #fffc00;
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 #00fffc, 0.05em 0 0 #fc00ff,
+      0 -0.05em 0 #fffc00;
+  }
+  100% {
+    text-shadow: -0.025em 0 0 #00fffc, -0.025em -0.025em 0 #fc00ff,
+      -0.025em -0.05em 0 #fffc00;
+  }
+`;
+
 const spin = keyframes`
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -14,7 +45,7 @@ const glowingAnimation = keyframes`
 export const Container = styled.div`
   max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 4rem 2rem;
   background: linear-gradient(to bottom, #000000, #1a1a1a);
   min-height: 100vh;
   color: #0f0;
@@ -25,6 +56,7 @@ export const Container = styled.div`
     font-size: 3rem;
     margin-bottom: 2rem;
     text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+    animation: ${glitch} 3s infinite;
   }
 `;
 
@@ -232,12 +264,14 @@ export const QuantityControl = styled.div`
 `;
 
 export const PlaceholderImage = styled.div`
-    width: 100%;
-    height: 200px;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #888;
-    font-size: 14px;
+  width: 100%;
+  height: 250px;
+  background-color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #0f0;
+  font-size: 14px;
+  border: 1px solid #0f0;
+  border-radius: 15px;
 `;
