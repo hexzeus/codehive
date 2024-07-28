@@ -230,3 +230,14 @@ export const QuantityControl = styled.div`
     color: #0f0;
   }
 `;
+
+export const PlaceholderImage = styled.div`
+    width: 100%;
+    height: 200px;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #888;
+    font-size: 14px;
+`;

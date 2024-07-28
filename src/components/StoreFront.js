@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import LazyLoad from 'react-lazyload';
 import commerce from '../lib/commerce';
 import Cart from '../components/Cart';
 import ProductModal from '../components/ProductModal';
@@ -15,6 +16,7 @@ import {
     ErrorMessage,
     CategoryFilter,
     SearchBar,
+    PlaceholderImage,
 } from '../styles/StoreFrontStyles';
 
 const StoreFront = () => {
@@ -33,22 +35,16 @@ const StoreFront = () => {
             const { data: productsData } = await commerce.products.list();
             setProducts(productsData);
 
-            try {
-                const categoriesResponse = await commerce.categories.list();
-                console.log('Categories response:', categoriesResponse);
-                if (categoriesResponse && categoriesResponse.data) {
-                    setCategories(prevCategories => {
-                        const allCategory = prevCategories.find(cat => cat.id === 'all');
-                        return allCategory
-                            ? [allCategory, ...categoriesResponse.data]
-                            : [{ id: 'all', name: 'All' }, ...categoriesResponse.data];
-                    });
-                } else {
-                    console.error('Unexpected categories response structure:', categoriesResponse);
-                }
-            } catch (categoryError) {
-                console.error('Error fetching categories:', categoryError);
-            }
+            const uniqueCategories = [...new Set(productsData.flatMap(product =>
+                product.categories.map(category => JSON.stringify({ id: category.id, name: category.name }))
+            ))].map(JSON.parse);
+
+            setCategories(prevCategories => {
+                const allCategory = prevCategories.find(cat => cat.id === 'all');
+                return allCategory
+                    ? [allCategory, ...uniqueCategories]
+                    : [{ id: 'all', name: 'All' }, ...uniqueCategories];
+            });
 
             setError(null);
         } catch (error) {
@@ -105,6 +101,11 @@ const StoreFront = () => {
         setSelectedProduct(null);
     }, []);
 
+    const handleImageError = useCallback((e) => {
+        e.target.onerror = null;
+        e.target.src = '/path/to/fallback/image.jpg'; // Replace with your fallback image path
+    }, []);
+
     return (
         <Container>
             <h1>Our Premium Collection</h1>
@@ -131,7 +132,18 @@ const StoreFront = () => {
                 <ProductGrid>
                     {filteredProducts.map((product) => (
                         <ProductCard key={product.id} onClick={() => handleProductSelect(product)}>
-                            <ProductImage src={product.image?.url} alt={product.name} />
+                            <LazyLoad
+                                height={200}
+                                once
+                                placeholder={<PlaceholderImage />}
+                                debounce={300}
+                            >
+                                <ProductImage
+                                    src={product.image?.url}
+                                    alt={product.name}
+                                    onError={handleImageError}
+                                />
+                            </LazyLoad>
                             <ProductInfo>
                                 <ProductName>{product.name}</ProductName>
                                 <ProductPrice>{product.price.formatted_with_symbol}</ProductPrice>
