@@ -26,19 +26,26 @@ const HomePage = () => {
     Particle,
     ScrollPrompt,
     Section,
-    SectionTitle
+    SectionTitle,
+    ProgressBar
   } = HomePageStyles;
 
-  const heroRef = useRef(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [particles, setParticles] = useState([]);
   const containerRef = useRef(null);
-  const [scrollY, setScrollY] = useState(0);
+  const heroRef = useRef(null);
 
   const handleScroll = useCallback(() => {
     const scrollPosition = window.scrollY;
-    setScrollY(scrollPosition);
+    const windowHeight = window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight;
+    const totalScroll = docHeight - windowHeight;
+    const progress = (scrollPosition / totalScroll) * 100;
+    setScrollProgress(progress);
+
     if (heroRef.current) {
-      heroRef.current.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+      const opacity = 1 - Math.min(scrollPosition / windowHeight, 1);
+      heroRef.current.style.opacity = opacity;
     }
   }, []);
 
@@ -78,6 +85,7 @@ const HomePage = () => {
 
   return (
     <Container ref={containerRef}>
+      <ProgressBar style={{ width: `${scrollProgress}%` }} />
       <CodeAnimation>
         <div>
           {[...Array(50)].map((_, index) => (
@@ -89,7 +97,7 @@ const HomePage = () => {
         <LogoImage src={logo} alt="IVES HUB Logo" />
         <Tagline>Crafting Digital Experiences That Inspire</Tagline>
         <CTAButton to="/contact">Initiate Project</CTAButton>
-        <ScrollPrompt style={{ opacity: 1 - scrollY / 300 }}>Scroll to Explore</ScrollPrompt>
+        <ScrollPrompt>Scroll to Explore</ScrollPrompt>
       </HeroSection>
       <Section>
         <SectionTitle>Our Expertise</SectionTitle>

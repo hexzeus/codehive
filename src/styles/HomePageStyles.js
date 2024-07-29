@@ -55,11 +55,6 @@ const glitch = keyframes`
   }
 `;
 
-const spin = keyframes`
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-`;
-
 export const Container = styled.div`
   background: #000000;
   color: #00ff00;
@@ -106,13 +101,15 @@ export const HeroSection = styled.section`
   text-align: center;
   padding: 0 2rem;
   position: relative;
+  transition: opacity 0.3s ease;
 `;
 
 export const LogoImage = styled.img`
-  width: 200px;
+  width: ${props => props.small ? '100px' : '200px'};
   height: auto;
   animation: ${float} 6s ease-in-out infinite;
   filter: drop-shadow(0 0 20px #00ff00);
+  transition: all 0.3s ease;
 `;
 
 export const Tagline = styled.h1`
@@ -131,8 +128,8 @@ export const Tagline = styled.h1`
 `;
 
 export const CTAButton = styled(Link)`
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
+  padding: ${props => props.small ? '0.5rem 1rem' : '1rem 2rem'};
+  font-size: ${props => props.small ? '1rem' : '1.2rem'};
   color: #000000;
   background: #00ff00;
   border: none;
@@ -151,8 +148,8 @@ export const CTAButton = styled(Link)`
   }
 
   @media (max-width: 480px) {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
+    padding: ${props => props.small ? '0.4rem 0.8rem' : '0.8rem 1.5rem'};
+    font-size: ${props => props.small ? '0.9rem' : '1rem'};
   }
 `;
 
@@ -366,6 +363,35 @@ export const ScrollPrompt = styled.div`
   animation: ${fadeInUp} 1s ease-out infinite alternate;
 `;
 
+export const StickyHeader = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  transition: all 0.3s ease;
+
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
+  }
+`;
+
+export const ProgressBar = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: #00ff00;
+  z-index: 1001;
+  transition: width 0.3s ease;
+`;
+
 export const HomePageStyles = {
   Container,
   CodeAnimation,
@@ -385,10 +411,11 @@ export const HomePageStyles = {
   ParticleContainer,
   Particle,
   ScrollPrompt,
+  StickyHeader,
+  ProgressBar,
   // Animations
   matrixRain,
   fadeInUp,
   float,
-  glitch,
-  spin
+  glitch
 };
