@@ -127,7 +127,7 @@ export const BrandContainer = styled(Link)`
 `;
 
 export const NavLink = styled(Link)`
-  margin: 0 1rem;
+  margin: 0 0.8rem;
   font-weight: bold;
   color: #00ff00;
   text-decoration: none;
@@ -135,7 +135,7 @@ export const NavLink = styled(Link)`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
   transition: color 0.3s ease, text-shadow 0.3s ease;
   font-family: 'Courier New', monospace;
 
@@ -197,6 +197,7 @@ export const MatrixToggle = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
   transition: color 0.3s ease, transform 0.2s ease;
+  margin-left: 0.8rem;
 
   &:hover {
     color: #00ff00;

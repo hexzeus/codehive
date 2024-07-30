@@ -1,7 +1,11 @@
-const express = require('express');
-const helmet = require('helmet');
-const path = require('path');
+import express from 'express';
+import helmet from 'helmet';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);  // Corrected this line
 
 // Use Helmet to set security headers
 app.use(helmet());
@@ -35,3 +39,5 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
+export default app;
